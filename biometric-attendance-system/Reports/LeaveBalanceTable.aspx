@@ -5,9 +5,9 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div class="row">
         <div class="col s10 m10 l10 offset-s1 offset-m1 offset-l1 card">
-            <asp:DropDownList ID="ddlDepartments"  Visible="true" CssClass="input-field btn grey lighten-4 teal-text" runat="server"></asp:DropDownList>
+            <asp:DropDownList ID="ddlDepartments"  Visible="true" CssClass=" col input-field btn grey lighten-4 teal-text l4 m4 s4 offset-l4 offset-m4 offset-s4" runat="server"></asp:DropDownList>
             <div class="row">
-                <div class="col s8 m5 l5">
+                <div class="col s8 m5 l5" style="height:100px;">
                     Start Date<br />
                     <asp:Calendar ID="Calendar1" runat="server"  OnSelectionChanged="Calendar1_SelectionChanged"></asp:Calendar>
                 </div>
@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="row">
-        <asp:GridView ID="grid1" runat="server" AutoGenerateColumns="false" CssClass="responsive-table striped card z-depth-2 col m10 l10" EmptyDataText="No Data" Width="100%" OnRowDataBound="grid1_RowDataBound">
+        <asp:GridView ID="grid1" runat="server" AutoGenerateColumns="false" CssClass="responsive-table striped card z-depth-2 col m10 l10 offset-l1 offset-m1" EmptyDataText="No Data" OnRowDataBound="grid1_RowDataBound">
             <Columns>
                 <asp:BoundField DataField="EmployeeId" HeaderText="Id" />
                 <asp:BoundField DataField="Name" HeaderText="Name" />

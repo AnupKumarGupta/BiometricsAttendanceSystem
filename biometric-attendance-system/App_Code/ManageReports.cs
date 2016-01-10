@@ -1034,10 +1034,14 @@ public class ManageReports
                             objDailyAttendanceReportViewModel.PunchRecords = "No Punch Records"; //Employee is Absent
                         TimeSpan totalShiftDuration = objDailyAttendanceReportViewModel._secondHalfEndTime - objDailyAttendanceReportViewModel._firstHalfStartTime;
 
-                        if (totalShiftDuration - objDailyAttendanceReportViewModel.Duration >= tsHalfLeave)
+                        if (TimeSpan.Parse(objDailyAttendanceReportViewModel.TotalDuration) == new TimeSpan(0, 0, 0))
                         {
-                            ManageLeaves objManageLeaves = new ManageLeaves();
-                            objManageLeaves.AssignLeave(objDailyAttendanceReportViewModel.EmployeeId, objDailyAttendanceReportViewModel.Date, (int)LeaveTypes.HDL);
+                            objDailyAttendanceReportViewModel.Status = Status.Absent;
+                        } 
+                        else if (totalShiftDuration - objDailyAttendanceReportViewModel.Duration >= tsHalfLeave)
+                        {
+                            //ManageLeaves objManageLeaves = new ManageLeaves();
+                            //objManageLeaves.AssignLeave(objDailyAttendanceReportViewModel.EmployeeId, objDailyAttendanceReportViewModel.Date, (int)LeaveTypes.HDL);
                             objDailyAttendanceReportViewModel.Status = Status.OnHalfDayLeave;
                         }
                     }

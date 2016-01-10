@@ -1,44 +1,59 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPages/Admin.master" AutoEventWireup="true" CodeFile="MonthlyAttendanceEmployeeWise.aspx.cs" Inherits="Reports_MonthlyAttendanceEmployeeWise" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <div>
-            <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged"></asp:Calendar>
-            <asp:Calendar ID="Calendar2" runat="server" OnSelectionChanged="Calendar2_SelectionChanged"></asp:Calendar>
-            <asp:TextBox runat="server" ID="txt_start_date" />
-            <asp:TextBox runat="server" ID="txt_end_date" />
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <div class="row">
+        <div class="col s10 m10 l10 offset-s1 offset-m1 offset-l1 card">
+            <div class="row">
+                <asp:TextBox ID="txtEmployeeId" placeholder="Employee Id" CssClass="col input-field offset-l1 offset-m1 offset-s1 l4 m4 s4" runat="server"></asp:TextBox>
+                <asp:DropDownList ID="ddlRelaxation" runat="server" CssClass=" col input-field btn grey lighten-4 teal-text l4 m4 s4 offset-l1 offset-m1 offset-s1">
+                    <asp:ListItem Value="00:05:00">5 minutes</asp:ListItem>
+                    <asp:ListItem Value="00:10:00">10 minutes</asp:ListItem>
+                    <asp:ListItem Value="00:15:00">15 minutes</asp:ListItem>
+                    <asp:ListItem Value="00:20:00">20 minutes</asp:ListItem>
+                </asp:DropDownList>
+            </div>
+            <div class="row">
+                <div class="col s8 m5 l5" style="height: 100px;">
+                    Start Date<br />
+                    <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged"></asp:Calendar>
+                </div>
+                <div class="col s8 m5 l5 offset-s2 offset-m2 offset-l2">
+                    End Date<br />
+                    <asp:Calendar ID="Calendar2" runat="server" OnSelectionChanged="Calendar2_SelectionChanged"></asp:Calendar>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s8 m5 l5">
+                    <asp:TextBox runat="server" CssClass="input-field text-darken-3" ID="txt_start_date" Enabled="false" />
+                </div>
+                <div class="col s8 m5 l5 offset-s2 offset-m2 offset-l2">
+                    <asp:TextBox runat="server" ID="txt_end_date" Enabled="false" />
+                </div>
+            </div>
+            <div class="col s8 m4 l4 offset-s2 offset-m5 offset-l5">
+                <asp:Button ID="btnGetData" Text="Get Data" CssClass="btn waves-button-input" runat="server" OnClick="btn_report_Click" />
+            </div>
+            <br />
+            <br />
         </div>
-        <div>
-            <asp:TextBox ID="txtEmployeeId" runat="server"></asp:TextBox>
-            <asp:DropDownList ID="ddlRelaxation" runat="server">
-                <asp:ListItem Value="00:05:00">5 minutes</asp:ListItem>
-                <asp:ListItem Value="00:10:00">10 minutes</asp:ListItem>
-                <asp:ListItem Value="00:15:00">15 minutes</asp:ListItem>
-                <asp:ListItem Value="00:20:00">20 minutes</asp:ListItem>
-            </asp:DropDownList>
-        </div>
-        <asp:Button Text="GetData" OnClick="btn_report_Click" runat="server" />
-        <div>
-            <asp:Label ID="lblName" runat="server" />
-            <asp:GridView runat="server" ID="grid_monthly_attendanceDetailed" AutoGenerateColumns="false" EmptyDataText="No Data" >
+        <div class="row">
+            <div class="row">
+                <div class="col l10 m10 s10 offset-l1 offset-s1 offset-m1 card-content">
+                    <asp:Label ID="lblName" CssClass="input-field" runat="server" />
+                </div>
+            </div>
+            <asp:GridView runat="server" ID="grid_monthly_attendanceDetailed" AutoGenerateColumns="false" CssClass="responsive-table striped card z-depth-2 col m10 l10 offset-l1 offset-m1" EmptyDataText="No Data">
                 <Columns>
                     <asp:TemplateField>
                         <HeaderTemplate>
                             <asp:Label Text="Date" runat="server" />
                         </HeaderTemplate>
                         <ItemTemplate>
-                            <asp:Label ID="Date" runat="server" Text='<%#Eval("Date")%>'></asp:Label>
+                            <asp:Label ID="Date" runat="server" Text='<%#Eval("Date", "{0:d}")%>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <%--<asp:TemplateField>
-                        <HeaderTemplate>
-                            <asp:Label Text="Name" runat="server" />
-                        </HeaderTemplate>
-                        <ItemTemplate>
-                            <asp:Label ID="lblEmployeeName" runat="server" Text='<%#Eval("Name")%>'></asp:Label>
-                        </ItemTemplate>
-                    </asp:TemplateField>--%>
                     <asp:TemplateField>
                         <HeaderTemplate>
                             <asp:Label Text="Shift In" runat="server" />
@@ -113,13 +128,17 @@
                     </asp:TemplateField>
                 </Columns>
             </asp:GridView>
-            <asp:Label ID="lblTotalDuration" runat="server" />
-            <asp:Label ID="lblPresentDays" runat="server" />
-            <asp:Label ID="lblLeaves" runat="server" />
-            <asp:Label ID="lblHolidays" runat="server" />
-            <asp:Label ID="lblAbsentDays" runat="server" />
-            <asp:Label ID="lblWeeklyOff" runat="server" />
-
+            <div class="row">
+                <div class="col l10 m10 s10 offset-l1 offset-s1 offset-m1 collapsible">
+                    <asp:Label ID="lblTotalDuration" runat="server" />
+                    <asp:Label ID="lblPresentDays" runat="server" />
+                    <asp:Label ID="lblLeaves" runat="server" />
+                    <asp:Label ID="lblHolidays" runat="server" />
+                    <asp:Label ID="lblAbsentDays" runat="server" />
+                    <asp:Label ID="lblWeeklyOff" runat="server" />
+                </div>
+            </div>
         </div>
+    </div>
 </asp:Content>
 

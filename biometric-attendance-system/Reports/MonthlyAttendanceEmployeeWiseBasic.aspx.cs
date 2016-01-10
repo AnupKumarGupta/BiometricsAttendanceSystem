@@ -30,7 +30,14 @@ public partial class Reports_MonthlyAttendanceEmployeeWiseBasic : System.Web.UI.
         var data = objManageReports.GetDataForMonthlyAttendanceReportByEmployeeId(EmployeeId, Calendar1.SelectedDate.Date, Calendar2.SelectedDate.Date, relaxationTime, out objMonthlyReportOfEmployee);
         grid_monthly_attendanceBasic.DataSource = data;
         grid_monthly_attendanceBasic.DataBind();
-        lblName.Text = "Name : " + data[0].Name;
+        if (data.Count != 0)
+        {
+            lblName.Text = "Name : " + data[0].Name;
+        }
+        else
+        {
+            lblName.Text = "No Data";
+        }
         lblTotalDuration.Text = "TotalDuration : " + objMonthlyReportOfEmployee.TotalDuration.ToString();
         lblPresentDays.Text = "PresentDays : " + objMonthlyReportOfEmployee.PresentDays.ToString();
         lblLeaves.Text = "Leaves : " + objMonthlyReportOfEmployee.Leaves.ToString();

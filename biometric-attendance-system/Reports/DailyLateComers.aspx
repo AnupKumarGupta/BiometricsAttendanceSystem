@@ -1,4 +1,4 @@
-﻿<%@ Page Title="DailyLateComers" Language="C#" MasterPageFile="~/MasterPages/Admin.master" AutoEventWireup="true" CodeFile="DailyLateComers.aspx.cs" Inherits="Reports_DailyLateComers" %>
+﻿<%@ Page Title="Daily Late Comers" Language="C#" MasterPageFile="~/MasterPages/Admin.master" AutoEventWireup="true" CodeFile="DailyLateComers.aspx.cs" Inherits="Reports_DailyLateComers" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>

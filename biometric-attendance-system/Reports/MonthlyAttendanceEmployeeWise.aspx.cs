@@ -13,11 +13,11 @@ public partial class Reports_MonthlyAttendanceEmployeeWise : System.Web.UI.Page
     }
     protected void Calendar1_SelectionChanged(object sender, EventArgs e)
     {
-        txt_start_date.Text = Calendar1.SelectedDate.Date.ToString();
+        txt_start_date.Text = Calendar1.SelectedDate.Date.ToString("d");
     }
     protected void Calendar2_SelectionChanged(object sender, EventArgs e)
     {
-        txt_end_date.Text = Calendar2.SelectedDate.Date.ToString();
+        txt_end_date.Text = Calendar2.SelectedDate.Date.ToString("d");
     }
     protected void btn_report_Click(object sender, EventArgs e)
     {
@@ -30,7 +30,14 @@ public partial class Reports_MonthlyAttendanceEmployeeWise : System.Web.UI.Page
         var data = objManageReports.GetDataForMonthlyAttendanceReportByEmployeeId(EmployeeId, Calendar1.SelectedDate.Date, Calendar2.SelectedDate.Date, relaxationTime, out objMonthlyReportOfEmployee);
         grid_monthly_attendanceDetailed.DataSource = data;
         grid_monthly_attendanceDetailed.DataBind();
-        lblName.Text = "Name : " + data[0].Name;
+        if (data.Count != 0)
+        {
+            lblName.Text = "Name : " + data[0].Name;
+        }
+        else
+        {
+            lblName.Text = "No Data";
+        }
         lblTotalDuration.Text = "TotalDuration : " + objMonthlyReportOfEmployee.TotalDuration.ToString();
         lblPresentDays.Text = "PresentDays : " + objMonthlyReportOfEmployee.PresentDays.ToString();
         lblLeaves.Text = "Leaves : " + objMonthlyReportOfEmployee.Leaves.ToString();

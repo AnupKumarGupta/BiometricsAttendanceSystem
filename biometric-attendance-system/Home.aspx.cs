@@ -43,7 +43,7 @@ public partial class Home : System.Web.UI.Page
                 }
                 else
                 {
-                    lblMessage.Text = "Invalid Id or Password";
+                    lblMessage.Text = "Invalid User Id or Password";
                 }
             }
         }
