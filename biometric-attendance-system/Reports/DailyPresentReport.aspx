@@ -89,5 +89,8 @@
             </Columns>
         </asp:GridView>
     </div>
+     <div class="col s8 m4 l4 offset-s2 offset-m5 offset-l5">
+    <asp:Button Text="Export to PDF" ID="btnExport" CssClass="btn waves-button-input" OnClick="btnExport_Click" Visible="false" runat="server" />
+                </div>
 </asp:Content>
 

@@ -1,5 +1,9 @@
-﻿using System;
+﻿using iTextSharp.text;
+using iTextSharp.text.html.simpleparser;
+using iTextSharp.text.pdf;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -59,4 +63,39 @@ public partial class Reports_LeaveBalanceTable : System.Web.UI.Page
             grid5.DataBind();
         }
     }
+
+    //protected void btnExport_Click(object sender, EventArgs e)
+    //{
+    //    using (StringWriter sw = new StringWriter())
+    //    {
+    //        using (HtmlTextWriter hw = new HtmlTextWriter(sw))
+    //        {
+    //            //To Export all pages
+    //            grid1.AllowPaging = false;
+    //            // this.BindGrid();
+
+    //            grid1.RenderBeginTag(hw);
+    //            grid1.HeaderRow.RenderControl(hw);
+    //            foreach (GridViewRow row in grid1.Rows)
+    //            {
+    //                row.RenderControl(hw);
+    //            }
+    //            grid1.FooterRow.RenderControl(hw);
+    //            grid1.RenderEndTag(hw);
+    //            StringReader sr = new StringReader(sw.ToString());
+    //            Document pdfDoc = new Document(PageSize.A2, 10f, 10f, 10f, 0f);
+    //            HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
+    //            PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
+    //            pdfDoc.Open();
+    //            htmlparser.Parse(sr);
+    //            pdfDoc.Close();
+
+    //            Response.ContentType = "application/pdf";
+    //            Response.AddHeader("content-disposition", "attachment;filename=Report.pdf");
+    //            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+    //            Response.Write(pdfDoc);
+    //            Response.End();
+    //        }
+    //    }
+    //}
 }
