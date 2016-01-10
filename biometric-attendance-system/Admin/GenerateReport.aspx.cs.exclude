@@ -1,0 +1,60 @@
+﻿using DALHelper;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+public partial class Admin_GenerateReport : System.Web.UI.Page
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        ddlDepartmentBind();
+    }
+    protected void ddlDepartmentBind()
+    {
+        MasterEntries objMasterEntries = new MasterEntries();
+        ddlDepartments.DataSource = objMasterEntries.GetAllDepartments();
+        ddlDepartments.DataTextField = "Name";
+        ddlDepartments.DataValueField = "Id";
+        ddlDepartments.DataBind();
+    }
+    protected void grdDefaulterEmployeesBind(DateTime date)
+    {
+        ManageReports objManageReports = new ManageReports();
+        grdDefaulterEmployees.DataSource = objManageReports.GetDefaulterEmployeesByDate(date);
+        grdDefaulterEmployees.DataBind();
+    }
+    protected void grdDefaulterEmployeesBind(DateTime date, int departmentId)
+    {
+        ManageReports objManageReports = new ManageReports();
+        grdDefaulterEmployees.DataSource = objManageReports.GetDefaulterEmployeesByDepartmentDateWise(date, departmentId);
+        grdDefaulterEmployees.DataBind();
+    }
+    protected void btnDeafulterList_Click(object sender, EventArgs e)
+    {
+        Button btn = (Button)sender;
+        try
+        {
+            if (btn.ID == "btnDeafulterList")
+                grdDefaulterEmployeesBind(Convert.ToDateTime(txtDate.Text));
+            else
+                grdDefaulterEmployeesBind(Convert.ToDateTime(txtDate.Text),Convert.ToInt32(ddlDepartments.SelectedValue));
+        }
+        catch
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "script", "alert('Error...');", true);
+        }
+    }
+    protected void btnAssignDefaulter_Click(object sender, EventArgs e)
+    {
+
+    }
+    protected void btnAssignLeave_Click(object sender, EventArgs e)
+    {
+
+    }
+}

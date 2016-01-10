@@ -1,0 +1,61 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+public partial class MasterEntry : System.Web.UI.Page
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+
+    }
+    protected void btnAddDepartment_Click(object sender, EventArgs e)
+    {
+        string department = txtAddDepartment.Text;
+        MasterEntries objMasterEntry = new MasterEntries();
+        objMasterEntry.AddDepartment(department);
+        gvGetDepartments.DataSource = objMasterEntry.GetAllDepartments();
+        gvGetDepartments.DataBind();
+    }
+    protected void btnAddLeave_Click(object sender, EventArgs e)
+    {
+        string leave = txtAddLeave.Text;
+        MasterEntries objMasterEntry = new MasterEntries();
+        objMasterEntry.AddTypeOfLeave(leave, 1); // Input from Drop down
+        gvGetTypeOfLeave.DataSource = objMasterEntry.GetAllTypeOfLeaves();
+        gvGetTypeOfLeave.DataBind();
+    
+    }
+    protected void btnAddRole_Click(object sender, EventArgs e)
+    {
+        string Role = txtAddRole.Text;
+        MasterEntries objMasterEntry = new MasterEntries();
+        objMasterEntry.AddRole(Role);
+        gvGetRole.DataSource = objMasterEntry.GetAllRoles();
+        gvGetRole.DataBind();
+    }
+    protected void btnAddShifts_Click(object sender, EventArgs e)
+    {
+        Shifts objShifts = new Shifts();
+        objShifts.FirstHalfStart = Convert.ToDateTime(txtFirstHalfStart.Text);
+        objShifts.FirstHalfEnd = Convert.ToDateTime(txtFirstHalfEnd.Text);
+        objShifts.SecondHalfStart = Convert.ToDateTime(txtSecondHalfStart.Text);
+        objShifts.SecondHalfEnd = Convert.ToDateTime(txtSecondHalfEnd.Text);
+        MasterEntries objMasterEntry = new MasterEntries();
+        objMasterEntry.AddShift(objShifts);
+        gvGetShifts.DataSource = objMasterEntry.GetAllShifts();
+        gvGetShifts.DataBind();
+
+    }
+    protected void btnAddDuration_Click(object sender, EventArgs e)
+    {
+        TimeSpan duration;
+        TimeSpan.TryParse(txtAddDuration.Text, out duration);
+        MasterEntries objMasterEntry = new MasterEntries();
+        objMasterEntry.AddDuration(duration);
+        gvGetDuration.DataSource = objMasterEntry.GetAllDurations();
+        gvGetDuration.DataBind();
+    }
+}

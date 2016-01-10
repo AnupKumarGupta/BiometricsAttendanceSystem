@@ -1,0 +1,60 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPages/Admin.master" AutoEventWireup="true" CodeFile="GenerateReport.aspx.cs" Inherits="Admin_GenerateReport" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <div class="row">
+        <div class="col m4 l4 s4">
+            <%--<asp:Calendar ID="calanderDefaulter" runat="server" CssClass="picker__day"></asp:Calendar>--%>
+            <asp:textbox id="txtDate" runat="server">
+            </asp:textbox>
+            <asp:button text="Deafulter List" id="btnDeafulterList" onclick="btnDeafulterList_Click" runat="server" />
+            &nbsp;&nbsp;
+            <asp:dropdownlist id="ddlDepartments" runat="server"></asp:dropdownlist>
+            <asp:button text="Deafulter List Department Wise" id="btnDeafulterListByDepartment" onclick="btnDeafulterList_Click" runat="server" />
+            &nbsp;&nbsp; 
+            <br />
+            <asp:gridview id="grdDefaulterEmployees" cssclass="responsive-table bordered striped highlight" autogeneratecolumns="false" runat="server">
+                <Columns>
+                    <asp:TemplateField>
+                        <HeaderTemplate>Employee Id</HeaderTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lblEmployeeId" runat="server" Text='<%#Eval("Id")%>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField>
+                        <HeaderTemplate>First Name</HeaderTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lblFirstName" runat="server" Text='<%#Eval("FirstName")%>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField>
+                        <HeaderTemplate>Middle Name</HeaderTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lblMiddleName" runat="server" Text='<%#Eval("MiddleName")%>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField>
+                        <HeaderTemplate>Last Name</HeaderTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lblLastName" runat="server" Text='<%#Eval("LastName")%>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField>
+                        <HeaderTemplate>Assign Leave</HeaderTemplate>
+                        <ItemTemplate>
+                            <asp:Button ID="btnAssignLeave" runat="server" CssClass="waves-effect waves-light btn teal" Text="Assign Leave"  CommandArgument='<%#Eval("Id")%>' OnClick="btnAssignLeave_Click"/>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField>
+                        <HeaderTemplate>Assign Absent</HeaderTemplate>
+                        <ItemTemplate>
+                            <asp:Button ID="btnAssignDefaulter" runat="server" CssClass="waves-effect waves-light btn red" Text="Assign Absent" CommandArgument='<%#Eval("Id")%>' OnClick="btnAssignDefaulter_Click" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+            </asp:gridview>
+        </div>
+    </div>
+</asp:Content>
+

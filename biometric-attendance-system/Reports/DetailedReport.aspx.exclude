@@ -1,0 +1,141 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="DetailedReport.aspx.cs" Inherits="Reports_DetailedReport" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            
+            <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged"></asp:Calendar>
+            <asp:TextBox runat="server" ID="txt_date" />
+            
+        </div>
+
+        <asp:Button Text="Get" ID="btn_report" OnClick="btn_report_Click" runat="server" />
+        <div>
+
+        <asp:GridView runat="server" ID="grid_detailed" AutoGenerateColumns="false">
+            <Columns>
+                <asp:TemplateField>
+                    <HeaderTemplate>
+                        <asp:Label Text="Employee Id" runat="server" />
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblEmployeeId" runat="server" Text='<%#Eval("EmployeeCode")%>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField>
+                    <HeaderTemplate>
+                        <asp:Label Text="Name" runat="server" />
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblEmployeeName" runat="server" Text='<%#Eval("Name")%>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField>
+                    <HeaderTemplate>
+                        <asp:Label Text="Shift" runat="server" />
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblShift" runat="server" Text='<%#Eval("Shift")%>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField>
+                    <HeaderTemplate>
+                        <asp:Label Text="S.In Time" runat="server" />
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblShiftInTime" runat="server" Text='<%#Eval("ShiftInTime")%>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField>
+                    <HeaderTemplate>
+                        <asp:Label Text="S. OutTime" runat="server" />
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblShiftOutTime" runat="server" Text='<%#Eval("ShiftOutTime")%>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField>
+                    <HeaderTemplate>
+                        <asp:Label Text="A. InTime" runat="server" />
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblActualInTime" runat="server" Text='<%#Eval("InTime")%>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField>
+                    <HeaderTemplate>
+                        <asp:Label Text="A. OutTime" runat="server" />
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblActualOutTime" runat="server" Text='<%#Eval("OutTime")%>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField>
+                    <HeaderTemplate>
+                        <asp:Label Text="Work Duration" runat="server" />
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblWorkDuration" runat="server" Text='<%#Eval("Duration")%>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField>
+                    <HeaderTemplate>
+                        <asp:Label Text="Over Time" runat="server" />
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblOverTime" runat="server" Text='**'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField>
+                    <HeaderTemplate>
+                        <asp:Label Text="Total Duration" runat="server" />
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblTotalDuration" runat="server" Text='<%#Eval("TotalDuration")%>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField>
+                    <HeaderTemplate>
+                        <asp:Label Text="Late By" runat="server" />
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblLateByDuration" runat="server" Text='<%#Eval("LateByDuration")%>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField>
+                    <HeaderTemplate>
+                        <asp:Label Text="Early Going By" runat="server" />
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblEarlyGoingByDuration" runat="server" Text='<%#Eval("EarlyGoingByDuration")%>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField>
+                    <HeaderTemplate>
+                        <asp:Label Text="Status" runat="server" />
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblStatus" runat="server" Text='<%#Eval("Status")%>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField>
+                    <HeaderTemplate>
+                        <asp:Label Text="Punch Records" runat="server" />
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblPunchRecords" runat="server" Text='<%#Eval("PunchRecords")%>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+            </Columns>
+        </asp:GridView>
+
+    </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,92 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+public partial class Admin_ManageLeave : System.Web.UI.Page
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        pnlFullDayLeave.Visible = false;
+        pnlDurationalLeave.Visible = false;
+        pnlHalfDayLeave.Visible = false;
+        pnlMultiDayLeave.Visible = false;
+    }
+    protected void ddlMasterLeaveType_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        int leaveId = Convert.ToInt32(ddlMasterLeaveType.SelectedValue);
+        if (leaveId == 1)
+        {
+            pnlFullDayLeave.Visible = true;
+            pnlDurationalLeave.Visible = false;
+            pnlHalfDayLeave.Visible = false;
+            pnlMultiDayLeave.Visible = false;
+        }
+        if (leaveId == 2)
+        {
+            pnlFullDayLeave.Visible = false;
+            pnlDurationalLeave.Visible = false;
+            pnlHalfDayLeave.Visible = true;
+            pnlMultiDayLeave.Visible = false;
+        }
+        if (leaveId == 3)
+        {
+            pnlFullDayLeave.Visible = false;
+            pnlDurationalLeave.Visible = true;
+            pnlHalfDayLeave.Visible = false;
+            pnlMultiDayLeave.Visible = false;
+        }
+        if (leaveId == 4)
+        {
+            pnlFullDayLeave.Visible = false;
+            pnlDurationalLeave.Visible = false;
+            pnlHalfDayLeave.Visible = false;
+            pnlMultiDayLeave.Visible = true;
+        }
+
+        ManageLeaves objManageLeave = new ManageLeaves();
+        ddlLeaveType.DataSource = objManageLeave.LeaveFromGivenMasterLeaveType(leaveId);
+        ddlLeaveType.DataTextField = "Name";
+        ddlLeaveType.DataValueField = "Id";
+        ddlLeaveType.DataBind();
+    }
+    protected void btnMarkLeave_Click(object sender, EventArgs e)
+    {
+        DateTime date;
+        int masterLeaveId = Convert.ToInt32(ddlMasterLeaveType.SelectedValue);
+        int leaveId = Convert.ToInt32(ddlLeaveType.SelectedValue);
+        int employeeId = Convert.ToInt32(txtEmployeeId.Text);
+        ManageLeaves objManageLeave = new ManageLeaves();
+        if (masterLeaveId == 1)
+        {
+
+            date = DateTime.ParseExact(Request.Form[txtDate.UniqueID], "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            bool value = objManageLeave.IsLeaveExist(employeeId, date);
+            if(value==true)
+            objManageLeave.FullDayLeave(employeeId, date, leaveId);
+        }
+        if (masterLeaveId == 2)
+        {
+            date = Convert.ToDateTime(txtHalfDayDate.Text);
+            bool value = objManageLeave.IsLeaveExist(employeeId, date);
+            if(value==true)
+            objManageLeave.HalfDayLeave(employeeId, date, leaveId);
+        }
+        if (masterLeaveId == 3)
+        {
+            date = Convert.ToDateTime(txtDurationalLeave.Text);
+            bool value = objManageLeave.IsLeaveExist(employeeId, date);
+            if(value==true)
+            objManageLeave.DurationalLeave(employeeId, leaveId, date);
+        }
+        if (masterLeaveId == 4)
+        {
+            DateTime StartDate = Convert.ToDateTime(txtStartingDate.Text);
+            DateTime EndDate = Convert.ToDateTime(txtEndingDate.Text);
+            objManageLeave.MultiDayLeave(employeeId, leaveId, StartDate, EndDate);
+        }
+    }
+}

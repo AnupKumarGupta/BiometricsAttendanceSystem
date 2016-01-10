@@ -1,0 +1,69 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="LeaveBalanceTable.aspx.cs" Inherits="Reports_LeaveBalanceTable" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <asp:DropDownList ID="ddlDepartments" runat="server"></asp:DropDownList>
+            <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged"></asp:Calendar>
+            <asp:Calendar ID="Calendar2" runat="server" OnSelectionChanged="Calendar2_SelectionChanged"></asp:Calendar>
+            <asp:TextBox runat="server" ID="txt_start_date" />
+            <asp:TextBox runat="server" ID="txt_end_date" />
+        </div>
+        <div>
+            <asp:Button ID="btnGetData" Text="Get Data" runat="server" OnClick="btnGetData_Click" />
+        </div>
+        <asp:GridView ID="grid1" runat="server" AutoGenerateColumns="false" Width="100%" OnRowDataBound="grid1_RowDataBound">
+            <Columns>
+                <asp:BoundField DataField="EmployeeId" HeaderText="Id" />
+                <asp:BoundField DataField="Name" HeaderText="Name" />
+                <asp:TemplateField>
+                    <ItemTemplate>
+                        <asp:GridView ID="grid2" runat="server" AutoGenerateColumns="False" Width="100%">
+                            <Columns>
+                                <asp:BoundField DataField="LeaveName" HeaderText="LeaveName" />
+                                <asp:BoundField DataField="LeaveCount" HeaderText="LeaveCount" />
+                            </Columns>
+                        </asp:GridView>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField>
+                    <ItemTemplate>
+                        <asp:GridView ID="grid3" runat="server" AutoGenerateColumns="False" Width="100%">
+                            <Columns>
+                                <asp:BoundField DataField="LeaveName" HeaderText="LeaveName" />
+                                <asp:BoundField DataField="LeaveCount" HeaderText="LeaveCount" />
+                            </Columns>
+                        </asp:GridView>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField>
+                    <ItemTemplate>
+                        <asp:GridView ID="grid4" runat="server" AutoGenerateColumns="False" Width="100%">
+                            <Columns>
+                                <asp:BoundField DataField="LeaveName" HeaderText="LeaveName" />
+                                <asp:BoundField DataField="LeaveCount" HeaderText="LeaveCount" />
+                            </Columns>
+                        </asp:GridView>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField>
+                    <ItemTemplate>
+                        <asp:GridView ID="grid5" runat="server" AutoGenerateColumns="False" Width="100%">
+                            <Columns>
+                                <asp:BoundField DataField="LeaveName" HeaderText="LeaveName" />
+                                <asp:BoundField DataField="LeaveCount" HeaderText="LeaveCount" />
+                            </Columns>
+                        </asp:GridView>
+                    </ItemTemplate>
+                </asp:TemplateField>
+            </Columns>
+        </asp:GridView>
+    </form>
+</body>
+</html>

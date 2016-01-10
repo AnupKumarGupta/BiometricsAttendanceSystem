@@ -1,0 +1,43 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ViewDetails.aspx.cs" Inherits="Employee_ViewDetails" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+           Welcome <asp:Label ID="lblName" runat="server" />
+            <asp:Button ID="btnViewEmployeeDetails" runat="server" Text="View Details" OnClick="btnViewDetails_Click" />
+            <asp:GridView ID="grdViewEmployeeDetails" runat="server" AutoGenerateColumns="false">
+                <Columns>
+                    <asp:TemplateField HeaderText="Name">
+                        <ItemTemplate>
+                            <asp:Label ID="lblFirstName" Text='<%#Eval("FirstName")%>' runat="server"></asp:Label>
+                            <asp:Label ID="lblMiddleName" Text='<%#Eval("MiddleName")%>' runat="server"></asp:Label>
+                            <asp:Label ID="lblLastName" Text='<%#Eval("LastName")%>' runat="server"></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+            </asp:GridView>
+            <asp:GridView ID="grdViewLeaveDetails" runat="server" AutoGenerateColumns="false">
+                <Columns>
+                    <asp:TemplateField HeaderText="No. of Leaves">
+                        <ItemTemplate>
+                            <asp:Label ID="lblNoOfLeaves" Text='<%#Eval("NoOfLeaves")%>' runat="server"></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Leave Type">
+                        <ItemTemplate>
+                            <asp:Label ID="lblLeaveType" Text='<%#Eval("Name")%>' runat="server"></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+            </asp:GridView>
+
+        </div>
+    </form>
+</body>
+</html>

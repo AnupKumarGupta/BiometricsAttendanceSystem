@@ -1,0 +1,62 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="MasterEntry.aspx.cs" Inherits="MasterEntry" %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <asp:TextBox ID="txtAddDepartment" runat="server" />
+            <asp:Button ID="btnAddDepartment" Text="Add Department" runat="server" OnClick="btnAddDepartment_Click" />
+            <asp:GridView ID="gvGetDepartments" runat="server">
+                <%-- <Columns>
+                <asp:TemplateField>
+                    <ItemTemplate>
+                                <asp:HyperLink NavigateUrl='<%#"../Admin/EditEmployee.aspx?Id="+ Eval("Id") %>' runat="server" ID="hplEmployeeEdit" Target="_blank">Edit</asp:HyperLink>
+                    </ItemTemplate>
+                </asp:TemplateField>
+            </Columns>--%>
+            </asp:GridView>
+            <asp:TextBox ID="txtAddLeave" runat="server" />
+            <asp:Button ID="btnAddLeave" Text="Add Leave Type" runat="server" OnClick="btnAddLeave_Click" />
+            <asp:GridView ID="gvGetTypeOfLeave" runat="server">
+                <%-- <Columns>
+                <asp:TemplateField>
+                    <ItemTemplate>
+                                <asp:HyperLink NavigateUrl='<%#"../Admin/EditEmployee.aspx?Id="+ Eval("Id") %>' runat="server" ID="hplEmployeeEdit" Target="_blank">Edit</asp:HyperLink>
+                    </ItemTemplate>
+                </asp:TemplateField>
+            </Columns>--%>
+            </asp:GridView>
+            <asp:TextBox ID="txtAddRole" runat="server" />
+            <asp:Button ID="btnAddRole" Text="Add Role" runat="server" OnClick="btnAddRole_Click" />
+            <asp:GridView ID="gvGetRole" runat="server">
+                <%-- <Columns>
+                <asp:TemplateField>
+                    <ItemTemplate>
+                                <asp:HyperLink NavigateUrl='<%#"../Admin/EditEmployee.aspx?Id="+ Eval("Id") %>' runat="server" ID="hplEmployeeEdit" Target="_blank">Edit</asp:HyperLink>
+                    </ItemTemplate>
+                </asp:TemplateField>
+            </Columns>--%>
+            </asp:GridView>
+            First Half
+            <br />
+            Start<asp:TextBox ID="txtFirstHalfStart" runat="server" />
+            End<asp:TextBox ID="txtFirstHalfEnd" runat="server" />
+            <br />
+            Second Half
+            <br />
+            Start<asp:TextBox ID="txtSecondHalfStart" runat="server" />
+            End<asp:TextBox ID="txtSecondHalfEnd" runat="server" />
+            <asp:Button ID="btnAddShifts" Text="Add Shifts" runat="server" OnClick="btnAddShifts_Click" />
+            <asp:GridView ID="gvGetShifts" runat="server">
+            </asp:GridView>
+            <asp:TextBox ID="txtAddDuration" runat="server" />
+            <asp:Button ID="btnAddDuration" Text="Add Duration" runat="server" OnClick="btnAddDuration_Click" />
+            <asp:GridView ID="gvGetDuration" runat="server">
+            </asp:GridView>
+        </div>
+    </form>
+</body>
+</html>

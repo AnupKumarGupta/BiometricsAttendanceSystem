@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+public partial class Reports_DailyAttendanceLateComing : System.Web.UI.Page
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+
+    }
+    protected void Calendar1_SelectionChanged(object sender, EventArgs e)
+    {
+        txt_start_date.Text = Calendar1.SelectedDate.Date.ToString();
+    }
+    protected void Calendar2_SelectionChanged(object sender, EventArgs e)
+    {
+        txt_end_date.Text = Calendar2.SelectedDate.Date.ToString();
+    }
+    protected void btn_report_Click(object sender, EventArgs e)
+    {
+        ManageReports objManageReports = new ManageReports();
+        var data = objManageReports.GetDataForDailyAttendanceLateComing(Calendar1.SelectedDate, Calendar2.SelectedDate);
+        grid_dailylatecoming.DataSource = data;
+        grid_dailylatecoming.DataBind();
+    }
+}

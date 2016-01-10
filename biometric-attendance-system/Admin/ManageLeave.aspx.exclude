@@ -1,0 +1,94 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPages/Admin.master" AutoEventWireup="true" CodeFile="ManageLeave.aspx.cs" Inherits="Admin_ManageLeave" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <asp:ScriptManager ID="scriptManagerDepartment" runat="server" />
+
+    EmployeeId<asp:TextBox ID="txtEmployeeId" runat="server" />
+    Master Leave
+    <asp:DropDownList ID="ddlMasterLeaveType" runat="server" Visible="true" CssClass="dropdown-button btn l2 m2 s2" AutoPostBack="true" OnSelectedIndexChanged="ddlMasterLeaveType_SelectedIndexChanged">
+                                <asp:ListItem Value="0">--- Select ----</asp:ListItem>
+                                <asp:ListItem Value="1">Full Day Leave</asp:ListItem>
+                                <asp:ListItem Value="2">Half Day Leave</asp:ListItem>
+                                <asp:ListItem Value="3">Short Leave</asp:ListItem>
+                                <asp:ListItem Value="4">Bulk Leave</asp:ListItem>
+                            </asp:DropDownList>
+     Leave:
+    <asp:DropDownList ID="ddlLeaveType" runat="server"  CssClass="dropdown-button btn l2 m2 s2">
+        <asp:ListItem Value="0">--- Select ----</asp:ListItem>
+    </asp:DropDownList>
+
+    <asp:Panel ID="pnlFullDayLeave" runat="server" Visible="true">
+        <div>
+            <asp:UpdatePanel ID="upnlFullDayLeave" runat="server">
+                <ContentTemplate>
+                    <div class="row">
+                        <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
+                            Date
+                            <asp:TextBox ID="txtDate" runat="server" placeholder="Date"></asp:TextBox>
+                        </div>
+                        </div>                  
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
+    </asp:Panel>
+    <asp:Panel ID="pnlHalfDayLeave" runat="server" Visible="true">
+        <div>
+            <asp:UpdatePanel ID="upnlHalfDayLeave" runat="server">
+                <ContentTemplate>
+                    <div class="row">
+                        <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
+                            Date
+                            <asp:TextBox ID="txtHalfDayDate" runat="server" placeholder="Date"></asp:TextBox>
+                        </div>
+                        <div class="col s2 l2 m2">
+                            <asp:DropDownList ID="ddlShifts" runat="server" AppendDataBoundItems="true" CssClass="dropdown-button btn l2 m2 s2">
+                                <asp:ListItem Value="0">--- Select ----</asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
+    </asp:Panel>
+    <asp:Panel ID="pnlDurationalLeave" runat="server" Visible="true">
+        <div>
+            <asp:UpdatePanel ID="upnlDurationalLeave" runat="server">
+                <ContentTemplate>
+                    <div class="row">
+                        <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
+                            Date
+                            <asp:TextBox ID="txtDurationalLeave" runat="server" placeholder="Date"></asp:TextBox>
+                        </div>
+                        <div class="col s2 l2 m2">
+                            <asp:DropDownList ID="ddlDuration" runat="server" AppendDataBoundItems="true" CssClass="dropdown-button btn l2 m2 s2">
+                                <asp:ListItem Value="0">--- Select ----</asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
+    </asp:Panel>
+    <asp:Panel ID="pnlMultiDayLeave" runat="server" Visible="true">
+        <div>
+            <asp:UpdatePanel ID="upnlMultiDayLeave" runat="server">
+                <ContentTemplate>
+                    <div class="row">
+                        <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
+                           Start Date
+                            <asp:TextBox ID="txtStartingDate" runat="server" placeholder="Start Date"></asp:TextBox>
+                        </div>
+                        <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
+                            End Date
+                            <asp:TextBox ID="txtEndingDate" runat="server" placeholder="End Date"></asp:TextBox>
+                        </div>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
+    </asp:Panel>
+    <asp:Button ID="btnMarkLeave" runat="server" Text="Mark Leave" OnClick="btnMarkLeave_Click" />
+</asp:Content>
+
