@@ -14,7 +14,7 @@ public partial class Reports_DailyAttendanceDetailedReport : System.Web.UI.Page
     }
     protected void Calendar1_SelectionChanged(object sender, EventArgs e)
     {
-        txt_date.Text = Calendar1.SelectedDate.Date.ToString();
+        txt_date.Text = Calendar1.SelectedDate.Date.ToString("d");
     }
     protected void btn_report_Click(object sender, EventArgs e)
     {

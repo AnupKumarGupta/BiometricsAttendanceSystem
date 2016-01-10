@@ -23,12 +23,12 @@
                 <asp:TextBox runat="server" ID="txt_date" />
             </div>
         </div>
-        <div class="col s8 m4 l4 offset-s2 offset-m6 offset-l6">
+        <div class="col s8 m4 l4 offset-s2 offset-m5 offset-l5">
             <asp:Button Text="Get Data" ID="btn_report" CssClass="btn waves-button-input" OnClick="btn_report_Click" runat="server" />
         </div>
     </div>
-    <div>
-        <asp:GridView runat="server" ID="grid_dailyAbsent" AutoGenerateColumns="false" CssClass="responsive-table striped card z-depth-2 col m10 l10 offset-l2 offset-m2" EmptyDataText="No Data">
+    <div class="row">
+        <asp:GridView runat="server" ID="grid_dailyAbsent" AutoGenerateColumns="false" CssClass="responsive-table striped card z-depth-2 col m10 l10 offset-l1 offset-m1" EmptyDataText="No Data">
             <Columns>
                 <asp:TemplateField>
                     <HeaderTemplate>
