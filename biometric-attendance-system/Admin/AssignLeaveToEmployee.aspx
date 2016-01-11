@@ -46,6 +46,11 @@
                             <asp:Label ID="lblNoOfLeaves" runat="server" Text='<%#Eval("Date")%>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
+                    <asp:TemplateField>
+                        <ItemTemplate>
+                            <asp:LinkButton ID ="lnkDelete" Text="Delete" CommandArgument='<%#Eval("leaveId")%>' runat="server" OnClick="lnkDelete_Click" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
                 </Columns>
             </asp:GridView>
         </div>

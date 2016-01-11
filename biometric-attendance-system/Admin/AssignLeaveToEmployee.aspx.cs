@@ -33,9 +33,12 @@ public partial class Admin_AssignLeaveToEmployee : System.Web.UI.Page
         DataTable dt = new DataTable();
         List<SqlParameter> lstData = new List<SqlParameter>();
         lstData.Add(new SqlParameter("@employeeId", Convert.ToInt32(Session["employeeId"])));
-        lstData.Add(new SqlParameter("@date", Calendar1.SelectedDate.Date));
+        lstData.Add(new SqlParameter("@dateMonth", Calendar1.SelectedDate.Month));
+        lstData.Add(new SqlParameter("@dateYear", Calendar1.SelectedDate.Year));
+        lstData.Add(new SqlParameter("@IsDeleted", Convert.ToInt32(0)));
         DataSet ds;
-        string query = "Select LeaveTypeId from tblLeave where EmployeeId=@employeeId And Date=@date";
+        int i = 0;
+        string query = "SELECT Id , LeaveTypeId , [Date] FROM tblLeave WHERE MONTH([Date]) = @dateMonth AND YEAR([Date]) = @dateYear And EmployeeId = @employeeId And IsDeleted = @IsDeleted";
         using (DBDataHelper objDDBDataHelper = new DBDataHelper())
         {
             ds = objDDBDataHelper.GetDataSet(query, SQLTextType.Query, lstData);
@@ -43,14 +46,17 @@ public partial class Admin_AssignLeaveToEmployee : System.Web.UI.Page
             foreach (DataRow row in ds.Tables[0].Rows)
             {
                 AssignLeaveViewModel objLeaves = new AssignLeaveViewModel();
-                int leaveId = Convert.ToInt32(ds.Tables[0].Rows[0][0]);
+                int Id = Convert.ToInt32(ds.Tables[0].Rows[i][0]);
+                int leaveId = Convert.ToInt32(ds.Tables[0].Rows[i][1]);
                 Leaves objLeaves1 = new Leaves();
                 objMasterEntries.GetLeavesById(leaveId, out objLeaves1);
+                objLeaves.leaveId = Id;
                 objLeaves.Id = objLeaves1.Id;
                 objLeaves.LeaveName = objLeaves1.LeaveName;
                 objLeaves.EmployeeId = Convert.ToInt32(Session["employeeId"]);
-                objLeaves.Date = Calendar1.SelectedDate.Date;
+                objLeaves.Date = (Convert.ToDateTime(ds.Tables[0].Rows[i][2])).Date;
                 lstLeaves.Add(objLeaves);
+                i++;
             }
             return lstLeaves;
         }
@@ -58,12 +64,23 @@ public partial class Admin_AssignLeaveToEmployee : System.Web.UI.Page
     public void BindGrid()
     {
         btnAssignLeave.Enabled = true;
-        gvViewEmployeeOnLeaveForDate.DataSource = BindGridData();
+        var x = BindGridData();
+        gvViewEmployeeOnLeaveForDate.DataSource = x;
         gvViewEmployeeOnLeaveForDate.DataBind();
-        if (gvViewEmployeeOnLeaveForDate.Rows.Count > 0)
+        //if (gvViewEmployeeOnLeaveForDate.Rows.Count > 0)
+        //{
+        //    btnAssignLeave.Enabled = false;
+        //    btnAssignLeave.Text = "Employee On Leave";
+        //}
+        foreach(var date in x)
         {
-            btnAssignLeave.Enabled = false;
-            btnAssignLeave.Text = "Employee On Leave";
+            btnAssignLeave.Text = "Assign Leave";
+            DateTime Date = date.Date;
+            if(Calendar1.SelectedDate.Date == Date)
+            {
+                btnAssignLeave.Enabled = false;
+                btnAssignLeave.Text = "Employee On Leave";
+            }
         }
     }
     protected void btnAssignLeave_Click(object sender, EventArgs e)
@@ -97,5 +114,22 @@ public partial class Admin_AssignLeaveToEmployee : System.Web.UI.Page
         ddlLeaves.DataTextField = "LeaveName";
         ddlLeaves.DataValueField = "Id";
         ddlLeaves.DataBind();
+    }
+
+    protected void lnkDelete_Click(object sender, EventArgs e)
+    {
+        LinkButton b = (LinkButton)sender;
+        int id = Convert.ToInt32(b.CommandArgument);
+        DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
+        DataTable dt = new DataTable();
+        List<SqlParameter> lstData = new List<SqlParameter>();
+        lstData.Add(new SqlParameter("@leaveId", id));
+        DataSet ds;
+        int i = 0;
+        string query = "Update tblLeave set IsDeleted = 1 where Id = @leaveId";
+        using (DBDataHelper objDDBDataHelper = new DBDataHelper())
+        {
+            ds = objDDBDataHelper.GetDataSet(query, SQLTextType.Query, lstData);
+        }
     }
 }
