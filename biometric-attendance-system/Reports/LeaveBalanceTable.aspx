@@ -40,8 +40,8 @@
                     <ItemTemplate>
                         <asp:GridView ID="grid2" runat="server" AutoGenerateColumns="False" Width="100%">
                             <Columns>
-                                <asp:BoundField DataField="LeaveName" HeaderText="LeaveName" />
-                                <asp:BoundField DataField="LeaveCount" HeaderText="LeaveCount" />
+                                <asp:BoundField DataField="SL" />
+                                <asp:BoundField DataField="EL" />
                             </Columns>
                         </asp:GridView>
                     </ItemTemplate>
@@ -49,19 +49,33 @@
                 <asp:TemplateField>
                     <ItemTemplate>
                         <asp:GridView ID="grid3" runat="server" AutoGenerateColumns="False" Width="100%">
-                            <Columns>
-                                <asp:BoundField DataField="LeaveName" HeaderText="LeaveName" />
-                                <asp:BoundField DataField="LeaveCount" HeaderText="LeaveCount" />
+                           <Columns>
+                                <asp:BoundField DataField="Casual Leave" />
+                                <asp:BoundField DataField="Emergency Leave" />
+                                <asp:BoundField DataField="Short Leave" />
+                                <asp:BoundField DataField="Half Day Leave" />
+                                <asp:BoundField DataField="Sick Leave" />
+                                <asp:BoundField DataField="Restricted Holiday" />
+                                <asp:BoundField DataField="D Leave" />
+                                <asp:BoundField DataField="Compensatory Off" />
                             </Columns>
                         </asp:GridView>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField>
+                    
                     <ItemTemplate>
+                        
                         <asp:GridView ID="grid4" runat="server" AutoGenerateColumns="False" Width="100%">
-                            <Columns>
-                                <asp:BoundField DataField="LeaveName" HeaderText="LeaveName" />
-                                <asp:BoundField DataField="LeaveCount" HeaderText="LeaveCount" />
+                             <Columns>
+                                <asp:BoundField DataField="Casual Leave" HeaderText="Casual Leave" />
+                                <asp:BoundField DataField="Emergency Leave"  HeaderText="Emergency Leave" />
+                                <asp:BoundField DataField="Short Leave" />
+                                <asp:BoundField DataField="Half Day Leave" />
+                                <asp:BoundField DataField="Sick Leave" />
+                                <asp:BoundField DataField="Restricted Holiday" />
+                                <asp:BoundField DataField="D Leave" />
+                                <asp:BoundField DataField="Compensatory Off" />
                             </Columns>
                         </asp:GridView>
                     </ItemTemplate>
@@ -69,9 +83,15 @@
                 <asp:TemplateField>
                     <ItemTemplate>
                         <asp:GridView ID="grid5" runat="server" AutoGenerateColumns="False" Width="100%">
-                            <Columns>
-                                <asp:BoundField DataField="LeaveName" HeaderText="LeaveName" />
-                                <asp:BoundField DataField="LeaveCount" HeaderText="LeaveCount" />
+                             <Columns>
+                                <asp:BoundField DataField="Casual Leave" />
+                                <asp:BoundField DataField="Emergency Leave" />
+                                <asp:BoundField DataField="Short Leave" />
+                                <asp:BoundField DataField="Half Day Leave" />
+                                <asp:BoundField DataField="Sick Leave" />
+                                <asp:BoundField DataField="Restricted Holiday" />
+                                <asp:BoundField DataField="D Leave" />
+                                <asp:BoundField DataField="Compensatory Off" />
                             </Columns>
                         </asp:GridView>
                     </ItemTemplate>

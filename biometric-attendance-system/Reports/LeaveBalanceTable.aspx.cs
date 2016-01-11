@@ -3,6 +3,7 @@ using iTextSharp.text.html.simpleparser;
 using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -53,15 +54,36 @@ public partial class Reports_LeaveBalanceTable : System.Web.UI.Page
             GridView grid5 = (GridView)e.Row.FindControl("grid5");
 
             var y = lstLeavesBalanceRecord.Select(x => x).Where(d => d.EmployeeId == id).FirstOrDefault();
-            grid2.DataSource = y.lstLeavesOldStack;
+            grid2.DataSource = GetDataTable(y.lstLeavesOldStack);
+           // var table = GetDataTable(y.lstLeavesOldStack);
             grid2.DataBind();
-            grid3.DataSource = y.lstLeavesDue;
+            grid3.DataSource = GetDataTable(y.lstLeavesDue);
             grid3.DataBind();
-            grid4.DataSource = y.lstLeavesAvailed;
+            grid4.DataSource = GetDataTable(y.lstLeavesAvailed);
             grid4.DataBind();
-            grid5.DataSource = y.lstLeavesBalance;
+            grid5.DataSource = GetDataTable(y.lstLeavesBalance);
             grid5.DataBind();
         }
+    }
+
+
+    public DataTable GetDataTable(List<LeavesCount> lst)
+    {
+        DataTable table = new DataTable();
+
+        foreach (var item in lst)
+        {
+            table.Columns.Add(item.LeaveName);
+        }
+        DataRow dr = table.NewRow();
+
+        for (int j = 0; j < lst.Count; j++)
+        {
+           dr[j] = lst[j].LeaveCount;
+        }
+        table.Rows.Add(dr);
+      
+        return table;
     }
 
     //protected void btnExport_Click(object sender, EventArgs e)
