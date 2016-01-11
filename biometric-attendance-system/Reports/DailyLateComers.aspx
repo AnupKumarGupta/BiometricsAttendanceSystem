@@ -4,6 +4,12 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div class="row">
+        <div class="col s12 breadcrumb">
+            <br />
+            <a href="../Admin/ManageMasterEntries.aspx" class="grey-text">Home &nbsp;&nbsp;></a>
+            <a href="../Admin/ReportMaster.aspx" class="grey-text">Reports &nbsp;&nbsp;></a>
+            <a href="#!" class="teal-text">&nbsp;&nbsp;Daily Late Comers &nbsp;&nbsp;</a>
+        </div>
         <div class="col s8 m3 l2 offset-s2 offset-m4 offset-l4">
             <asp:DropDownList ID="ddlDepartments" Visible="true" CssClass="input-field btn grey lighten-4 teal-text" runat="server"></asp:DropDownList>
         </div>
@@ -89,8 +95,8 @@
             </Columns>
         </asp:GridView>
     </div>
-     <div class="col s8 m4 l4 offset-s2 offset-m5 offset-l5">
-    <asp:Button Text="Export to PDF" ID="btnExport" CssClass="btn waves-button-input" OnClick="btnExport_Click" Visible="false" runat="server" />
-                </div>
+    <div class="col s8 m4 l4 offset-s2 offset-m5 offset-l5">
+        <asp:Button Text="Export to PDF" ID="btnExport" CssClass="btn waves-button-input" OnClick="btnExport_Click" Visible="false" runat="server" />
+    </div>
 </asp:Content>
 

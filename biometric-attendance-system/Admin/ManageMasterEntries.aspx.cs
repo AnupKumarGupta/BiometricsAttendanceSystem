@@ -369,4 +369,8 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         Response.Redirect("~/Admin/ViewEmployeeLeaves.aspx");
     }
 
+    protected void btnReports_Click(object sender, EventArgs e)
+    {
+
+    }
 }

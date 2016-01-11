@@ -4,6 +4,12 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div class="row">
+        <div class="col s12 breadcrumb">
+            <br />
+            <a href="../Admin/ManageMasterEntries.aspx" class="grey-text">Home &nbsp;&nbsp;></a>
+            <a href="../Admin/ReportMaster.aspx" class="grey-text">Reports &nbsp;&nbsp;></a>
+            <a href="#!" class="teal-text">&nbsp;&nbsp;Monthly Leave Balance &nbsp;&nbsp;</a>
+        </div>
         <div class="col s10 m10 l10 offset-s1 offset-m1 offset-l1 card">
             <div class="row">
                 <asp:TextBox ID="txtEmployeeId" placeholder="Employee Id" CssClass="col input-field offset-l1 offset-m1 offset-s1 l4 m4 s4" runat="server"></asp:TextBox>
@@ -140,8 +146,8 @@
             </div>
         </div>
         <div class="col s8 m4 l4 offset-s2 offset-m5 offset-l5">
-    <asp:Button Text="Export to PDF" ID="btnExport" CssClass="btn waves-button-input" OnClick="btnExport_Click" Visible="false" runat="server" />
-                </div>
+            <asp:Button Text="Export to PDF" ID="btnExport" CssClass="btn waves-button-input" OnClick="btnExport_Click" Visible="false" runat="server" />
+        </div>
     </div>
 </asp:Content>
 

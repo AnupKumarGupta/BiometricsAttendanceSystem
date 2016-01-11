@@ -5,7 +5,11 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div class="row">
         <div class="col s12">
-            <a href="#!" class="breadcrumb">Home</a>
+            <div class="col s12 breadcrumb">
+                <br />
+                <a href="./ReportMaster.aspx" class="grey-text">Home &nbsp;&nbsp;></a>
+                <a href="#!" class="teal-text">&nbsp;&nbsp;Reports &nbsp;&nbsp;</a>
+            </div>
         </div>
         <div class="col">
             <asp:Button Text="text" ID="btnDailyBasicReport" CssClass="btn" runat="server" />

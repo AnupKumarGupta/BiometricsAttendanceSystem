@@ -1,9 +1,15 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/MasterPages/Admin.master" AutoEventWireup="true" CodeFile="MonthlyLateComers.aspx.cs" Inherits="Reports_MonthlyLateComers" %>
+﻿<%@ Page Title="Monthly Late Comers" Language="C#" MasterPageFile="~/MasterPages/Admin.master" AutoEventWireup="true" CodeFile="MonthlyLateComers.aspx.cs" Inherits="Reports_MonthlyLateComers" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">   
         <div>
+            <div class="col s12 breadcrumb">
+            <br />
+            <a href="../Admin/ManageMasterEntries.aspx" class="grey-text">Home &nbsp;&nbsp;></a>
+            <a href="../Admin/ReportMaster.aspx" class="grey-text">Reports &nbsp;&nbsp;></a>
+            <a href="#!" class="teal-text">&nbsp;&nbsp;Monthly Late Comers&nbsp;&nbsp;</a>
+        </div>
             <asp:DropDownList ID="ddlDepartments" runat="server"></asp:DropDownList>
             <asp:DropDownList ID="ddlRelaxation" runat="server">
                 <asp:ListItem Value="00:05:00">5 minutes</asp:ListItem>

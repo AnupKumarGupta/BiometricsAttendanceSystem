@@ -6,7 +6,8 @@
     <div class="row">
         <div class="col s12 breadcrumb">
             <br />
-            <a href="../Admin/ReportMaster.aspx" class="grey-text">Home &nbsp;&nbsp;></a>
+            <a href="../Admin/ManageMasterEntries.aspx" class="grey-text">Home &nbsp;&nbsp;></a>
+            <a href="../Admin/ReportMaster.aspx" class="grey-text">Reports &nbsp;&nbsp;></a>
             <a href="#!" class="teal-text">&nbsp;&nbsp;Daily Absent Report &nbsp;&nbsp;</a>
         </div>
         <div class="col s8 m3 l2 offset-s2 offset-m4 offset-l4">

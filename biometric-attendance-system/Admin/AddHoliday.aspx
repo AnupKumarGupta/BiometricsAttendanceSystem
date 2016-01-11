@@ -4,6 +4,11 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div class="row">
+        <div class="col s12 breadcrumb">
+            <br />
+            <a href="./ReportMaster.aspx" class="grey-text">Home &nbsp;&nbsp;></a>
+            <a href="#!" class="teal-text">&nbsp;&nbsp;Add Holiday &nbsp;&nbsp;</a>
+        </div>
         <div class="col s6 m6 l6 offset-s3 offset-m3 offset-l3 card">
             <br />
             <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged" CssClass="picker__calendar-container"></asp:Calendar>
