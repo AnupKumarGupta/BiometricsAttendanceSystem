@@ -10,7 +10,7 @@
                 <asp:TextBox ID="txtEmployeeId" CssClass="input-field col l10 m10 s10 offset-l1 offset-m1 offset-s1" placeholder="Admin Id" runat="server"></asp:TextBox>
             </div>
             <div class="row">
-                <asp:TextBox ID="txtPassword" type="password" CssClass="input-field col l10 m10 s10 offset-l1 offset-m1 offset-s1" placeholder="Password" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtPassword" CssClass="input-field col l10 m10 s10 offset-l1 offset-m1 offset-s1" placeholder="Password" runat="server"></asp:TextBox>
             </div>
             <div class="row">
                 <asp:Button ID="btnSubmit" CssClass="btn col offset-l4 offset-m4 offset-s4 l4 m4 s4" runat="server" Text="Login" OnClick="btnSubmit_Click" />

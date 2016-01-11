@@ -1,4 +1,4 @@
-﻿<%@ Page Title="LeaveBalanceTable" Language="C#" MasterPageFile="~/MasterPages/Admin.master" AutoEventWireup="true" CodeFile="LeaveBalanceTable.aspx.cs" Inherits="Reports_LeaveBalanceTable" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPages/Admin.master" AutoEventWireup="true" CodeFile="LeaveBalanceTable.aspx.cs" Inherits="Reports_LeaveBalanceTable" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
