@@ -371,6 +371,6 @@ public partial class ManageMasterEntries : System.Web.UI.Page
 
     protected void btnReports_Click(object sender, EventArgs e)
     {
-
+        Response.Redirect("~/Admin/ReportMaster.aspx");
     }
 }

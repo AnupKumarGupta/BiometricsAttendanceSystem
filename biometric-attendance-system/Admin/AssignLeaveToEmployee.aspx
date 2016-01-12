@@ -43,7 +43,7 @@
                             <asp:Label ID="lblNoOfLeaves" Text="Date" runat="server" />
                         </HeaderTemplate>
                         <ItemTemplate>
-                            <asp:Label ID="lblNoOfLeaves" runat="server" Text='<%#Eval("Date")%>'></asp:Label>
+                            <asp:Label ID="lblNoOfLeaves" runat="server" Text='<%#Eval("Date", "{0:d}")%>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField>

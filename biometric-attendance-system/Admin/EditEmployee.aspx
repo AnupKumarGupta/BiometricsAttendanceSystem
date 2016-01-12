@@ -4,6 +4,13 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div class="row">
+        <div class="col s12">
+            <div class="col s12 breadcrumb">
+                <br />
+                <a href="~/Admin/ManageMasterEntries.aspx" class="grey-text">Home &nbsp;&nbsp;></a>
+                <a href="#!" class="teal-text">&nbsp;&nbsp;Edit Employees &nbsp;&nbsp;</a>
+            </div>
+        </div>
         <br />
         <div class="col s8 m6 l4 offset-s2 offset-m4 offset-l4">
             <asp:TextBox runat="server" ID="txtName" placeholder="Name" ToolTip="Name"></asp:TextBox>

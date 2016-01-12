@@ -42,7 +42,7 @@
             <Columns>
                 <asp:BoundField DataField="EmployeeId" HeaderText="Id" />
                 <asp:BoundField DataField="Name" HeaderText="Name" />
-                <asp:TemplateField HeaderText="Old Stack">
+                <asp:TemplateField HeaderText="Old Stock">
                     <ItemTemplate>
                         <asp:GridView ID="grid2" runat="server" AutoGenerateColumns="False" Width="100%">
                             <Columns>
@@ -57,11 +57,11 @@
                         <asp:GridView ID="grid3" runat="server" AutoGenerateColumns="False" Width="100%">
                             <Columns>
                                 <asp:BoundField DataField="Casual Leave" HeaderText="CL" />
-                                <asp:BoundField DataField="Emergency Leave" HeaderText="EL" />
-                                <asp:BoundField DataField="Short Leave" HeaderText="SL" />
+                                <asp:BoundField DataField="Earned Leave" HeaderText="EL" />
+                                <asp:BoundField DataField="Short Leave" HeaderText="SHL" />
                                 <asp:BoundField DataField="Half Day Leave" HeaderText="HDL" />
                                 <asp:BoundField DataField="Sick Leave" HeaderText="SL" />
-                                <asp:BoundField DataField="Restricted Holiday" HeaderText="RL" />
+                                <asp:BoundField DataField="Restricted Holiday" HeaderText="RH" />
                                 <asp:BoundField DataField="D Leave" HeaderText="DL" />
                                 <asp:BoundField DataField="Compensatory Off" HeaderText="CO" />
                             </Columns>
@@ -73,11 +73,11 @@
                         <asp:GridView ID="grid4" runat="server" AutoGenerateColumns="False" Width="100%">
                             <Columns>
                                 <asp:BoundField DataField="Casual Leave" HeaderText="CL" />
-                                <asp:BoundField DataField="Emergency Leave" HeaderText="EL" />
-                                <asp:BoundField DataField="Short Leave" HeaderText="SL" />
+                                <asp:BoundField DataField="Earned Leave" HeaderText="EL" />
+                                <asp:BoundField DataField="Short Leave" HeaderText="SHL" />
                                 <asp:BoundField DataField="Half Day Leave" HeaderText="HDL" />
                                 <asp:BoundField DataField="Sick Leave" HeaderText="SL" />
-                                <asp:BoundField DataField="Restricted Holiday" HeaderText="RL" />
+                                <asp:BoundField DataField="Restricted Holiday" HeaderText="RH" />
                                 <asp:BoundField DataField="D Leave" HeaderText="DL" />
                                 <asp:BoundField DataField="Compensatory Off" HeaderText="CO" />
                             </Columns>
@@ -89,11 +89,11 @@
                         <asp:GridView ID="grid5" runat="server" AutoGenerateColumns="False" Width="100%">
                             <Columns>
                                 <asp:BoundField DataField="Casual Leave" HeaderText="CL" />
-                                <asp:BoundField DataField="Emergency Leave" HeaderText="EL" />
-                                <asp:BoundField DataField="Short Leave" HeaderText="SL" />
+                                <asp:BoundField DataField="Earned Leave" HeaderText="EL" />
+                                <asp:BoundField DataField="Short Leave" HeaderText="SHL" />
                                 <asp:BoundField DataField="Half Day Leave" HeaderText="HDL" />
                                 <asp:BoundField DataField="Sick Leave" HeaderText="SL" />
-                                <asp:BoundField DataField="Restricted Holiday" HeaderText="RL" />
+                                <asp:BoundField DataField="Restricted Holiday" HeaderText="RH" />
                                 <asp:BoundField DataField="D Leave" HeaderText="DL" />
                                 <asp:BoundField DataField="Compensatory Off" HeaderText="CO" />
                             </Columns>
