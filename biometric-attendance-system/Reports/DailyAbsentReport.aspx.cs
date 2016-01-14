@@ -63,7 +63,6 @@ public partial class Reports_DailyAbsentReport : System.Web.UI.Page
                 PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
                 pdfDoc.Open();
                 htmlparser.Parse(sr);
-                pdfDoc.AddHeader("Daily Absent Report", "Daily Absent Report");
                 pdfDoc.Close();
 
                 Response.ContentType = "application/pdf";

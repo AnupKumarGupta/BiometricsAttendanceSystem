@@ -68,8 +68,6 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         string departmentName = txtEditDepartment.Text;
         int Id = Convert.ToInt32(Session["departmentId"]);
         objMasterEntry.UpdateDepartment(Id, departmentName);
-        grdDepartmentBind();
-        popupEditDepartment.Hide();
     }
 
     #endregion
@@ -103,8 +101,7 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         string leaveName = txtEditLeave.Text;
         int Id = Convert.ToInt32(Session["LeaveId"]);
         objMasterEntry.UpdateLeave(Id, leaveName);
-        grdLeaveBind();
-        popupEditLeave.Hide();
+
     }
 
     protected void grdLeaveBind()
@@ -164,7 +161,6 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         int Id = Convert.ToInt32(Session["roleId"]);
         objMasterEntry.UpdateRole(Id, roleName);
         grdRoleBind();
-        popupEditRole.Hide();
     }
 
     protected void grdRoleBind()
@@ -239,11 +235,12 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         int roleId = Convert.ToInt32(ddlRole.SelectedValue);
         int leaveId = Convert.ToInt32(ddlLeave.SelectedValue);
         int noOfLeaves = Convert.ToInt32(txtNoOfLeaves.Text);
-        int isPromoted = Convert.ToInt32(ddlIsPromoted.SelectedValue);
+        int limit = Convert.ToInt32(txtLimit.Text);
+        bool isPromoted = true;
         MasterEntries objMasterEntry = new MasterEntries();
         int count = objMasterEntry.Count(roleId, leaveId);
         if (count == 0)
-            objMasterEntry.LeaveAssignedByRole(leaveId, roleId, noOfLeaves, isPromoted);
+            objMasterEntry.LeaveAssignedByRole(leaveId, roleId, noOfLeaves, isPromoted, limit);
         grdLeaveAssignByRoleBind();
     }
 
@@ -264,16 +261,17 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         ddlRole1.DataTextField = "Name";
         ddlRole1.DataValueField = "Id";
         ddlRole1.DataBind();
-        ddlLeaveEdit.DataSource = GetAllLeaves();
-        ddlLeaveEdit.DataTextField = "LeaveName";
-        ddlLeaveEdit.DataValueField = "Id";
-        ddlLeaveEdit.DataBind();
+        //ddlLeaveEdit.DataSource = GetAllLeaves();
+        //ddlLeaveEdit.DataTextField = "LeaveName";
+        //ddlLeaveEdit.DataValueField = "Id";
+        //ddlLeaveEdit.DataBind();
         MasterEntries objMasterEntry = new MasterEntries();
         LinkButton b = (LinkButton)sender;
         int Id = Convert.ToInt32(b.CommandArgument);
         string roleName = objMasterEntry.GetRoleById(Id);
         LeaveAssignedByRole objLeaves = new LeaveAssignedByRole();
         objMasterEntry.GetLeavesAssignedByRoleById(Id, out objLeaves);
+        txtLimitEdit.Text = objLeaves.Limit.ToString();
         txtNoOfLeave.Text = objLeaves.NoOfLeaves.ToString();
         ddlIsPromotedEdit.SelectedIndex = Convert.ToInt32(objLeaves.IsPromoted);
         ddlRole1.SelectedIndex = Convert.ToInt32(objLeaves.RoleId);
@@ -287,13 +285,12 @@ public partial class ManageMasterEntries : System.Web.UI.Page
     protected void btnUpdate_Click(object sender, EventArgs e)
     {
         MasterEntries objMasterEntry = new MasterEntries();
+        int limit = Convert.ToInt32(txtLimitEdit.Text);
         int noOfLeaves = Convert.ToInt32(txtNoOfLeave.Text);
         // int isPromoted = Convert.ToInt32(ddlIsPromotedEdit.SelectedIndex);
         int Id = Convert.ToInt32(Session["Id"]);
         bool isPromoted = true;
-        objMasterEntry.UpdateLeavesAssignedByRole(Id, noOfLeaves, isPromoted);
-        grdLeaveAssignByRoleBind();
-        popupEditLeaveAssignedByRole.Hide();
+        objMasterEntry.UpdateLeavesAssignedByRole(Id, limit, noOfLeaves, isPromoted);
     }
 
     protected List<Role> GiveAllRole()

@@ -219,7 +219,7 @@ public class MasterEntries
         }
     }
 
-    public bool LeaveAssignedByRole(int leaveId, int roleId, int noOfLeaves, int isPromoted)
+    public bool LeaveAssignedByRole(int leaveId, int roleId, int noOfLeaves, bool isPromoted, int limit)
     {
         DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
         DBDataHelper helper = new DBDataHelper();
@@ -227,8 +227,8 @@ public class MasterEntries
         lstLeaveAssignedByRole.Add(new SqlParameter("@leaveId", leaveId));
         lstLeaveAssignedByRole.Add(new SqlParameter("@roleId", roleId));
         lstLeaveAssignedByRole.Add(new SqlParameter("@noOfLeaves", noOfLeaves));
-        lstLeaveAssignedByRole.Add(new SqlParameter("@isPromoted", Convert.ToBoolean(isPromoted)));
-        lstLeaveAssignedByRole.Add(new SqlParameter("@createdAt", DateTime.Now));
+        lstLeaveAssignedByRole.Add(new SqlParameter("@isPromoted", isPromoted));
+        lstLeaveAssignedByRole.Add(new SqlParameter("@limit", limit));
         DataTable dt = new DataTable();
         try
         {
@@ -274,7 +274,6 @@ public class MasterEntries
         {
             ds = objDDBDataHelper.GetDataSet("spGetLeaveAssignedByRoleById", SQLTextType.Stored_Proc, lstparameter);
             List<LeaveAssignedByRole> lstLeaveType = new List<LeaveAssignedByRole>();
-            Leaves objLeave = new Leaves();
             foreach (DataRow rows in ds.Tables[0].Rows)
             {
                 objLeaves1.Id = Convert.ToInt32(ds.Tables[0].Rows[i][0]);
@@ -282,9 +281,9 @@ public class MasterEntries
                 objLeaves1.LeaveTypeId = Convert.ToInt32(ds.Tables[0].Rows[i][2]);
                 objLeaves1.NoOfLeaves = Convert.ToInt32(ds.Tables[0].Rows[i][3]);
                 objLeaves1.IsPromoted = Convert.ToBoolean(ds.Tables[0].Rows[i][4]);
-                GetLeavesById(objLeaves1.LeaveTypeId, out objLeave);
-                objLeaves1.LeaveName = objLeave.LeaveName;
-                objLeaves1.RoleName = GetRoleById(objLeaves1.RoleId);
+                objLeaves1.Limit = Convert.ToInt32(ds.Tables[0].Rows[i][5]);
+                objLeaves1.RoleName = (ds.Tables[0].Rows[i][6]).ToString();
+                objLeaves1.LeaveName = (ds.Tables[0].Rows[i][7]).ToString();
                 lstLeaveType.Add(objLeaves1);
                 i++;
             }
@@ -292,14 +291,14 @@ public class MasterEntries
             return true;
         }
     }
-    public bool UpdateLeavesAssignedByRole(int id, int noOfLeaves, bool isPromoted)
+    public bool UpdateLeavesAssignedByRole(int id, int limit, int noOfLeaves, bool isPromoted)
     {
         DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
         List<SqlParameter> lstparameter = new List<SqlParameter>();
         lstparameter.Add(new SqlParameter("@id", id));
+        lstparameter.Add(new SqlParameter("@limit", limit));
         lstparameter.Add(new SqlParameter("@noOfLeaves", noOfLeaves));
         lstparameter.Add(new SqlParameter("@isPromoted", isPromoted));
-        lstparameter.Add(new SqlParameter("@updatedAt", DateTime.Now));
         DataTable dt = new DataTable();
         DataSet ds;
         int i = 0;
@@ -328,8 +327,9 @@ public class MasterEntries
                 objLeaves.LeaveTypeId = Convert.ToInt32(ds.Tables[0].Rows[i][2]);
                 objLeaves.NoOfLeaves = Convert.ToInt32(ds.Tables[0].Rows[i][3]);
                 objLeaves.IsPromoted = Convert.ToBoolean(ds.Tables[0].Rows[i][4]);
-                objLeaves.RoleName = (ds.Tables[0].Rows[i][5]).ToString();
-                objLeaves.LeaveName = (ds.Tables[0].Rows[i][6]).ToString();
+                objLeaves.Limit = Convert.ToInt32(ds.Tables[0].Rows[i][5]);
+                objLeaves.RoleName = (ds.Tables[0].Rows[i][6]).ToString();
+                objLeaves.LeaveName = (ds.Tables[0].Rows[i][7]).ToString();
                 lstLeaveType.Add(objLeaves);
                 i++;
             }
