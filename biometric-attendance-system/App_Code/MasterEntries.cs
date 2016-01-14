@@ -519,6 +519,56 @@ public class MasterEntries
         }
     }
 
+    public List<Shifts> GetShiftsById(int Id) //to be edited
+    {
+        DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
+        DataTable dt = new DataTable();
+        List<SqlParameter> lst = new List<SqlParameter>();
+        lst.Add(new SqlParameter ("@id",Id));
+        DataSet ds;
+        int i = 0;
+        using (DBDataHelper objDDBDataHelper = new DBDataHelper())
+        {
+            ds = objDDBDataHelper.GetDataSet("spGetShiftsById", SQLTextType.Stored_Proc,lst);
+            List<Shifts> lstShifts = new List<Shifts>();
+
+            foreach (DataRow rows in ds.Tables[0].Rows)
+            {
+                Shifts objShifts = new Shifts();
+                objShifts.Id = Convert.ToInt32(ds.Tables[0].Rows[i][0]);
+                objShifts.FirstHalfStart = TimeSpan.Parse(ds.Tables[0].Rows[i][1].ToString());
+                objShifts.FirstHalfEnd = TimeSpan.Parse(ds.Tables[0].Rows[i][2].ToString());
+                objShifts.SecondHalfStart = TimeSpan.Parse(ds.Tables[0].Rows[i][3].ToString());
+                objShifts.SecondHalfEnd = TimeSpan.Parse(ds.Tables[0].Rows[i][4].ToString());
+                objShifts.IsActive = Convert.ToBoolean(ds.Tables[0].Rows[i][5]);
+                lstShifts.Add(objShifts);
+                i++;
+            }
+            return lstShifts;
+        }
+    }
+
+    public bool UpdateShifts(int shiftId, Shifts objShift) // To be Edited
+    {
+        DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
+        List<SqlParameter> lstDuration = new List<SqlParameter>();
+        lstDuration.Add(new SqlParameter("@shiftId", shiftId));
+        lstDuration.Add(new SqlParameter("@updatedAt", DateTime.Now));
+        DataTable dt = new DataTable();
+        DataSet ds;
+        try
+        {
+            using (DBDataHelper objDDBDataHelper = new DBDataHelper())
+            {
+                ds = objDDBDataHelper.GetDataSet("spUpdateDuration", SQLTextType.Stored_Proc, lstDuration);
+            }
+            return true;
+        }
+        catch (Exception ex)
+        {
+            return false;
+        }
+    }
     #endregion
 
     #region ManageDuration
@@ -606,6 +656,29 @@ public class MasterEntries
             }
         }
         return duration;
+    }
+
+    public bool UpdateDuration(int durationId, TimeSpan duration) // To be Edited
+    {
+        DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
+        List<SqlParameter> lstDuration = new List<SqlParameter>();
+        lstDuration.Add(new SqlParameter("@durationId", durationId));
+        lstDuration.Add(new SqlParameter("@duration", duration));
+        lstDuration.Add(new SqlParameter("@updatedAt", DateTime.Now));
+        DataTable dt = new DataTable();
+        DataSet ds;
+        try
+        {
+            using (DBDataHelper objDDBDataHelper = new DBDataHelper())
+            {
+                ds = objDDBDataHelper.GetDataSet("spUpdateDuration", SQLTextType.Stored_Proc, lstDuration);
+            }
+            return true;
+        }
+        catch (Exception ex)
+        {
+            return false;
+        }
     }
     #endregion
 

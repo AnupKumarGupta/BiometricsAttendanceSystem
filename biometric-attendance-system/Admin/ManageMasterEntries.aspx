@@ -76,7 +76,7 @@
 
     <asp:Panel ID="EditDepartment" runat="server" CssClass="modalPopup" Style="display: none; width: 61% !important; height: auto; margin-top: 100px;">
         <asp:Button ID="btnforPopupRef" runat="server" Style="display: none" />
-        
+
         <cc1:ModalPopupExtender ID="popupEditDepartment" runat="server" Enabled="True" TargetControlID="btnforPopupRef" CancelControlID="lkbClose" PopupControlID="EditDepartment" BackgroundCssClass="modalBackground active">
         </cc1:ModalPopupExtender>
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
@@ -102,14 +102,6 @@
                 </div>
             </ContentTemplate>
         </asp:UpdatePanel>
-    </asp:Panel>
-       
-     <asp:Button ID="btnShow" runat="server" Style="display: none" />
-    <cc1:ModalPopupExtender ID="mp1" runat="server" PopupControlID="Panel1" TargetControlID="btnShow" CancelControlID="btnClose" BackgroundCssClass="modalBackground">
-    </cc1:ModalPopupExtender>
-    <asp:Panel ID="Panel1" runat="server" CssClass="modalPopup" align="center" style = "display:none">
-    This is an ASP.Net AJAX ModalPopupExtender Example<br />
-    <asp:Button ID="btnClose" runat="server" Text="X" />
     </asp:Panel>
 
     <asp:Panel ID="pnlLeave" runat="server" Visible="true">
@@ -164,27 +156,27 @@
         </cc1:ModalPopupExtender>
         <asp:UpdatePanel ID="UpdatePanel2" runat="server">
             <ContentTemplate>
-        <div class="card z-depth-3 blue-grey lighten-5">
-            <br />
-            <div class="row">
-                <div class="center">
-                    <div class="modal-header">
-                        <asp:Label CssClass="grey-text text-darken-2 modal-header" Style="font: 20px" runat="server">Edit Department</asp:Label>
-                        <asp:LinkButton ID="lkbClose1" runat="server" CssClass="modal-close right-aligned">
-                            <b class="glyphicon glyphicon-remove-sign">&nbsp;&nbsp;&nbsp; X</b>
-                        </asp:LinkButton></>
-                    </div>
-                </div>
-                <div class="center">
+                <div class="card z-depth-3 blue-grey lighten-5">
+                    <br />
                     <div class="row">
-                        <asp:TextBox runat="server" CssClass="input-field col l8 m8 offset-l2 offset-m2" ID="txtEditLeave" placeholder="Leave"></asp:TextBox>
-                        <asp:Button ID="btnUpdateLeave" CssClass="btn" Text="Update Leave" OnClick="btnUpdateLeave_Click" runat="server" />
+                        <div class="center">
+                            <div class="modal-header">
+                                <asp:Label CssClass="grey-text text-darken-2 modal-header" Style="font: 20px" runat="server">Edit Department</asp:Label>
+                                <asp:LinkButton ID="lkbClose1" runat="server" CssClass="modal-close right-aligned">
+                            <b class="glyphicon glyphicon-remove-sign">&nbsp;&nbsp;&nbsp; X</b>
+                                </asp:LinkButton></>
+                            </div>
+                        </div>
+                        <div class="center">
+                            <div class="row">
+                                <asp:TextBox runat="server" CssClass="input-field col l8 m8 offset-l2 offset-m2" ID="txtEditLeave" placeholder="Leave"></asp:TextBox>
+                                <asp:Button ID="btnUpdateLeave" CssClass="btn" Text="Update Leave" OnClick="btnUpdateLeave_Click" runat="server" />
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-</ContentTemplate>
-            </asp:UpdatePanel>
+            </ContentTemplate>
+        </asp:UpdatePanel>
     </asp:Panel>
 
 
@@ -236,19 +228,19 @@
         </cc1:ModalPopupExtender>
         <asp:UpdatePanel runat="server">
             <ContentTemplate>
-        <div class="modal-header">
-            <h3 id="H3" class="modal-title">Edit Role
+                <div class="modal-header">
+                    <h3 id="H3" class="modal-title">Edit Role
                 <asp:LinkButton ID="lkbClose2" runat="server" CssClass="left0 btn-close"><b class="glyphicon glyphicon-remove-sign"></b>&nbsp;x</asp:LinkButton></h3>
-        </div>
-        <div style="min-height: 120px; width: 100%">
-            <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
-                <asp:TextBox runat="server" ID="txtEditRole" placeholder="Role"></asp:TextBox>
-                <asp:Button ID="btnUpdateRole" Text="Update Role" OnClick="btnUpdateRole_Click" runat="server" />
-            </div>
-        </div>
-        <div class="modal-footer"></div>
-        </ContentTemplate>
-            </asp:UpdatePanel>
+                </div>
+                <div style="min-height: 120px; width: 100%">
+                    <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
+                        <asp:TextBox runat="server" ID="txtEditRole" placeholder="Role"></asp:TextBox>
+                        <asp:Button ID="btnUpdateRole" Text="Update Role" OnClick="btnUpdateRole_Click" runat="server" />
+                    </div>
+                </div>
+                <div class="modal-footer"></div>
+            </ContentTemplate>
+        </asp:UpdatePanel>
     </asp:Panel>
 
     <asp:Panel ID="pnlLeaveAssignedByRole" runat="server" Visible="true">
@@ -356,29 +348,29 @@
         </cc1:ModalPopupExtender>
         <asp:UpdatePanel runat="server">
             <ContentTemplate>
-                    <div class="card z-depth-3 blue-grey lighten-5">
-                <div class="modal-header">
-                    <h3 id="H4" class="modal-title">Edit Leave
+                <div class="card z-depth-3 blue-grey lighten-5">
+                    <div class="modal-header">
+                        <h3 id="H4" class="modal-title">Edit Leave
                 <asp:LinkButton ID="lkbClose3" runat="server" CssClass="left0 btn-close"><b class="glyphicon glyphicon-remove-sign"></b>&nbsp;x</asp:LinkButton></h3>
-                </div>
-                <div style="min-height: 120px; width: 100%">
-                    <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
-                        Role:
+                    </div>
+                    <div style="min-height: 120px; width: 100%">
+                        <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
+                            Role:
                             <asp:DropDownList ID="ddlRole1" runat="server" AppendDataBoundItems="True" CssClass="dropdown-button btn l2 m2 s2">
                                 <asp:ListItem Value="0">--- Select ----</asp:ListItem>
                             </asp:DropDownList>
-                        Leave:<asp:DropDownList ID="ddlLeaveEdit" runat="server" AppendDataBoundItems="True" CssClass="dropdown-button btn l2 m2 s2">
-                            <asp:ListItem Value="0">--- Select ----</asp:ListItem>
-                        </asp:DropDownList>
-                        <asp:TextBox runat="server" ID="txtNoOfLeave" placeholder="No. of Leaves"></asp:TextBox>
-                        <asp:DropDownList ID="ddlIsPromotedEdit" runat="server" Visible="true" CssClass="dropdown-button btn l2 m2 s2">
-                            <asp:ListItem Value="0">--- Carry Forward ----</asp:ListItem>
-                            <asp:ListItem Value="1">Yes</asp:ListItem>
-                            <asp:ListItem Value="2">No</asp:ListItem>
-                        </asp:DropDownList>
-                        <asp:Button ID="btnUpdate" Text="Update Leave" OnClick="btnUpdate_Click" runat="server" />
+                            Leave:<asp:DropDownList ID="ddlLeaveEdit" runat="server" AppendDataBoundItems="True" CssClass="dropdown-button btn l2 m2 s2">
+                                <asp:ListItem Value="0">--- Select ----</asp:ListItem>
+                            </asp:DropDownList>
+                            <asp:TextBox runat="server" ID="txtNoOfLeave" placeholder="No. of Leaves"></asp:TextBox>
+                            <asp:DropDownList ID="ddlIsPromotedEdit" runat="server" Visible="true" CssClass="dropdown-button btn l2 m2 s2">
+                                <asp:ListItem Value="0">--- Carry Forward ----</asp:ListItem>
+                                <asp:ListItem Value="1">Yes</asp:ListItem>
+                                <asp:ListItem Value="2">No</asp:ListItem>
+                            </asp:DropDownList>
+                            <asp:Button ID="btnUpdate" Text="Update Leave" OnClick="btnUpdate_Click" runat="server" />
+                        </div>
                     </div>
-                </div>
                 </div>
                 <div class="modal-footer"></div>
             </ContentTemplate>
@@ -389,49 +381,55 @@
         <div>
             <asp:UpdatePanel ID="upnlDuration" runat="server">
                 <ContentTemplate>
-                    <div class="row">
-                        <asp:DropDownList ID="ddlSuggestions" runat="server" CssClass="dropdown-button btn l2 m2 s2">
-                            <asp:ListItem Value="00:45:00">45 minutes</asp:ListItem>
-                            <asp:ListItem Value="01:00:00">1 hour</asp:ListItem>
-                            <asp:ListItem Value="01:15:00">1 hour 15 minutes</asp:ListItem>
-                            <asp:ListItem Value="01:30:00">1 hour 30 minutes</asp:ListItem>
-                        </asp:DropDownList>
-                        <asp:DropDownList ID="ddlLeaves" runat="server" CssClass="dropdown-button btn l2 m2 s2">
-                            <asp:ListItem Value="0">--Select Leave--</asp:ListItem>
-                            <asp:ListItem Value="3">Short Leave</asp:ListItem>
-                            <asp:ListItem Value="4">Half Day Leave</asp:ListItem>
-                        </asp:DropDownList>
-                        <div class="col s2 l2 m2">
-                            <asp:LinkButton ID="lnkAddDuration" CssClass="btn waves-effect waves-light" runat="server" OnClick="lnkAddDuration_Click">
+                    <div class="card">
+                        <div class="col s8 l8 m8 offset-l2 offset-s2 offset-m2 card z-depth-1">
+                            <div class="row">
+                                Suggestions
+                            <asp:DropDownList ID="ddlSuggestions" runat="server" CssClass="dropdown-button btn l2 m2 s2">
+                                <asp:ListItem Value="00:45:00">45 minutes</asp:ListItem>
+                                <asp:ListItem Value="01:00:00">1 hour</asp:ListItem>
+                                <asp:ListItem Value="01:15:00">1 hour 15 minutes</asp:ListItem>
+                                <asp:ListItem Value="01:30:00">1 hour 30 minutes</asp:ListItem>
+                            </asp:DropDownList>
+                                Leaves 
+                            <asp:DropDownList ID="ddlLeaves" runat="server" CssClass="dropdown-button btn l2 m2 s2">
+                                <asp:ListItem Value="0">--Select Leave--</asp:ListItem>
+                                <asp:ListItem Value="3">Short Leave</asp:ListItem>
+                                <asp:ListItem Value="4">Half Day Leave</asp:ListItem>
+                            </asp:DropDownList>
+                                <div class="col s2 l2 m2">
+                                    <asp:LinkButton ID="lnkAddDuration" CssClass="btn waves-effect waves-light" runat="server" OnClick="lnkAddDuration_Click">
                                  <i class="material-icons">add </i> Add Role
-                            </asp:LinkButton>
-                        </div>
-                        <div class="col s4 l4 m4 offset-l4 offset-m4 offset-s4">
-                            <asp:GridView ID="gvDuration" AutoGenerateColumns="false" CssClass="responsive-table striped" runat="server">
-                                <Columns>
-                                    <asp:TemplateField>
-                                        <HeaderTemplate>
-                                            <asp:Label Text="Leave Name" runat="server" />
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblFirstHalfStartTiming" runat="server" Text='<%#Eval("leaveName")%>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <HeaderTemplate>
-                                            <asp:Label Text="Duration" runat="server" />
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblFirstHalfStartTiming" runat="server" Text='<%#Eval("duration")%>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <%--<asp:TemplateField>
+                                    </asp:LinkButton>
+                                </div>
+                                <div class="col s4 l4 m4 offset-l4 offset-m4 offset-s4">
+                                    <asp:GridView ID="gvDuration" AutoGenerateColumns="false" CssClass="responsive-table striped" runat="server">
+                                        <Columns>
+                                            <asp:TemplateField>
+                                                <HeaderTemplate>
+                                                    <asp:Label Text="Leave Name" runat="server" />
+                                                </HeaderTemplate>
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lblLeaveName" runat="server" Text='<%#Eval("leaveName")%>'></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField>
+                                                <HeaderTemplate>
+                                                    <asp:Label Text="Duration" runat="server" />
+                                                </HeaderTemplate>
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lblDuration" runat="server" Text='<%#Eval("duration")%>'></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField>
                                         <ItemTemplate>
                                             <asp:LinkButton ID="lkbEditDuration" Text="Edit" OnClick="lkbEditDuration_Click" CommandArgument='<%#Eval("Id")%>' runat="server" />
                                         </ItemTemplate>
-                                    </asp:TemplateField>--%>
-                                </Columns>
-                            </asp:GridView>
+                                    </asp:TemplateField>
+                                        </Columns>
+                                    </asp:GridView>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </ContentTemplate>
@@ -442,20 +440,23 @@
     <asp:Panel ID="pnlEditDuration" runat="server" DefaultButton="lkbClose6" CssClass="modalPopup" Style="display: none; width: 61% !important; height: auto;">
         <asp:Button ID="btnforPopupRef6" runat="server" Style="display: none" />
         <cc1:ModalPopupExtender ID="popupEditDuration" runat="server" Enabled="True" TargetControlID="btnforPopupRef6"
-            CancelControlID="lkbClose6" PopupControlID="EditRole" BackgroundCssClass="modalBackground">
+            CancelControlID="lkbClose6" PopupControlID="pnlEditDuration" BackgroundCssClass="modalBackground">
         </cc1:ModalPopupExtender>
+        <asp:UpdatePanel runat="server">
+            <ContentTemplate>
         <div class="modal-header">
-            <h3 id="H5" class="modal-title">Edit Role
+            <h3 id="H5" class="modal-title">Edit Duration
                 <asp:LinkButton ID="lkbClose6" runat="server" CssClass="left0 btn-close"><b class="glyphicon glyphicon-remove-sign"></b>&nbsp;x</asp:LinkButton></h3>
         </div>
         <div style="min-height: 120px; width: 100%">
             <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
-                <asp:TextBox runat="server" ID="txtEditDuration" placeholder="Role"></asp:TextBox>
-                <asp:Button ID="btnEditDuration" Text="Update Duration" OnClick="btnEditDuration_Click" runat="server" />
+               Duration <asp:TextBox runat="server" ID="txtEditDuration" placeholder="Duration"></asp:TextBox>
+                <asp:Button ID="btnUpdateDuration" Text="Update Duration" OnClick="btnUpdateDuration_Click" runat="server" />
             </div>
         </div>
         <div class="modal-footer"></div>
-
+                </ContentTemplate>
+        </asp:UpdatePanel>
     </asp:Panel>
 
     <asp:Panel ID="pnlShifts" runat="server" Visible="false">
@@ -521,6 +522,11 @@
                                             <asp:Label ID="lblSecondHalfEndTiming" runat="server" Text='<%#Eval("SecondHalfEnd")%>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
+                                    <asp:TemplateField>
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="lkbEditShift" Text="Edit" OnClick="lkbEditShift_Click" CommandArgument='<%#Eval("Id")%>' runat="server" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
                                 </Columns>
                             </asp:GridView>
                         </div>
@@ -529,4 +535,5 @@
             </asp:UpdatePanel>
         </div>
     </asp:Panel>
+
 </asp:Content>

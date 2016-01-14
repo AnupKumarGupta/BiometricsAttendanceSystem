@@ -206,6 +206,14 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         gvShifts.DataBind();
     }
 
+    protected void lkbEditShift_Click(object sender, EventArgs e)
+    {
+        MasterEntries objMasterEntry = new MasterEntries();
+        LinkButton b = (LinkButton)sender;
+        int Id = Convert.ToInt32(b.CommandArgument);
+        Shifts objShift = new Shifts();
+        
+    }
     #endregion
 
     #region LeavesAssignedByRole
@@ -344,9 +352,14 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         gvDuration.DataBind();
     }
 
-    protected void btnEditDuration_Click(object sender, EventArgs e)
+    protected void btnUpdateDuration_Click(object sender, EventArgs e)
     {
-
+        int Id = Convert.ToInt32(Session["durationId"]);
+        TimeSpan duration = TimeSpan.Parse(txtEditDuration.Text);
+        MasterEntries objMasterEntries = new MasterEntries();
+        objMasterEntries.UpdateDuration(Id, duration);
+        GridDuration();
+        popupEditDuration.Hide();
     }
 
     protected void lkbEditDuration_Click(object sender, EventArgs e)
@@ -376,5 +389,9 @@ public partial class ManageMasterEntries : System.Web.UI.Page
     {
         Response.Redirect("~/Admin/ReportMaster.aspx");
     }
+
+
+
+    
 }
 
