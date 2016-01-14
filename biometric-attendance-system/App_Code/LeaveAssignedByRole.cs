@@ -14,6 +14,5 @@ public class LeaveAssignedByRole
     public int LeaveTypeId { get; set; }
     public string LeaveName { get; set; }
     public int NoOfLeaves { get; set; }
-    public int Limit { get; set; }
     public bool IsPromoted { get; set; }
 }

@@ -10,7 +10,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:DropDownList ID="ddlShowDepartment" runat="server" AppendDataBoundItems="true" AutoPostBack="true" CssClass="dropdown-button btn 12 m2 s2" OnSelectedIndexChanged="ddlShowDepartment_SelectedIndexChanged">
-        <asp:ListItem Value="0">--Select Item--</asp:ListItem>
+        <asp:ListItem Value="0">--Select Department--</asp:ListItem>
     </asp:DropDownList>
     <asp:GridView ID="grid1" runat="server" AutoGenerateColumns="false" Width="100%" OnRowDataBound="grid1_RowDataBound">
         <Columns>
