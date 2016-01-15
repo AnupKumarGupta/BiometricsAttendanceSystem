@@ -392,9 +392,6 @@ public class ManageLeaves
             }
         }
     }
-    #endregion
-
-    #region Working
     public List<LeavesOldStockViewModel> getDataForOldLeaves(DateTime sessionStartDate, DateTime sessionEndDate)
     {
         List<LeavesOldStockViewModel> lstLeavesOldStockViewModel = new List<LeavesOldStockViewModel>();
@@ -417,7 +414,7 @@ public class ManageLeaves
                 lstLeavesOldStockViewModel.Add(objLeavesOldStockViewModel);
             }
         }
-       
+
         return lstLeavesOldStockViewModel;
     }
     

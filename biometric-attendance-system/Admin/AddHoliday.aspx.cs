@@ -13,12 +13,14 @@ public partial class Admin_AddHoliday : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        BindData();
     }
     protected void Calendar1_SelectionChanged(object sender, EventArgs e)
     {
         lblDate.Text = Calendar1.SelectedDate.Date.ToString("d");
         txtHoliday.Text = "";
+        btnAddHoliday.Enabled = true;
+
         DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
         DBDataHelper helper = new DBDataHelper();
         string query = @"SELECT [NameOfHoliday]
@@ -30,7 +32,7 @@ public partial class Admin_AddHoliday : System.Web.UI.Page
         using (DBDataHelper objDDBDataHelper = new DBDataHelper())
         {
             dt = objDDBDataHelper.GetDataTable(query, SQLTextType.Query, lst_params);
-            if(dt != null && dt.Rows.Count>0)
+            if (dt != null && dt.Rows.Count > 0)
             {
                 btnAddHoliday.Enabled = false;
                 btnAddHoliday.Text = "Holiday Exists";
@@ -51,5 +53,23 @@ public partial class Admin_AddHoliday : System.Web.UI.Page
             objDDBDataHelper.ExecSQL(query, SQLTextType.Query, lstData);
         }
         ScriptManager.RegisterStartupScript(this, this.GetType(), "script", "alert('Holiday Added Successfully...');", true);
+        BindData();
+    }
+    protected void BindData()
+    {
+        DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
+        DBDataHelper helper = new DBDataHelper();
+        string query = @"SELECT [NameOfHoliday],[Date]
+                             FROM [tblHolidays]
+                             WHERE year([Date]) = year(@date)";
+
+        List<SqlParameter> lst_params = new List<SqlParameter>();
+        lst_params.Add(new SqlParameter("@date", DateTime.Now));
+
+        using (DBDataHelper objDDBDataHelper = new DBDataHelper())
+        {
+            grdHoliday.DataSource = objDDBDataHelper.GetDataTable(query, SQLTextType.Query, lst_params);
+            grdHoliday.DataBind();
+        }
     }
 }

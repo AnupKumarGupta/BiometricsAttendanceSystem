@@ -9,7 +9,7 @@
             <a href="~/Admin/ManageMasterEntries.aspx" class="grey-text">Home &nbsp;&nbsp;></a>
             <a href="#!" class="teal-text">&nbsp;&nbsp;Add Holiday &nbsp;&nbsp;</a>
         </div>
-        <div class="col s6 m6 l6 offset-s3 offset-m3 offset-l3 card">
+        <div class="col s4 m4 l4 offset-s1 offset-m1 offset-l1 card">
             <br />
             <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged" CssClass="picker__calendar-container"></asp:Calendar>
             <br />
@@ -23,6 +23,35 @@
             </div>
             <br />
         </div>
-    </div>
+        <div class="col s5 m5 l5 offset-s1 offset-m1 offset-l1 card">
+            <asp:GridView ID="grdHoliday" runat="server" AutoGenerateColumns="false" CssClass="responsive-table striped" EmptyDataText="No Data">
+                <Columns>
+                    <asp:TemplateField>
+                        <HeaderTemplate>
+                            <asp:Label Text="Date" runat="server" />
+                        </HeaderTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lblDate" runat="server" Text='<%#Eval("Date","{0:d}")%>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField>
+                        <HeaderTemplate>
+                            <asp:Label Text="Name Of Holiday" runat="server" />
+                        </HeaderTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lblNameOfHoliday" runat="server" Text='<%#Eval("NameOfHoliday")%>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField>
+                        <HeaderTemplate>
+                            <asp:Label Text="NameOfHoliday" runat="server" />
+                        </HeaderTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lblNameOfHoliday" runat="server" Text='<%#Eval("NameOfHoliday")%>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+            </asp:GridView>
+        </div>
 </asp:Content>
 
