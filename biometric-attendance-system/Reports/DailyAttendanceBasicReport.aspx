@@ -21,14 +21,20 @@
                 <asp:ListItem Value="00:20:00">20 minutes</asp:ListItem>
             </asp:DropDownList>
         </div>
-        <div class="row">
-            <div class="col s12 m4 l4 offset-l4 offset-m4">
-                <br />
-                <br />
-                <asp:Calendar CssClass="calendar" ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged"></asp:Calendar>
-                <asp:TextBox runat="server" ID="txt_date" />
-            </div>
-        </div>
+        <asp:ScriptManager runat="server" />
+        <asp:UpdatePanel runat="server">
+            <ContentTemplate>
+                <div class="row">
+                    <div class="col s12 m4 l4 offset-l4 offset-m4">
+                        <br />
+                        <br />
+                        <asp:Calendar CssClass="calendar" ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged"></asp:Calendar>
+                        <asp:TextBox runat="server" ID="txt_date" />
+                    </div>
+                </div>
+
+            </ContentTemplate>
+        </asp:UpdatePanel>
         <div class="col s12 m4 l4 offset-m5 offset-l5">
             <asp:Button Text="Get Data" ID="btn_report" CssClass="btn waves-button-input" OnClick="btn_report_Click" runat="server" />
         </div>
@@ -121,6 +127,9 @@
     </div>
     <div class="col s12 m4 l4 offset-m5 offset-l5">
         <asp:Button Text="Export to PDF" ID="btnExport" CssClass="btn waves-button-input" OnClick="btnExport_Click" Visible="false" runat="server" />
+    </div>
+    <div class="col s12 m4 l4 offset-m5 offset-l5">
+        <asp:Button Text="Export to Excel" ID="btn_export_xl" CssClass="btn waves-button-input" OnClick="btn_export_xl_Click" Visible="false" runat="server" />
     </div>
 </asp:Content>
 
