@@ -1037,7 +1037,7 @@ public class ManageReports
                         if (TimeSpan.Parse(objDailyAttendanceReportViewModel.TotalDuration) == new TimeSpan(0, 0, 0))
                         {
                             objDailyAttendanceReportViewModel.Status = Status.Absent;
-                        } 
+                        }
                         else if (totalShiftDuration - objDailyAttendanceReportViewModel.Duration >= tsHalfLeave)
                         {
                             //ManageLeaves objManageLeaves = new ManageLeaves();
@@ -1316,18 +1316,16 @@ public class ManageReports
         }
         return lstLeavesBalanceRecord;
     }
-
-    #endregion
-
-    #region Leave Assigned Record
     public List<LeaveAssignedRecord> GetLeavesAssignedPerSession(int departmentId, DateTime startDate)
     {
         DataTable dtAssignedLeaves;
         DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
         List<LeaveAssignedRecord> lstLeaveAssignedRecord = new List<LeaveAssignedRecord>();
-        string query = "select EmployeeId,Name from tblEmployees Join tblEmployeesMaster on tblEmployees.EmployeeId = tblEmployeesMaster.id Where departmentid= @departmentid";
-        List<SqlParameter> list_params_Assigned = new List<SqlParameter>() { new SqlParameter("@departmentid", departmentId)};
-        
+        string query = @"Select EmployeeId,Name 
+                         FROM tblEmployees Join tblEmployeesMaster on tblEmployees.EmployeeId = tblEmployeesMaster.id 
+                         WHERE departmentid= @departmentid";
+        List<SqlParameter> list_params_Assigned = new List<SqlParameter>() { new SqlParameter("@departmentid", departmentId) };
+
         using (DBDataHelper helper = new DBDataHelper())
         {
             dtAssignedLeaves = helper.GetDataTable(query, SQLTextType.Query, list_params_Assigned);
@@ -1344,7 +1342,19 @@ public class ManageReports
     }
     #endregion
 
+    #region Update Leave Balance
+    public void UpdateLeaveBalanceTable(DateTime OldSessionStartDate, DateTime OldSessionEndDate, DateTime NewSessionStartDate, DateTime NewSessionEndDate)
+    {
+        MasterEntries objMasterEntries = new MasterEntries();
+        List<Departments> lstDepartments = objMasterEntries.GetAllDepartments();
+        foreach (var item in lstDepartments)
+        {
+            //List<LeavesBalanceRecord> lst = GetDataForMonthlyLeaveBalanceTable();
+
+        }
+    }
+
     #endregion
 
-
+    #endregion
 }
