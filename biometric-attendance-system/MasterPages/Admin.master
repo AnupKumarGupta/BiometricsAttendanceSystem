@@ -7,6 +7,7 @@
     <title></title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <link href="../materialize/css/materialize.min.css" rel="stylesheet" />
+    <link href="../Stylesheets/style.css" rel="stylesheet" />
     <link runat="server" rel="shortcut icon" href="../Images/logo.png" type="image/x-icon" />
     <link runat="server" rel="icon" href="../Images/logo.png" type="image/ico" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
