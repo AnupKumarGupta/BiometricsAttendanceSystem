@@ -12,17 +12,17 @@
         <div class="col card l8 offset-l2">
             <br />
             <div class="row center">
-                <asp:Button ID="btnDepartments" runat="server" Text="Departments" CssClass="waves-effect waves-ripple btn-large" OnClick="btnDepartments_Click" />
-                <asp:Button ID="btnLeaves" runat="server" Text="Leaves" CssClass="waves-effect waves-ripple btn-large" OnClick="btnLeaves_Click" />
-                <asp:Button ID="btnRoles" runat="server" Text="Roles" CssClass="waves-effect waves-ripple btn-large" OnClick="btnRoles_Click" />
-                <asp:Button ID="btnDuration" runat="server" Text="Duration" CssClass="waves-effect waves-ripple btn-large" OnClick="btnDuration_Click" />
-                <asp:Button ID="btnShifts" runat="server" Text="Shifts" CssClass="waves-effect waves-ripple btn-large" OnClick="btnShifts_Click" />
-                <asp:Button ID="btnReports" runat="server" Text="Reports" CssClass="waves-effect waves-ripple btn-large" OnClick="btnReports_Click" />
+                <asp:Button ID="btnDepartments" runat="server" Text="Departments" CssClass="btn-large" OnClick="btnDepartments_Click" />
+                <asp:Button ID="btnLeaves" runat="server" Text="Leaves" CssClass="btn-large" OnClick="btnLeaves_Click" />
+                <asp:Button ID="btnRoles" runat="server" Text="Roles" CssClass="btn-large" OnClick="btnRoles_Click" />
+                <asp:Button ID="btnDuration" runat="server" Text="Duration" CssClass="btn-large" OnClick="btnDuration_Click" />
+                <asp:Button ID="btnShifts" runat="server" Text="Shifts" CssClass="btn-large" OnClick="btnShifts_Click" />
+                <asp:Button ID="btnReports" runat="server" Text="Reports" CssClass="btn-large" OnClick="btnReports_Click" />
             </div>
             <div class="row center">
-                <asp:Button ID="btnLeaveAssignedByRole" runat="server" Text="Leave Assigned By Role" CssClass="waves-effect waves-ripple btn-large" OnClick="btnLeaveAssignedByRole_Click" />
-                <asp:Button ID="btnEmployee" runat="server" Text="Employee" CssClass="waves-effect waves-ripple btn-large" OnClick="btnEmployee_Click" />
-                <asp:Button ID="btnLeaveForEmployee" runat="server" Text="Leave Assigned To Employees" CssClass="waves-effect waves-ripple btn-large" OnClick="btnLeaveForEmployee_Click" />
+                <asp:Button ID="btnLeaveAssignedByRole" runat="server" Text="Leave Assigned By Role" CssClass="btn-large" OnClick="btnLeaveAssignedByRole_Click" />
+                <asp:Button ID="btnEmployee" runat="server" Text="Employee" CssClass="btn-large" OnClick="btnEmployee_Click" />
+                <asp:Button ID="btnLeaveForEmployee" runat="server" Text="Leave Assigned To Employees" CssClass="btn-large" OnClick="btnLeaveForEmployee_Click" />
             </div>
         </div>
     </div>
@@ -34,20 +34,20 @@
                 <ContentTemplate>
                     <br />
                     <div class="row">
-                        <div class="col s8 l8 m8 offset-l2 offset-s2 offset-m2 card z-depth-1">
+                        <div class="col s12 l8 m8 offset-l2 offset-m2 card z-depth-1">
                             <div class="row">
                                 <br />
-                                <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
+                                <div class="col s12 l2 m2 offset-l4 offset-m4">
                                     <asp:TextBox runat="server" CssClass="input-field" ID="txtDepartment" placeholder="Department"></asp:TextBox>
                                 </div>
-                                <div class="col s2 l2 m2">
-                                    <asp:LinkButton ID="lnkAddDepartment" CssClass="btn waves-effect waves-light" runat="server" OnClick="lnkAddDepartment_Click">
+                                <div class="col s12 l2 m2">
+                                    <asp:LinkButton ID="lnkAddDepartment" CssClass="btn waves-light" runat="server" OnClick="lnkAddDepartment_Click">
                                          Add Department
                                     </asp:LinkButton>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col s4 l4 m4 offset-l4 offset-m4 offset-s4" style="height: 300px">
+                                <div class="col s12 l4 m12 offset-l4" style="height: 300px">
                                     <asp:GridView ID="grdDepartment" AutoGenerateColumns="false" CssClass="responsive-table striped" runat="server">
                                         <Columns>
                                             <asp:TemplateField>
@@ -110,20 +110,20 @@
                 <ContentTemplate>
                     <br />
                     <div class="row">
-                        <div class="col s8 l8 m8 offset-l2 offset-s2 offset-m2 card z-depth-1">
+                        <div class="col s12 l8 m8 offset-l2 offset-m2 card z-depth-1">
                             <div class="row">
                                 <br />
-                                <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
+                                <div class="col s12 l2 m2 offset-l4 offset-m4">
                                     <asp:TextBox runat="server" CssClass="input-field" ID="txtLeave" placeholder="Leave"></asp:TextBox>
                                 </div>
-                                <div class="col s2 l2 m2">
-                                    <asp:LinkButton ID="lnkAddLeave" CssClass="btn waves-effect waves-light" runat="server" OnClick="lnkAddLeave_Click">
+                                <div class="col s12 l2 m2">
+                                    <asp:LinkButton ID="lnkAddLeave" CssClass="btn waves-light" runat="server" OnClick="lnkAddLeave_Click">
                                          Add Leave
                                     </asp:LinkButton>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col s4 l4 m4 offset-l4 offset-m4 offset-s4" style="height: 300px">
+                                <div class="col s12 l4 m12 offset-l4" style="height: 300px">
                                     <asp:GridView ID="grdLeave" AutoGenerateColumns="false" CssClass="responsive-table striped" runat="server">
                                         <Columns>
                                             <asp:TemplateField>
@@ -185,18 +185,18 @@
             <asp:UpdatePanel ID="upanelRole" runat="server">
                 <ContentTemplate>
                     <div class="row">
-                        <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
+                        <div class="col s12 l2 m2 offset-l4 offset-m4">
                             <asp:TextBox runat="server" ID="txtRole" placeholder="Roles"></asp:TextBox>
                         </div>
-                        <div class="col s2 l2 m2">
-                            <asp:LinkButton ID="lnkAddRole" CssClass="btn waves-effect waves-light" runat="server" OnClick="lnkAddRole_Click">
+                        <div class="col s12 l2 m2">
+                            <asp:LinkButton ID="lnkAddRole" CssClass="btn waves-light" runat="server" OnClick="lnkAddRole_Click">
                                  <i class="material-icons">add </i> Add Role
                             </asp:LinkButton>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col s4 l4 m4 offset-l4 offset-m4 offset-s4">
+                        <div class="col s12 l4 m12 offset-l4">
                             <asp:GridView ID="grdRole" AutoGenerateColumns="false" CssClass="responsive-table striped" runat="server">
                                 <Columns>
                                     <asp:TemplateField>
@@ -233,7 +233,7 @@
                 <asp:LinkButton ID="lkbClose2" runat="server" CssClass="left0 btn-close"><b class="glyphicon glyphicon-remove-sign"></b>&nbsp;x</asp:LinkButton></h3>
                 </div>
                 <div style="min-height: 120px; width: 100%">
-                    <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
+                    <div class="col s12 l2 m2 offset-l4 offset-m4">
                         <asp:TextBox runat="server" ID="txtEditRole" placeholder="Role"></asp:TextBox>
                         <asp:Button ID="btnUpdateRole" Text="Update Role" OnClick="btnUpdateRole_Click" runat="server" />
                     </div>
@@ -249,45 +249,45 @@
                 <ContentTemplate>
                     <br />
                     <div class="row">
-                        <div class="col s8 l8 m8 offset-l2 offset-s2 offset-m2 card z-depth-1">
+                        <div class="col s12 l8 m8 offset-l2 offset-m2 card z-depth-1">
                             <div class="row">
                                 <br />
-                                <div class="col s4 l4 m4 offset-l2 offset-m2">
+                                <div class="col s12 l4 m4 offset-l2 offset-m2">
                                     Role:<br />
-                                    <asp:DropDownList ID="ddlRole" runat="server" AppendDataBoundItems="True" CssClass="dropdown-button btn l2 m2 s2">
+                                    <asp:DropDownList ID="ddlRole" runat="server" AppendDataBoundItems="True" CssClass="dropdown-button btn l2 m2 s12">
                                         <asp:ListItem Value="0">--- Select ----</asp:ListItem>
                                     </asp:DropDownList>
                                 </div>
-                                <div class="col s4 l4 m4">
+                                <div class="col s12 l4 m4">
                                     Leave:<br />
-                                    <asp:DropDownList ID="ddlLeave" runat="server" AppendDataBoundItems="True" CssClass="dropdown-button btn l2 m2 s2">
+                                    <asp:DropDownList ID="ddlLeave" runat="server" AppendDataBoundItems="True" CssClass="dropdown-button btn l2 m2 s12">
                                         <asp:ListItem Value="0">--- Select ----</asp:ListItem>
                                     </asp:DropDownList>
                                 </div>
                             </div>
                             <div class="row">
                                 <br />
-                                <div class="col s4 l4 m4 offset-l2 offset-m2">
+                                <div class="col s12 l4 m4 offset-l2 offset-m2">
                                     <asp:TextBox runat="server" CssClass="input-field" ID="txtNoOfLeaves" placeholder="No. of Leaves"></asp:TextBox>
                                 </div>
                             </div>
                             <div class="row">
                                 <br />
-                                <div class="col s4 l4 m4 offset-l2 offset-m2">
-                                    <asp:DropDownList ID="ddlIsPromoted" runat="server" Visible="true" CssClass="dropdown-button btn l2 m2 s2">
+                                <div class="col s12 l4 m4 offset-l2 offset-m2">
+                                    <asp:DropDownList ID="ddlIsPromoted" runat="server" Visible="true" CssClass="dropdown-button btn l2 m2 s12">
                                         <asp:ListItem Value="0">Carry Forward</asp:ListItem>
                                         <asp:ListItem Value="1">Yes</asp:ListItem>
                                         <asp:ListItem Value="2">No</asp:ListItem>
                                     </asp:DropDownList>
                                 </div>
-                                <div class="col s4 l4 m4">
-                                    <asp:LinkButton ID="lnkAddLeaveAsssignedByRole" CssClass="btn waves-effect waves-light col s12 l12 m12" runat="server" OnClick="lnkAddLeaveAsssignedByRole_Click">
+                                <div class="col s12 l4 m4">
+                                    <asp:LinkButton ID="lnkAddLeaveAsssignedByRole" CssClass="btn waves-light col s12 l12 m12" runat="server" OnClick="lnkAddLeaveAsssignedByRole_Click">
                                          Add Leave For Role
                                     </asp:LinkButton>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col s8 l8 m8 offset-l2 offset-m2 offset-s2">
+                                <div class="col s12 l8 m12 offset-l2">
                                     <asp:GridView ID="gvViewLeaveAssignedByRole" AutoGenerateColumns="false" CssClass="responsive-table striped" runat="server">
                                         <Columns>
                                             <asp:TemplateField>
@@ -354,16 +354,16 @@
                 <asp:LinkButton ID="lkbClose3" runat="server" CssClass="left0 btn-close"><b class="glyphicon glyphicon-remove-sign"></b>&nbsp;x</asp:LinkButton></h3>
                     </div>
                     <div style="min-height: 120px; width: 100%">
-                        <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
+                        <div class="col s12 l2 m2 offset-l4 offset-m4">
                             Role:
-                            <asp:DropDownList ID="ddlRole1" runat="server" AppendDataBoundItems="True" CssClass="dropdown-button btn l2 m2 s2">
+                            <asp:DropDownList ID="ddlRole1" runat="server" AppendDataBoundItems="True" CssClass="dropdown-button btn l2 m2 s12">
                                 <asp:ListItem Value="0">--- Select ----</asp:ListItem>
                             </asp:DropDownList>
-                            Leave:<asp:DropDownList ID="ddlLeaveEdit" runat="server" AppendDataBoundItems="True" CssClass="dropdown-button btn l2 m2 s2">
+                            Leave:<asp:DropDownList ID="ddlLeaveEdit" runat="server" AppendDataBoundItems="True" CssClass="dropdown-button btn l2 m2 s12">
                                 <asp:ListItem Value="0">--- Select ----</asp:ListItem>
                             </asp:DropDownList>
                             <asp:TextBox runat="server" ID="txtNoOfLeave" placeholder="No. of Leaves"></asp:TextBox>
-                            <asp:DropDownList ID="ddlIsPromotedEdit" runat="server" Visible="true" CssClass="dropdown-button btn l2 m2 s2">
+                            <asp:DropDownList ID="ddlIsPromotedEdit" runat="server" Visible="true" CssClass="dropdown-button btn l2 m2 s12">
                                 <asp:ListItem Value="0">--- Carry Forward ----</asp:ListItem>
                                 <asp:ListItem Value="1">Yes</asp:ListItem>
                                 <asp:ListItem Value="2">No</asp:ListItem>
@@ -382,27 +382,27 @@
             <asp:UpdatePanel ID="upnlDuration" runat="server">
                 <ContentTemplate>
                     <div class="card">
-                        <div class="col s8 l8 m8 offset-l2 offset-s2 offset-m2 card z-depth-1">
+                        <div class="col s12 l8 m8 offset-l2 offset-m2 card z-depth-1">
                             <div class="row">
                                 Suggestions
-                            <asp:DropDownList ID="ddlSuggestions" runat="server" CssClass="dropdown-button btn l2 m2 s2">
+                            <asp:DropDownList ID="ddlSuggestions" runat="server" CssClass="dropdown-button btn l2 m2 s12">
                                 <asp:ListItem Value="00:45:00">45 minutes</asp:ListItem>
                                 <asp:ListItem Value="01:00:00">1 hour</asp:ListItem>
                                 <asp:ListItem Value="01:15:00">1 hour 15 minutes</asp:ListItem>
                                 <asp:ListItem Value="01:30:00">1 hour 30 minutes</asp:ListItem>
                             </asp:DropDownList>
                                 Leaves 
-                            <asp:DropDownList ID="ddlLeaves" runat="server" CssClass="dropdown-button btn l2 m2 s2">
+                            <asp:DropDownList ID="ddlLeaves" runat="server" CssClass="dropdown-button btn l2 m2 s12">
                                 <asp:ListItem Value="0">--Select Leave--</asp:ListItem>
                                 <asp:ListItem Value="3">Short Leave</asp:ListItem>
                                 <asp:ListItem Value="4">Half Day Leave</asp:ListItem>
                             </asp:DropDownList>
-                                <div class="col s2 l2 m2">
-                                    <asp:LinkButton ID="lnkAddDuration" CssClass="btn waves-effect waves-light" runat="server" OnClick="lnkAddDuration_Click">
+                                <div class="col s12 l2 m2">
+                                    <asp:LinkButton ID="lnkAddDuration" CssClass="btn waves-light" runat="server" OnClick="lnkAddDuration_Click">
                                  <i class="material-icons">add </i> Add Role
                                     </asp:LinkButton>
                                 </div>
-                                <div class="col s4 l4 m4 offset-l4 offset-m4 offset-s4">
+                                <div class="col s12 l4 m12 offset-l4">
                                     <asp:GridView ID="gvDuration" AutoGenerateColumns="false" CssClass="responsive-table striped" runat="server">
                                         <Columns>
                                             <asp:TemplateField>
@@ -449,7 +449,7 @@
                 <asp:LinkButton ID="lkbClose6" runat="server" CssClass="left0 btn-close"><b class="glyphicon glyphicon-remove-sign"></b>&nbsp;x</asp:LinkButton></h3>
         </div>
         <div style="min-height: 120px; width: 100%">
-            <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
+            <div class="col s12 l2 m2 offset-l4 offset-m4">
                Duration <asp:TextBox runat="server" ID="txtEditDuration" placeholder="Duration"></asp:TextBox>
                 <asp:Button ID="btnUpdateDuration" Text="Update Duration" OnClick="btnUpdateDuration_Click" runat="server" />
             </div>
@@ -464,30 +464,30 @@
             <asp:UpdatePanel ID="upanelShifts" runat="server">
                 <ContentTemplate>
                     <div class="row">
-                        <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
+                        <div class="col s12 l2 m2 offset-l4 offset-m4">
                             <asp:TextBox runat="server" ID="txtFirstHalfStart" placeholder="First Half Start Timing"></asp:TextBox>
                         </div>
-                        <div class="col s2 l2 m2">
+                        <div class="col s12 l2 m2">
                             <asp:TextBox runat="server" ID="txtFirstHalfEnd" placeholder="First Half End Timing"></asp:TextBox>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
+                        <div class="col s12 l2 m2 offset-l4 offset-m4">
                             <asp:TextBox runat="server" ID="txtSecondHalfStart" placeholder="Second Half Start Timing"></asp:TextBox>
                         </div>
-                        <div class="col s2 l2 m2">
+                        <div class="col s12 l2 m2">
                             <asp:TextBox runat="server" ID="txtSecondHalfEnd" placeholder="Second Half End Timing"></asp:TextBox>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col s4 l4 m4 offset-l4 offset-m4 offset-s4">
-                            <asp:LinkButton ID="lnkbtnShifts" CssClass="btn waves-effect waves-light col s12 l12 m12" runat="server" OnClick="lnkbtnShifts_Click">
+                        <div class="col s12 l4 m4 offset-l4 offset-m4">
+                            <asp:LinkButton ID="lnkbtnShifts" CssClass="btn waves-light col s12 l12 m12" runat="server" OnClick="lnkbtnShifts_Click">
                                  <i class="material-icons">add </i> Add Shift
                             </asp:LinkButton>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col s4 l4 m4 offset-l4 offset-m4 offset-s4">
+                        <div class="col s12 l4 m12 offset-l4">
                             <asp:GridView ID="gvShifts" AutoGenerateColumns="false" CssClass="responsive-table striped" runat="server">
                                 <Columns>
                                     <asp:TemplateField>

@@ -1,12 +1,16 @@
-﻿using iTextSharp.text;
+﻿using DocumentFormat.OpenXml.Drawing.Charts;
+using iTextSharp.text;
 using iTextSharp.text.html.simpleparser;
 using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 public partial class Reports_DailyAttendanceBasicReport : System.Web.UI.Page
@@ -22,13 +26,17 @@ public partial class Reports_DailyAttendanceBasicReport : System.Web.UI.Page
     }
     protected void btn_report_Click(object sender, EventArgs e)
     {
-        btnExport.Visible = true;
+        
         ManageReports objManageReports = new ManageReports();
         TimeSpan relaxationTime = new TimeSpan();
         relaxationTime = TimeSpan.Parse(ddlRelaxation.SelectedValue.ToString());
         var data = objManageReports.GetDataForDailyAttendanceReport(Convert.ToInt32(ddlDepartments.SelectedValue.ToString()), Calendar1.SelectedDate.Date, relaxationTime);
         grid_dailyAttendance.DataSource = data;
         grid_dailyAttendance.DataBind();
+        btnExport.Visible = true;
+        btn_export_xl.Visible = true;
+
+
     }
     protected void BindDropDowns()
     {
@@ -37,6 +45,8 @@ public partial class Reports_DailyAttendanceBasicReport : System.Web.UI.Page
         ddlDepartments.DataTextField = "Name";
         ddlDepartments.DataValueField = "Id";
         ddlDepartments.DataBind();
+
+
     }
 
 
@@ -73,5 +83,10 @@ public partial class Reports_DailyAttendanceBasicReport : System.Web.UI.Page
                 Response.End();
             }
         }
+    }
+
+    protected void btn_export_xl_Click(object sender, EventArgs e)
+    {
+        Utility.GenerateExcel(grid_dailyAttendance,"AKGEC Daily Attendance Report", "Report", this);
     }
 }

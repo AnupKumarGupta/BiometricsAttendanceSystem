@@ -1,0 +1,15 @@
+﻿table#ContentPlaceHolder1_Calendar1 {
+    width: 50%;
+    line-height: 0;
+    margin: auto auto;
+}
+
+table#ContentPlaceHolder1_Calendar2 {
+    width: 50%;
+    line-height: 0;
+    margin: auto auto;
+}
+
+.row * {
+    text-align: center !important;
+}
