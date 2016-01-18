@@ -23,6 +23,7 @@ public class MasterEntries
         lstDepartment.Add(new SqlParameter("@name", Department));
         lstDepartment.Add(new SqlParameter("@createdOn", DateTime.Now));
         lstDepartment.Add(new SqlParameter("@updatedOn", DateTime.Now));
+        lstDepartment.Add(new SqlParameter("@isDeleted", false));
         DataTable dt = new DataTable();
         try
         {
@@ -91,7 +92,7 @@ public class MasterEntries
     /// </summary>
     /// <param name="departmentId"></param>
     /// <returns></returns>
-    public bool UpdateDepartment(int departmentId, string Department)//Changes Remaining
+    public bool UpdateDepartment(int departmentId, string Department)
     {
         List<SqlParameter> lstDepartment = new List<SqlParameter>();
         lstDepartment.Add(new SqlParameter("@name", Department));
@@ -103,6 +104,27 @@ public class MasterEntries
             using (DBDataHelper objDDBDataHelper = new DBDataHelper())
             {
                 objDDBDataHelper.ExecSQL("spUpdateDepartment", SQLTextType.Stored_Proc, lstDepartment);
+
+            }
+            return true;
+        }
+        catch (Exception ex)
+        {
+            return false;
+        }
+    }
+
+    public bool DeleteDepartment(int departmentId)
+    {
+        List<SqlParameter> lstDepartment = new List<SqlParameter>();
+        lstDepartment.Add(new SqlParameter("@departmentId", departmentId));
+        lstDepartment.Add(new SqlParameter("@updatedAt", DateTime.Now));
+        DataTable dt = new DataTable();
+        try
+        {
+            using (DBDataHelper objDDBDataHelper = new DBDataHelper())
+            {
+                objDDBDataHelper.ExecSQL("spDeleteDepartment", SQLTextType.Stored_Proc, lstDepartment);
 
             }
             return true;
@@ -209,6 +231,27 @@ public class MasterEntries
             using (DBDataHelper objDDBDataHelper = new DBDataHelper())
             {
                 objDDBDataHelper.ExecSQL("spUpdateLeave", SQLTextType.Stored_Proc, lstLeave);
+
+            }
+            return true;
+        }
+        catch (Exception ex)
+        {
+            return false;
+        }
+    }
+
+    public bool DeleteLeave(int leaveId)
+    {
+        List<SqlParameter> lstLeave = new List<SqlParameter>();
+        lstLeave.Add(new SqlParameter("@leaveId", leaveId));
+        lstLeave.Add(new SqlParameter("@updatedAt", DateTime.Now));
+        DataTable dt = new DataTable();
+        try
+        {
+            using (DBDataHelper objDDBDataHelper = new DBDataHelper())
+            {
+                objDDBDataHelper.ExecSQL("spDeleteLeave", SQLTextType.Stored_Proc, lstLeave);
 
             }
             return true;
@@ -449,6 +492,26 @@ public class MasterEntries
         }
     }
 
+    public bool DeleteRole(int roleId)
+    {
+        List<SqlParameter> lstRole = new List<SqlParameter>();
+        lstRole.Add(new SqlParameter("@roleId", roleId));
+        lstRole.Add(new SqlParameter("@updatedAt", DateTime.Now));
+        DataTable dt = new DataTable();
+        try
+        {
+            using (DBDataHelper objDDBDataHelper = new DBDataHelper())
+            {
+                objDDBDataHelper.ExecSQL("spDeleteRole", SQLTextType.Stored_Proc, lstRole);
+
+            }
+            return true;
+        }
+        catch (Exception ex)
+        {
+            return false;
+        }
+    }
     #endregion
 
     #region ManageShifts
@@ -519,7 +582,7 @@ public class MasterEntries
         }
     }
 
-    public List<Shifts> GetShiftsById(int Id) //to be edited
+    public void GetShiftsById(int Id, out Shifts objShift) //to be edited
     {
         DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
         DataTable dt = new DataTable();
@@ -527,6 +590,7 @@ public class MasterEntries
         lst.Add(new SqlParameter ("@id",Id));
         DataSet ds;
         int i = 0;
+                Shifts objShifts1 = new Shifts();
         using (DBDataHelper objDDBDataHelper = new DBDataHelper())
         {
             ds = objDDBDataHelper.GetDataSet("spGetShiftsById", SQLTextType.Stored_Proc,lst);
@@ -534,33 +598,55 @@ public class MasterEntries
 
             foreach (DataRow rows in ds.Tables[0].Rows)
             {
-                Shifts objShifts = new Shifts();
-                objShifts.Id = Convert.ToInt32(ds.Tables[0].Rows[i][0]);
-                objShifts.FirstHalfStart = TimeSpan.Parse(ds.Tables[0].Rows[i][1].ToString());
-                objShifts.FirstHalfEnd = TimeSpan.Parse(ds.Tables[0].Rows[i][2].ToString());
-                objShifts.SecondHalfStart = TimeSpan.Parse(ds.Tables[0].Rows[i][3].ToString());
-                objShifts.SecondHalfEnd = TimeSpan.Parse(ds.Tables[0].Rows[i][4].ToString());
-                objShifts.IsActive = Convert.ToBoolean(ds.Tables[0].Rows[i][5]);
-                lstShifts.Add(objShifts);
+                objShifts1.Id = Convert.ToInt32(ds.Tables[0].Rows[i][0]);
+                objShifts1.FirstHalfStart = TimeSpan.Parse(ds.Tables[0].Rows[i][1].ToString());
+                objShifts1.FirstHalfEnd = TimeSpan.Parse(ds.Tables[0].Rows[i][2].ToString());
+                objShifts1.SecondHalfStart = TimeSpan.Parse(ds.Tables[0].Rows[i][3].ToString());
+                objShifts1.SecondHalfEnd = TimeSpan.Parse(ds.Tables[0].Rows[i][4].ToString());
                 i++;
             }
-            return lstShifts;
+            objShift = objShifts1;
         }
     }
 
-    public bool UpdateShifts(int shiftId, Shifts objShift) // To be Edited
+    public bool UpdateShifts(int shiftId, Shifts objShift) 
     {
         DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
-        List<SqlParameter> lstDuration = new List<SqlParameter>();
-        lstDuration.Add(new SqlParameter("@shiftId", shiftId));
-        lstDuration.Add(new SqlParameter("@updatedAt", DateTime.Now));
+        List<SqlParameter> lstShift = new List<SqlParameter>();
+        lstShift.Add(new SqlParameter("@shiftId", shiftId));
+        lstShift.Add(new SqlParameter("@firstHalfStart", objShift.FirstHalfStart));
+        lstShift.Add(new SqlParameter("@firstHalfEnd", objShift.FirstHalfEnd));
+        lstShift.Add(new SqlParameter("@secondHalfStart", objShift.SecondHalfStart));
+        lstShift.Add(new SqlParameter("@secondHalfEnd", objShift.SecondHalfEnd));
+        lstShift.Add(new SqlParameter("@updatedOn", DateTime.Now));
         DataTable dt = new DataTable();
         DataSet ds;
         try
         {
             using (DBDataHelper objDDBDataHelper = new DBDataHelper())
             {
-                ds = objDDBDataHelper.GetDataSet("spUpdateDuration", SQLTextType.Stored_Proc, lstDuration);
+                objDDBDataHelper.ExecSQL("spUpdateShift", SQLTextType.Stored_Proc, lstShift);
+            }
+            return true;
+        }
+        catch (Exception ex)
+        {
+            return false;
+        }
+    }
+
+    public bool DeleteShift(int shiftId)
+    {
+        List<SqlParameter> lstShift = new List<SqlParameter>();
+        lstShift.Add(new SqlParameter("@shiftId", shiftId));
+        lstShift.Add(new SqlParameter("@updatedAt", DateTime.Now));
+        DataTable dt = new DataTable();
+        try
+        {
+            using (DBDataHelper objDDBDataHelper = new DBDataHelper())
+            {
+                objDDBDataHelper.ExecSQL("spDeleteShift", SQLTextType.Stored_Proc, lstShift);
+
             }
             return true;
         }
@@ -672,6 +758,27 @@ public class MasterEntries
             using (DBDataHelper objDDBDataHelper = new DBDataHelper())
             {
                 ds = objDDBDataHelper.GetDataSet("spUpdateDuration", SQLTextType.Stored_Proc, lstDuration);
+            }
+            return true;
+        }
+        catch (Exception ex)
+        {
+            return false;
+        }
+    }
+
+    public bool DeleteDuration(int durationId)
+    {
+        List<SqlParameter> lstDuration = new List<SqlParameter>();
+        lstDuration.Add(new SqlParameter("@durationId", durationId));
+        lstDuration.Add(new SqlParameter("@updatedAt", DateTime.Now));
+        DataTable dt = new DataTable();
+        try
+        {
+            using (DBDataHelper objDDBDataHelper = new DBDataHelper())
+            {
+                objDDBDataHelper.ExecSQL("spDeleteDuration", SQLTextType.Stored_Proc, lstDuration);
+
             }
             return true;
         }

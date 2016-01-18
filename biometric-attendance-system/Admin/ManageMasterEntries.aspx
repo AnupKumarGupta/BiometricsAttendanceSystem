@@ -38,10 +38,11 @@
                             <div class="row">
                                 <br />
                                 <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
-                                    <asp:TextBox runat="server" CssClass="input-field" ID="txtDepartment" placeholder="Department"></asp:TextBox>
+                                    <asp:TextBox runat="server" CssClass="input-field" ID="txtDepartment" placeholder="Department" ValidationGroup="Department"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="rfvTxtDepartment" runat="server" ErrorMessage="Required" ControlToValidate="txtDepartment" ForeColor="Red" ValidationGroup="Department"></asp:RequiredFieldValidator>
                                 </div>
                                 <div class="col s2 l2 m2">
-                                    <asp:LinkButton ID="lnkAddDepartment" CssClass="btn waves-effect waves-light" runat="server" OnClick="lnkAddDepartment_Click">
+                                    <asp:LinkButton ID="lnkAddDepartment" CssClass="btn waves-effect waves-light" runat="server" OnClick="lnkAddDepartment_Click" ValidationGroup="Department">
                                          Add Department
                                     </asp:LinkButton>
                                 </div>
@@ -61,6 +62,11 @@
                                             <asp:TemplateField>
                                                 <ItemTemplate>
                                                     <asp:LinkButton ID="lkbEditDepartment" Text="Edit" OnClick="lkbEditDepartment_Click" CommandArgument='<%#Eval("Id")%>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                             <asp:TemplateField>
+                                                <ItemTemplate>
+                                                    <asp:LinkButton ID="lkbDeleteDepartment" Text="Delete" OnClick="lkbDeleteDepartment_Click" CommandArgument='<%#Eval("Id")%>' runat="server" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>
@@ -94,8 +100,9 @@
                         </div>
                         <div class="center">
                             <div class="row">
-                                <asp:TextBox runat="server" CssClass="input-field col l8 m8 offset-l2 offset-m2" ID="txtEditDepartment" placeholder="Department"></asp:TextBox>
-                                <asp:Button ID="btnUpdateDepartment" CssClass="btn" Text="Update Department" OnClick="btnUpdateDepartment_Click" runat="server" />
+                                <asp:TextBox runat="server" CssClass="input-field col l8 m8 offset-l2 offset-m2" ID="txtEditDepartment" placeholder="Department" ValidationGroup="EditDepartment"></asp:TextBox>
+                                <asp:RequiredFieldValidator ID="rfvTxtEditDepartment" runat="server" ErrorMessage="Required" ControlToValidate="txtEditDepartment" ForeColor="Red" ValidationGroup="EditDepartment"></asp:RequiredFieldValidator>
+                                <asp:Button ID="btnUpdateDepartment" CssClass="btn" Text="Update Department" OnClick="btnUpdateDepartment_Click" runat="server" ValidationGroup="EditDepartment" />
                             </div>
                         </div>
                     </div>
@@ -114,10 +121,11 @@
                             <div class="row">
                                 <br />
                                 <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
-                                    <asp:TextBox runat="server" CssClass="input-field" ID="txtLeave" placeholder="Leave"></asp:TextBox>
+                                    <asp:TextBox runat="server" CssClass="input-field" ID="txtLeave" placeholder="Leave" ValidationGroup="Leave"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="rfvTxtLeave" ErrorMessage="Required" ControlToValidate="txtLeave" runat="server" ValidationGroup="Leave" ForeColor="Red" />
                                 </div>
                                 <div class="col s2 l2 m2">
-                                    <asp:LinkButton ID="lnkAddLeave" CssClass="btn waves-effect waves-light" runat="server" OnClick="lnkAddLeave_Click">
+                                    <asp:LinkButton ID="lnkAddLeave" CssClass="btn waves-effect waves-light" runat="server" OnClick="lnkAddLeave_Click" ValidationGroup="Leave">
                                          Add Leave
                                     </asp:LinkButton>
                                 </div>
@@ -137,6 +145,11 @@
                                             <asp:TemplateField>
                                                 <ItemTemplate>
                                                     <asp:LinkButton ID="lkbEditLeave" Text="Edit" OnClick="lkbEditLeave_Click" CommandArgument='<%#Eval("Id")%>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField>
+                                                <ItemTemplate>
+                                                    <asp:LinkButton ID="lkbDeleteLeave" Text="Delete" OnClick="lkbDeleteLeave_Click" CommandArgument='<%#Eval("Id")%>' runat="server" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>
@@ -169,8 +182,9 @@
                         </div>
                         <div class="center">
                             <div class="row">
-                                <asp:TextBox runat="server" CssClass="input-field col l8 m8 offset-l2 offset-m2" ID="txtEditLeave" placeholder="Leave"></asp:TextBox>
-                                <asp:Button ID="btnUpdateLeave" CssClass="btn" Text="Update Leave" OnClick="btnUpdateLeave_Click" runat="server" />
+                                <asp:TextBox runat="server" CssClass="input-field col l8 m8 offset-l2 offset-m2" ID="txtEditLeave" placeholder="Leave" ValidationGroup="EditLeave"></asp:TextBox>
+                                <asp:RequiredFieldValidator ID="rfvEditLeave" ErrorMessage="Required" ControlToValidate="txtEditLeave" runat="server" ValidationGroup="EditLeave" ForeColor="Red" />
+                                <asp:Button ID="btnUpdateLeave" CssClass="btn" Text="Update Leave" OnClick="btnUpdateLeave_Click" runat="server" ValidationGroup="EditLeave" />
                             </div>
                         </div>
                     </div>
@@ -179,17 +193,17 @@
         </asp:UpdatePanel>
     </asp:Panel>
 
-
     <asp:Panel ID="pnlRole" runat="server" Visible="false">
         <div>
             <asp:UpdatePanel ID="upanelRole" runat="server">
                 <ContentTemplate>
                     <div class="row">
                         <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
-                            <asp:TextBox runat="server" ID="txtRole" placeholder="Roles"></asp:TextBox>
+                            <asp:TextBox runat="server" ID="txtRole" placeholder="Roles" ValidationGroup="Role"></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="rfvRoles" ErrorMessage="Required" ControlToValidate="txtRole" runat="server" ForeColor="Red" ValidationGroup="Role" />
                         </div>
                         <div class="col s2 l2 m2">
-                            <asp:LinkButton ID="lnkAddRole" CssClass="btn waves-effect waves-light" runat="server" OnClick="lnkAddRole_Click">
+                            <asp:LinkButton ID="lnkAddRole" CssClass="btn waves-effect waves-light" runat="server" OnClick="lnkAddRole_Click" ValidationGroup="Role">
                                  <i class="material-icons">add </i> Add Role
                             </asp:LinkButton>
                         </div>
@@ -210,6 +224,11 @@
                                     <asp:TemplateField>
                                         <ItemTemplate>
                                             <asp:LinkButton ID="lkbEditRole" Text="Edit" OnClick="lkbEditRole_Click" CommandArgument='<%#Eval("Id")%>' runat="server" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                     <asp:TemplateField>
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="lkbDeleteRole" Text="Delete" OnClick="lkbDeleteRole_Click" CommandArgument='<%#Eval("Id")%>' runat="server" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                 </Columns>
@@ -234,8 +253,9 @@
                 </div>
                 <div style="min-height: 120px; width: 100%">
                     <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
-                        <asp:TextBox runat="server" ID="txtEditRole" placeholder="Role"></asp:TextBox>
-                        <asp:Button ID="btnUpdateRole" Text="Update Role" OnClick="btnUpdateRole_Click" runat="server" />
+                        <asp:TextBox runat="server" ID="txtEditRole" placeholder="EditRole" ValidationGroup="EditRole"></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="rfvEditRole" ErrorMessage="Required" ControlToValidate="txtEditRole" runat="server" ForeColor="Red" ValidationGroup="EditRole" />
+                        <asp:Button ID="btnUpdateRole" Text="Update Role" OnClick="btnUpdateRole_Click" runat="server" ValidationGroup="EditRole" />
                     </div>
                 </div>
                 <div class="modal-footer"></div>
@@ -254,21 +274,24 @@
                                 <br />
                                 <div class="col s4 l4 m4 offset-l2 offset-m2">
                                     Role:<br />
-                                    <asp:DropDownList ID="ddlRole" runat="server" AppendDataBoundItems="True" CssClass="dropdown-button btn l2 m2 s2">
+                                    <asp:DropDownList ID="ddlRole" runat="server" AppendDataBoundItems="True" CausesValidation="true" CssClass="dropdown-button btn l2 m2 s2" ValidationGroup="LeaveAssignedByRole">
                                         <asp:ListItem Value="0">--- Select ----</asp:ListItem>
                                     </asp:DropDownList>
+                                    <asp:RequiredFieldValidator ID="rfvDdlRole" ErrorMessage="Required" ControlToValidate="ddlRole" runat="server" ValidationGroup="LeaveAssignedByRole" InitialValue="0" ForeColor="Red" SetFocusOnError="True" />
                                 </div>
                                 <div class="col s4 l4 m4">
                                     Leave:<br />
-                                    <asp:DropDownList ID="ddlLeave" runat="server" AppendDataBoundItems="True" CssClass="dropdown-button btn l2 m2 s2">
+                                    <asp:DropDownList ID="ddlLeave" runat="server" AppendDataBoundItems="True" CssClass="dropdown-button btn l2 m2 s2" ValidationGroup="LeaveAssignedByRole">
                                         <asp:ListItem Value="0">--- Select ----</asp:ListItem>
                                     </asp:DropDownList>
+                                    <asp:RequiredFieldValidator ID="rfvLeave" ErrorMessage="Required" ControlToValidate="ddlLeave" runat="server" ValidationGroup="LeaveAssignedByRole" InitialValue="0" ForeColor="Red" SetFocusOnError="True" />
                                 </div>
                             </div>
                             <div class="row">
                                 <br />
                                 <div class="col s4 l4 m4 offset-l2 offset-m2">
                                     <asp:TextBox runat="server" CssClass="input-field" ID="txtNoOfLeaves" placeholder="No. of Leaves"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="rfvNoOfLeaves" ErrorMessage="Required" ControlToValidate="txtNoOfLeaves" runat="server" ValidationGroup="LeaveAssignedByRole" ForeColor="Red" />
                                 </div>
                             </div>
                             <div class="row">
@@ -279,9 +302,10 @@
                                         <asp:ListItem Value="1">Yes</asp:ListItem>
                                         <asp:ListItem Value="2">No</asp:ListItem>
                                     </asp:DropDownList>
+                                    <asp:RequiredFieldValidator ID="rfvIsPromoted" ErrorMessage="Required" ControlToValidate="ddlIsPromoted" runat="server" ValidationGroup="LeaveAssignedByRole" InitialValue="Carry Forward" ForeColor="Red" />
                                 </div>
                                 <div class="col s4 l4 m4">
-                                    <asp:LinkButton ID="lnkAddLeaveAsssignedByRole" CssClass="btn waves-effect waves-light col s12 l12 m12" runat="server" OnClick="lnkAddLeaveAsssignedByRole_Click">
+                                    <asp:LinkButton ID="lnkAddLeaveAsssignedByRole" CssClass="btn waves-effect waves-light col s12 l12 m12" runat="server" OnClick="lnkAddLeaveAsssignedByRole_Click" ValidationGroup="LeaveAssignedByRole">
                                          Add Leave For Role
                                     </asp:LinkButton>
                                 </div>
@@ -422,10 +446,15 @@
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField>
-                                        <ItemTemplate>
-                                            <asp:LinkButton ID="lkbEditDuration" Text="Edit" OnClick="lkbEditDuration_Click" CommandArgument='<%#Eval("Id")%>' runat="server" />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
+                                                <ItemTemplate>
+                                                    <asp:LinkButton ID="lkbEditDuration" Text="Edit" OnClick="lkbEditDuration_Click" CommandArgument='<%#Eval("Id")%>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField>
+                                                <ItemTemplate>
+                                                    <asp:LinkButton ID="lkbDeleteDuration" Text="Delete" OnClick="lkbDeleteDuration_Click" CommandArgument='<%#Eval("Id")%>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                         </Columns>
                                     </asp:GridView>
                                 </div>
@@ -444,18 +473,19 @@
         </cc1:ModalPopupExtender>
         <asp:UpdatePanel runat="server">
             <ContentTemplate>
-        <div class="modal-header">
-            <h3 id="H5" class="modal-title">Edit Duration
+                <div class="modal-header">
+                    <h3 id="H5" class="modal-title">Edit Duration
                 <asp:LinkButton ID="lkbClose6" runat="server" CssClass="left0 btn-close"><b class="glyphicon glyphicon-remove-sign"></b>&nbsp;x</asp:LinkButton></h3>
-        </div>
-        <div style="min-height: 120px; width: 100%">
-            <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
-               Duration <asp:TextBox runat="server" ID="txtEditDuration" placeholder="Duration"></asp:TextBox>
-                <asp:Button ID="btnUpdateDuration" Text="Update Duration" OnClick="btnUpdateDuration_Click" runat="server" />
-            </div>
-        </div>
-        <div class="modal-footer"></div>
-                </ContentTemplate>
+                </div>
+                <div style="min-height: 120px; width: 100%">
+                    <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
+                        Duration
+                        <asp:TextBox runat="server" ID="txtEditDuration" placeholder="Duration"></asp:TextBox>
+                        <asp:Button ID="btnUpdateDuration" Text="Update Duration" OnClick="btnUpdateDuration_Click" runat="server" />
+                    </div>
+                </div>
+                <div class="modal-footer"></div>
+            </ContentTemplate>
         </asp:UpdatePanel>
     </asp:Panel>
 
@@ -465,23 +495,27 @@
                 <ContentTemplate>
                     <div class="row">
                         <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
-                            <asp:TextBox runat="server" ID="txtFirstHalfStart" placeholder="First Half Start Timing"></asp:TextBox>
+                            <asp:TextBox runat="server" ID="txtFirstHalfStart" placeholder="First Half Start Timing" ValidationGroup="Shifts"></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="rfvFirstHalfStart" ErrorMessage="Required" ControlToValidate="txtFirstHalfStart" runat="server" ForeColor="Red" ValidationGroup="Shifts" />
                         </div>
                         <div class="col s2 l2 m2">
-                            <asp:TextBox runat="server" ID="txtFirstHalfEnd" placeholder="First Half End Timing"></asp:TextBox>
+                            <asp:TextBox runat="server" ID="txtFirstHalfEnd" placeholder="First Half End Timing" ValidationGroup="Shifts"></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="rfvFirstHalfEnd" ErrorMessage="Required" ControlToValidate="txtFirstHalfEnd" runat="server" ForeColor="Red" ValidationGroup="Shifts" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
-                            <asp:TextBox runat="server" ID="txtSecondHalfStart" placeholder="Second Half Start Timing"></asp:TextBox>
+                            <asp:TextBox runat="server" ID="txtSecondHalfStart" placeholder="Second Half Start Timing" ValidationGroup="Shifts"></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="rfvSecondHalfStart" ErrorMessage="Required" ControlToValidate="txtSecondHalfStart" runat="server" ForeColor="Red" ValidationGroup="Shifts" />
                         </div>
                         <div class="col s2 l2 m2">
-                            <asp:TextBox runat="server" ID="txtSecondHalfEnd" placeholder="Second Half End Timing"></asp:TextBox>
+                            <asp:TextBox runat="server" ID="txtSecondHalfEnd" placeholder="Second Half End Timing" ValidationGroup="Shifts"></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="rfvSecondHalfEnd" ErrorMessage="Required" ControlToValidate="txtSecondHalfEnd" runat="server" ForeColor="Red" ValidationGroup="Shifts" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col s4 l4 m4 offset-l4 offset-m4 offset-s4">
-                            <asp:LinkButton ID="lnkbtnShifts" CssClass="btn waves-effect waves-light col s12 l12 m12" runat="server" OnClick="lnkbtnShifts_Click">
+                            <asp:LinkButton ID="lnkbtnShifts" CssClass="btn waves-effect waves-light col s12 l12 m12" runat="server" OnClick="lnkbtnShifts_Click" ValidationGroup="Shifts">
                                  <i class="material-icons">add </i> Add Shift
                             </asp:LinkButton>
                         </div>
@@ -527,6 +561,11 @@
                                             <asp:LinkButton ID="lkbEditShift" Text="Edit" OnClick="lkbEditShift_Click" CommandArgument='<%#Eval("Id")%>' runat="server" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
+                                     <asp:TemplateField>
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="lkbDeleteShift" Text="Delete" OnClick="lkbDeleteShift_Click" CommandArgument='<%#Eval("Id")%>' runat="server" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
                                 </Columns>
                             </asp:GridView>
                         </div>
@@ -534,6 +573,37 @@
                 </ContentTemplate>
             </asp:UpdatePanel>
         </div>
+    </asp:Panel>
+
+    <asp:Panel ID="pnlEditShifts" runat="server" DefaultButton="lkbClose7" CssClass="modalPopup" Style="display: none; height: auto;">
+        <asp:Button ID="btnforPopupRef7" runat="server" Style="display: none" />
+        <cc1:ModalPopupExtender ID="popupEditShifts" runat="server" Enabled="True" TargetControlID="btnforPopupRef7"
+            CancelControlID="lkbClose7" PopupControlID="pnlEditShifts" BackgroundCssClass="modalBackground">
+        </cc1:ModalPopupExtender>
+        <asp:UpdatePanel runat="server">
+            <ContentTemplate>
+                <div class="card z-depth-3 blue-grey lighten-5">
+                    <div class="modal-header">
+                        <h3 id="H6" class="modal-title">Edit Shifts
+                <asp:LinkButton ID="lkbClose7" runat="server" CssClass="left0 btn-close"><b class="glyphicon glyphicon-remove-sign"></b>&nbsp;x</asp:LinkButton></h3>
+                    </div>
+                    <div style="min-height: 120px; width: 100%">
+                        <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
+                            <asp:TextBox runat="server" ID="txtEditFirstHalfStart" placeholder="First Half Start Timing"></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="rfvEditFirstHalfStart" ErrorMessage="Required" ControlToValidate="txtEditFirstHalfStart" runat="server" ForeColor="Red" ValidationGroup="EditShifts" />
+                            <asp:TextBox runat="server" ID="txtEditFirstHalfEnd" placeholder="First Half End Timing"></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="rfvEditFirstHalfEnd" ErrorMessage="Required" ControlToValidate="txtEditFirstHalfEnd" runat="server" ForeColor="Red" ValidationGroup="EditShifts" />
+                            <asp:TextBox runat="server" ID="txtEditSecondHalfStart" placeholder="Second Half Start Timing"></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="rfvEditSecondHalfStart" ErrorMessage="Required" ControlToValidate="txtEditSecondHalfStart" runat="server" ForeColor="Red" ValidationGroup="EditShifts" />
+                            <asp:TextBox runat="server" ID="txtEditSecondHalfEnd" placeholder="Second Half End Timing"></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="rfvEditSecondHalfEnd" ErrorMessage="Required" ControlToValidate="txtEditSecondHalfEnd" runat="server" ForeColor="Red" ValidationGroup="EditShifts" />
+                            <asp:Button ID="btnEditShifts" Text="Update Shifts" OnClick="btnEditShifts_Click" runat="server" ValidationGroup="EditShifts" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer"></div>
+            </ContentTemplate>
+        </asp:UpdatePanel>
     </asp:Panel>
 
 </asp:Content>

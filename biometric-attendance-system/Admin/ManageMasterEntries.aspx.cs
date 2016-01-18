@@ -19,9 +19,8 @@ public partial class ManageMasterEntries : System.Web.UI.Page
             pnlDepartment.Visible = false;
             pnlLeave.Visible = false;
             pnlDuration.Visible = false;
-            grdDepartmentBind();
-            grdLeaveBind();
-            grdRoleBind();
+            pnlRole.Visible = false;
+            pnlShifts.Visible = false;
         }
     }
 
@@ -35,6 +34,7 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         pnlRole.Visible = false;
         pnlShifts.Visible = false;
         pnlDuration.Visible = false;
+        grdDepartmentBind();
     }
 
     protected void lnkAddDepartment_Click(object sender, EventArgs e)
@@ -43,6 +43,7 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         MasterEntries objMasterEntry = new MasterEntries();
         objMasterEntry.AddDepartment(department);
         grdDepartmentBind();
+        txtDepartment.Text = string.Empty;
     }
 
     protected void grdDepartmentBind()
@@ -72,6 +73,14 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         popupEditDepartment.Hide();
     }
 
+    protected void lkbDeleteDepartment_Click(object sender, EventArgs e)
+    {
+        LinkButton b = (LinkButton)sender;
+        int Id = Convert.ToInt32(b.CommandArgument);
+        MasterEntries objMasterEntry = new MasterEntries();
+        objMasterEntry.DeleteDepartment(Id);
+        grdDepartmentBind();
+    }
     #endregion
 
     #region Leave
@@ -122,6 +131,17 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         pnlRole.Visible = false;
         pnlShifts.Visible = false;
         pnlDuration.Visible = false;
+        grdLeaveBind();
+    }
+
+    protected void lkbDeleteLeave_Click(object sender, EventArgs e)
+    {
+        LinkButton b = (LinkButton)sender;
+        int Id = Convert.ToInt32(b.CommandArgument);
+        MasterEntries objMasterEntry = new MasterEntries();
+        objMasterEntry.DeleteLeave(Id);
+        grdLeaveBind();
+
     }
 
     #endregion
@@ -144,6 +164,7 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         pnlLeave.Visible = false;
         pnlShifts.Visible = false;
         pnlDuration.Visible = false;
+        grdRoleBind();
     }
 
     protected void lkbEditRole_Click(object sender, EventArgs e)
@@ -165,6 +186,15 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         objMasterEntry.UpdateRole(Id, roleName);
         grdRoleBind();
         popupEditRole.Hide();
+    }
+
+    protected void lkbDeleteRole_Click(object sender, EventArgs e)
+    {
+        LinkButton b = (LinkButton)sender;
+        int Id = Convert.ToInt32(b.CommandArgument);
+        MasterEntries objMasterEntry = new MasterEntries();
+        objMasterEntry.DeleteRole(Id);
+        grdRoleBind();
     }
 
     protected void grdRoleBind()
@@ -212,8 +242,38 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         LinkButton b = (LinkButton)sender;
         int Id = Convert.ToInt32(b.CommandArgument);
         Shifts objShift = new Shifts();
-        
+        objMasterEntry.GetShiftsById(Id, out objShift);
+        Session["shiftId"] = Id;
+        txtEditFirstHalfStart.Text = objShift.FirstHalfStart.ToString();
+        txtEditFirstHalfEnd.Text = objShift.FirstHalfEnd.ToString();
+        txtEditSecondHalfStart.Text = objShift.SecondHalfStart.ToString();
+        txtEditSecondHalfEnd.Text = objShift.SecondHalfEnd.ToString();
+        popupEditShifts.Show();
     }
+
+    protected void btnEditShifts_Click(object sender, EventArgs e)
+    {
+        MasterEntries objMasterEntry = new MasterEntries();
+        int Id = Convert.ToInt32(Session["shiftId"]);
+        Shifts objShift = new Shifts();
+        objShift.FirstHalfStart = TimeSpan.Parse(txtEditFirstHalfStart.Text);
+        objShift.FirstHalfEnd = TimeSpan.Parse(txtEditFirstHalfEnd.Text);
+        objShift.SecondHalfStart = TimeSpan.Parse(txtEditSecondHalfStart.Text);
+        objShift.SecondHalfEnd = TimeSpan.Parse(txtEditSecondHalfEnd.Text);
+        objMasterEntry.UpdateShifts(Id, objShift);
+        grdShiftsBind();
+        popupEditShifts.Hide();
+    }
+
+    protected void lkbDeleteShift_Click(object sender, EventArgs e)
+    {
+        LinkButton b = (LinkButton)sender;
+        int Id = Convert.ToInt32(b.CommandArgument);
+        MasterEntries objMasterEntry = new MasterEntries();
+        objMasterEntry.DeleteShift(Id);
+        grdShiftsBind();
+    }
+
     #endregion
 
     #region LeavesAssignedByRole
@@ -373,6 +433,15 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         popupEditDuration.Show();
     }
 
+    protected void lkbDeleteDuration_Click(object sender, EventArgs e)
+    {
+        LinkButton b = (LinkButton)sender;
+        int Id = Convert.ToInt32(b.CommandArgument);
+        MasterEntries objMasterEntry = new MasterEntries();
+        objMasterEntry.DeleteDuration(Id);
+        GridDuration();
+    }
+
     #endregion
 
     protected void btnEmployee_Click(object sender, EventArgs e)
@@ -392,6 +461,13 @@ public partial class ManageMasterEntries : System.Web.UI.Page
 
 
 
-    
+
+
+
+
+
+
+
+   
 }
 
