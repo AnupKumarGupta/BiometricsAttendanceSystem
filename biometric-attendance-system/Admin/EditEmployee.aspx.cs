@@ -24,13 +24,14 @@ public partial class Admin_EditEmployee : System.Web.UI.Page
     {
         Employees objEmployee = new Employees();
         objEmployee.Id = Convert.ToInt32(Session["EmployeeId"] == null ? 0 : Session["EmployeeId"]);
-        objEmployee.DateOfBirth = Convert.ToDateTime(txtDateOfBirth.Text);
+        objEmployee.DateOfBirth = DateTime.Now;
         objEmployee.JoiningDate = Convert.ToDateTime(txtDateOfJoining.Text);
         objEmployee.ContactNumber = Convert.ToInt64(txtContactNumber.Text);
         objEmployee.RoleId = Convert.ToInt32(ddlRoles.SelectedValue);
         objEmployee.DepartmentId = Convert.ToInt32(ddlRoles.SelectedValue);
-        objEmployee.Password = txtPassword.Text;
+        objEmployee.Password = "";
         objEmployee.Gender = rdrbtnMale.Checked == true ? "Male" : "Female";
+        objEmployee.WeeklyOffDay = Convert.ToInt32(ddlDays.SelectedValue);
         ManageEmployees objManageEmployees = new ManageEmployees();
         objManageEmployees.UpdateEmployee(objEmployee);
         Response.Redirect("ViewEmployee.aspx");
@@ -54,11 +55,10 @@ public partial class Admin_EditEmployee : System.Web.UI.Page
         txtName.Text = objEmployee.Name;
         rdrbtnMale.Checked = objEmployee.Gender == "NULL" ? true : objEmployee.Gender == "Male" ? true : false;
         rdrbtnFemale.Checked = rdrbtnMale.Checked ? false : true;
-        txtDateOfBirth.Text = objEmployee.DateOfBirth == new DateTime() ? "" : objEmployee.DateOfBirth.ToString("d");
-        txtDateOfJoining.Text = objEmployee.JoiningDate == new DateTime() ? "" : objEmployee.JoiningDate.ToString("d");
+        txtDateOfJoining.Text = objEmployee.JoiningDate == new DateTime() ? "" : objEmployee.JoiningDate.ToString("dd/M/yyyy");
         txtContactNumber.Text = objEmployee.ContactNumber == 0 ? "" : objEmployee.ContactNumber.ToString();
         ddlDepartments.SelectedValue = objEmployee.DepartmentId.ToString();
         ddlRoles.SelectedValue = objEmployee.RoleId.ToString();
-        txtPassword.Text = objEmployee.Password == "NULL" ? "" : objEmployee.Password;
+        ddlDays.SelectedValue = objEmployee.WeeklyOffDay.ToString();
     }
 }

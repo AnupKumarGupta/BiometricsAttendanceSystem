@@ -17,10 +17,10 @@
                 </asp:TemplateField>
                 <asp:TemplateField>
                     <HeaderTemplate>
-                        <asp:Label Text="Date Of Birth" runat="server" />
+                        <asp:Label Text="Joining Date" runat="server" />
                     </HeaderTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="lblDateOfBirth" runat="server" Text='<%#Eval("DateOfBirth")%>'></asp:Label>
+                        <asp:Label ID="lblJoiningDate" runat="server" Text='<%#Eval("JoiningDate","{0:d}")%>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField>

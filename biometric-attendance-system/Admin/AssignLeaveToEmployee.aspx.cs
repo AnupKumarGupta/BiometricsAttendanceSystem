@@ -13,32 +13,51 @@ public partial class Admin_AssignLeaveToEmployee : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        Calendar1.SelectedDates.Clear();
+        BindGrid();
         if (Session["employeeId"] == null)
-        { Response.Redirect("~/Admin/AssignLeave.aspx"); }
+        {
+            Response.Redirect("~/Admin/AssignLeave.aspx");
+        }
         if (!IsPostBack)
             BindDropdown();
         if (Session["employeeId"] != null)
             lblName.Text = Session["employeeName"].ToString();
     }
 
-    protected void Calender1_SelectionChanged(object sender, EventArgs e)
-    {
-        txt_date.Text = Calendar1.SelectedDate.Date.ToString("d");
-        BindGrid();
-    }
-    public List<AssignLeaveViewModel> BindGridData()
+    public static List<DateTime> list = new List<DateTime>();
+    public List<AssignLeaveViewModel> GetDataForGridview()
     {
         MasterEntries objMasterEntries = new MasterEntries();
         DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
-        DataTable dt = new DataTable();
+        DateTime sessionStartDate = new DateTime();
+        DateTime sessionEndDate = new DateTime();
+        if (DateTime.Now.Month <= 7)
+        {
+            sessionStartDate = new DateTime(DateTime.Now.Year - 1, 8, 1);
+            sessionEndDate = new DateTime(DateTime.Now.Year, 7, 31);
+        }
+        else
+        {
+            sessionStartDate = new DateTime(DateTime.Now.Year, 8, 1);
+            sessionEndDate = new DateTime(DateTime.Now.Year + 1, 7, 31);
+        }
+
         List<SqlParameter> lstData = new List<SqlParameter>();
         lstData.Add(new SqlParameter("@employeeId", Convert.ToInt32(Session["employeeId"])));
-        lstData.Add(new SqlParameter("@dateMonth", Calendar1.SelectedDate.Month));
-        lstData.Add(new SqlParameter("@dateYear", Calendar1.SelectedDate.Year));
+        lstData.Add(new SqlParameter("@sessionStartDate", sessionStartDate));
+        lstData.Add(new SqlParameter("@sessionEndDate", sessionEndDate));
         lstData.Add(new SqlParameter("@IsDeleted", Convert.ToInt32(0)));
+
         DataSet ds;
         int i = 0;
-        string query = "SELECT Id , LeaveTypeId , [Date] FROM tblLeave WHERE MONTH([Date]) = @dateMonth AND YEAR([Date]) = @dateYear And EmployeeId = @employeeId And IsDeleted = @IsDeleted";
+        string query = @"SELECT Id , LeaveTypeId , [Date] 
+                         FROM tblLeave 
+                         WHERE [Date]  >= @sessionStartDate
+                         AND [Date] <= @sessionEndDate 
+                         AND EmployeeId = @employeeId 
+                         AND IsDeleted = @IsDeleted";
+
         using (DBDataHelper objDDBDataHelper = new DBDataHelper())
         {
             ds = objDDBDataHelper.GetDataSet(query, SQLTextType.Query, lstData);
@@ -63,41 +82,46 @@ public partial class Admin_AssignLeaveToEmployee : System.Web.UI.Page
     }
     public void BindGrid()
     {
-        btnAssignLeave.Enabled = true;
-        var x = BindGridData();
+        var x = GetDataForGridview();
         gvViewEmployeeOnLeaveForDate.DataSource = x;
         gvViewEmployeeOnLeaveForDate.DataBind();
-        //if (gvViewEmployeeOnLeaveForDate.Rows.Count > 0)
+
+        //foreach (var date in x)
         //{
-        //    btnAssignLeave.Enabled = false;
-        //    btnAssignLeave.Text = "Employee On Leave";
+        //    btnAssignLeave.Text = "Assign Leave";
+        //    DateTime Date = date.Date;
+        //    if (Date >= Calendar1.SelectedDate.Date && Date <= Calendar2.SelectedDate.Date)
+        //    {
+        //        btnAssignLeave.Enabled = false;
+        //        btnAssignLeave.Text = "Employee On Leave";
+        //    }
         //}
-        foreach(var date in x)
+    }
+    public void AssignLeave(DateTime date)
+    {
+        DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
+        DataTable dt = new DataTable();
+        List<SqlParameter> lstData = new List<SqlParameter>();
+        lstData.Add(new SqlParameter("@employeeId", Convert.ToInt32(Session["employeeId"])));
+        lstData.Add(new SqlParameter("@date", date));
+        lstData.Add(new SqlParameter("@leaveTypeId", Convert.ToInt32(ddlLeaves.SelectedValue)));
+        lstData.Add(new SqlParameter("@createdAt", DateTime.Now));
+        using (DBDataHelper objDDBDataHelper = new DBDataHelper())
         {
-            btnAssignLeave.Text = "Assign Leave";
-            DateTime Date = date.Date;
-            if(Calendar1.SelectedDate.Date == Date)
-            {
-                btnAssignLeave.Enabled = false;
-                btnAssignLeave.Text = "Employee On Leave";
-            }
+            objDDBDataHelper.ExecSQL("spAssignLeave", SQLTextType.Stored_Proc, lstData);
         }
     }
     protected void btnAssignLeave_Click(object sender, EventArgs e)
     {
+        List<DateTime> newList = new List<DateTime>();
+        if (Session["SelectedDates"] != null)
+            newList = (List<DateTime>)Session["SelectedDates"];
+
         if (Convert.ToInt32(ddlLeaves.SelectedValue) > 0)
         {
-            DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
-            DataTable dt = new DataTable();
-            List<SqlParameter> lstData = new List<SqlParameter>();
-            lstData.Add(new SqlParameter("@employeeId", Convert.ToInt32(Session["employeeId"])));
-            lstData.Add(new SqlParameter("@date", Calendar1.SelectedDate.Date));
-            lstData.Add(new SqlParameter("@leaveTypeId", Convert.ToInt32(ddlLeaves.SelectedValue)));
-            lstData.Add(new SqlParameter("@createdAt", DateTime.Now));
-            DataSet ds;
-            using (DBDataHelper objDDBDataHelper = new DBDataHelper())
+            foreach (var date in newList)
             {
-                objDDBDataHelper.ExecSQL("spAssignLeave", SQLTextType.Stored_Proc, lstData);
+                AssignLeave(date);
             }
             ScriptManager.RegisterStartupScript(this, this.GetType(), "script", "alert('Leave Assigned');", true);
             BindGrid();
@@ -106,6 +130,7 @@ public partial class Admin_AssignLeaveToEmployee : System.Web.UI.Page
         {
             ScriptManager.RegisterStartupScript(this, this.GetType(), "script", "alert('Select a Leave');", true);
         }
+        Calendar1.SelectedDates.Clear();
     }
     public void BindDropdown()
     {
@@ -115,7 +140,6 @@ public partial class Admin_AssignLeaveToEmployee : System.Web.UI.Page
         ddlLeaves.DataValueField = "Id";
         ddlLeaves.DataBind();
     }
-
     protected void lnkDelete_Click(object sender, EventArgs e)
     {
         LinkButton b = (LinkButton)sender;
@@ -130,6 +154,58 @@ public partial class Admin_AssignLeaveToEmployee : System.Web.UI.Page
         using (DBDataHelper objDDBDataHelper = new DBDataHelper())
         {
             ds = objDDBDataHelper.GetDataSet(query, SQLTextType.Query, lstData);
+        }
+    }
+    protected void Calendar1_DayRender(object sender, DayRenderEventArgs e)
+    {
+        if (e.Day.IsSelected == true)
+        {
+            list.Add(e.Day.Date);
+        }
+        Session["SelectedDates"] = list;
+    }
+    protected void Calender1_SelectionChanged(object sender, EventArgs e)
+    {
+        if (Session["SelectedDates"] != null)
+        {
+            List<DateTime> newList = (List<DateTime>)Session["SelectedDates"];
+            int count = 0;
+            foreach (DateTime dt in newList)
+            {
+                Calendar1.SelectedDates.Add(dt);
+                count = LeaveExists(dt);
+            }
+            if (count > 0)
+            {
+                btnAssignLeave.Enabled = false;
+                btnAssignLeave.Text = "Employee On Leave";
+            }
+            list.Clear();
+        }
+    }
+    protected int LeaveExists(DateTime date)
+    {
+        MasterEntries objMasterEntries = new MasterEntries();
+        DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
+
+        List<SqlParameter> lstData = new List<SqlParameter>();
+        lstData.Add(new SqlParameter("@employeeId", Convert.ToInt32(Session["employeeId"])));
+        lstData.Add(new SqlParameter("@date", date));
+        lstData.Add(new SqlParameter("@IsDeleted", Convert.ToInt32(0)));
+
+        DataSet ds;
+        string query = @"SELECT Count(Id) 
+                         FROM tblLeave 
+                         WHERE [Date] = @date
+                         AND EmployeeId = @employeeId 
+                         AND IsDeleted = @IsDeleted";
+
+        using (DBDataHelper objDDBDataHelper = new DBDataHelper())
+        {
+            ds = objDDBDataHelper.GetDataSet(query, SQLTextType.Query, lstData);
+            List<AssignLeaveViewModel> lstLeaves = new List<AssignLeaveViewModel>();
+            int number = Convert.ToInt32(ds.Tables[0].Rows[0][0]);
+            return number;
         }
     }
 }

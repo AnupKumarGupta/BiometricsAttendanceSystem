@@ -60,6 +60,7 @@ public class ManageEmployees
         lstEmployeeDetail.Add(new SqlParameter("@roleId", objEmployee.RoleId));
         lstEmployeeDetail.Add(new SqlParameter("@departmentId", objEmployee.DepartmentId));
         lstEmployeeDetail.Add(new SqlParameter("@contactNumber", objEmployee.ContactNumber));
+        lstEmployeeDetail.Add(new SqlParameter("@weeklyOffDay", objEmployee.WeeklyOffDay));
         DataTable dt = new DataTable();
         try
         {
@@ -117,6 +118,7 @@ public class ManageEmployees
                 objEmployee.DepartmentName = ds.Tables[0].Rows[i][9] == DBNull.Value ? "NULL" : ds.Tables[0].Rows[i][9].ToString();
                 objEmployee.RoleId = ds.Tables[0].Rows[i][10] == DBNull.Value ? new Int32() : Convert.ToInt32(ds.Tables[0].Rows[i][10]); ;
                 objEmployee.RoleName = ds.Tables[0].Rows[i][11] == DBNull.Value ? "NULL" : ds.Tables[0].Rows[i][11].ToString();
+                objEmployee.WeeklyOffDay = ds.Tables[0].Rows[i][12] == DBNull.Value ? 1 : Convert.ToInt32(ds.Tables[0].Rows[i][12]);
                 lstEmployee.Add(objEmployee);
                 i++;
             }
@@ -147,6 +149,7 @@ public class ManageEmployees
             objEmployee.DepartmentName = ds.Tables[0].Rows[i][9] == DBNull.Value ? "NULL" : ds.Tables[0].Rows[i][9].ToString();
             objEmployee.RoleId = ds.Tables[0].Rows[i][10] == DBNull.Value ? new Int32() : Convert.ToInt32(ds.Tables[0].Rows[i][10]); ;
             objEmployee.RoleName = ds.Tables[0].Rows[i][11] == DBNull.Value ? "NULL" : ds.Tables[0].Rows[i][11].ToString();
+            objEmployee.WeeklyOffDay = ds.Tables[0].Rows[i][12] == DBNull.Value ? 1 : Convert.ToInt32(ds.Tables[0].Rows[i][12]);
             return objEmployee;
         }
     }
