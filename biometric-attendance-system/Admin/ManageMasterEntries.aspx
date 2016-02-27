@@ -15,7 +15,7 @@
                 <asp:Button ID="btnDepartments" runat="server" Text="Departments" CssClass="waves-effect waves-ripple btn-large" OnClick="btnDepartments_Click" />
                 <asp:Button ID="btnLeaves" runat="server" Text="Leaves" CssClass="waves-effect waves-ripple btn-large" OnClick="btnLeaves_Click" />
                 <asp:Button ID="btnRoles" runat="server" Text="Roles" CssClass="waves-effect waves-ripple btn-large" OnClick="btnRoles_Click" />
-                <asp:Button ID="btnDuration" runat="server" Text="Duration" CssClass="waves-effect waves-ripple btn-large" OnClick="btnDuration_Click" />
+<%--                <asp:Button ID="btnDuration" runat="server" Text="Duration" CssClass="waves-effect waves-ripple btn-large" OnClick="btnDuration_Click" />--%>
                 <asp:Button ID="btnShifts" runat="server" Text="Shifts" CssClass="waves-effect waves-ripple btn-large" OnClick="btnShifts_Click" />
                 <asp:Button ID="btnReports" runat="server" Text="Reports" CssClass="waves-effect waves-ripple btn-large" OnClick="btnReports_Click" />
             </div>

@@ -383,67 +383,6 @@ public partial class ManageMasterEntries : System.Web.UI.Page
 
     #endregion
 
-    #region Duration
-
-    protected void btnDuration_Click(object sender, EventArgs e)
-    {
-        pnlDepartment.Visible = false;
-        pnlRole.Visible = false;
-        pnlLeave.Visible = false;
-        pnlLeaveAssignedByRole.Visible = false;
-        pnlShifts.Visible = false;
-        pnlDuration.Visible = true;
-        GridDuration();
-    }
-
-    protected void lnkAddDuration_Click(object sender, EventArgs e)
-    {
-        TimeSpan duration = TimeSpan.Parse(ddlSuggestions.SelectedValue);
-        int leaveId = Convert.ToInt32(ddlLeaves.SelectedValue);
-        MasterEntries objMasterEntry = new MasterEntries();
-        objMasterEntry.AddDuration(duration, leaveId);
-        GridDuration();
-    }
-
-    public void GridDuration()
-    {
-        MasterEntries objMasterEntry = new MasterEntries();
-        gvDuration.DataSource = objMasterEntry.GetAllDurations();
-        gvDuration.DataBind();
-    }
-
-    protected void btnUpdateDuration_Click(object sender, EventArgs e)
-    {
-        int Id = Convert.ToInt32(Session["durationId"]);
-        TimeSpan duration = TimeSpan.Parse(txtEditDuration.Text);
-        MasterEntries objMasterEntries = new MasterEntries();
-        objMasterEntries.UpdateDuration(Id, duration);
-        GridDuration();
-        popupEditDuration.Hide();
-    }
-
-    protected void lkbEditDuration_Click(object sender, EventArgs e)
-    {
-        MasterEntries objMasterEntry = new MasterEntries();
-        LinkButton b = (LinkButton)sender;
-        int Id = Convert.ToInt32(b.CommandArgument);
-        TimeSpan editDuration = objMasterEntry.GetDurationById(Id);
-        txtEditDuration.Text = editDuration.ToString();
-        Session["durationId"] = Id;
-        popupEditDuration.Show();
-    }
-
-    protected void lkbDeleteDuration_Click(object sender, EventArgs e)
-    {
-        LinkButton b = (LinkButton)sender;
-        int Id = Convert.ToInt32(b.CommandArgument);
-        MasterEntries objMasterEntry = new MasterEntries();
-        objMasterEntry.DeleteDuration(Id);
-        GridDuration();
-    }
-
-    #endregion
-
     protected void btnEmployee_Click(object sender, EventArgs e)
     {
         Response.Redirect("~/Admin/ViewEmployee.aspx");
