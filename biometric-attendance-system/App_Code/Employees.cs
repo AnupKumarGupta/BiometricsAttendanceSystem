@@ -26,4 +26,5 @@ public class Employees
     public DateTime CreatedOn { get; set; }
     public DateTime UpdatedOn { get; set; }
     public int WeeklyOffDay { get; set; }
+    public int ShiftId { get; set; }
 }
