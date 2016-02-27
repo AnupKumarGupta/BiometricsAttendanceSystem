@@ -514,6 +514,12 @@
                         </div>
                     </div>
                     <div class="row">
+                        <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
+                            <asp:TextBox runat="server" ID="txtSLDuration" placeholder="SL Duration" ValidationGroup="Shifts"></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="rfvTxtSLDuration" ErrorMessage="Required" ControlToValidate="txtSLDuration" runat="server" ForeColor="Red" ValidationGroup="Shifts" />
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col s4 l4 m4 offset-l4 offset-m4 offset-s4">
                             <asp:LinkButton ID="lnkbtnShifts" CssClass="btn waves-effect waves-light col s12 l12 m12" runat="server" OnClick="lnkbtnShifts_Click" ValidationGroup="Shifts">
                                  <i class="material-icons">add </i> Add Shift
@@ -554,6 +560,14 @@
                                         </HeaderTemplate>
                                         <ItemTemplate>
                                             <asp:Label ID="lblSecondHalfEndTiming" runat="server" Text='<%#Eval("SecondHalfEnd")%>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                     <asp:TemplateField>
+                                        <HeaderTemplate>
+                                            <asp:Label Text="SL Duration" runat="server" />
+                                        </HeaderTemplate>
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblSLDuration" runat="server" Text='<%#Eval("SLDuration")%>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField>
@@ -597,7 +611,10 @@
                             <asp:RequiredFieldValidator ID="rfvEditSecondHalfStart" ErrorMessage="Required" ControlToValidate="txtEditSecondHalfStart" runat="server" ForeColor="Red" ValidationGroup="EditShifts" />
                             <asp:TextBox runat="server" ID="txtEditSecondHalfEnd" placeholder="Second Half End Timing"></asp:TextBox>
                             <asp:RequiredFieldValidator ID="rfvEditSecondHalfEnd" ErrorMessage="Required" ControlToValidate="txtEditSecondHalfEnd" runat="server" ForeColor="Red" ValidationGroup="EditShifts" />
-                            <asp:Button ID="btnEditShifts" Text="Update Shifts" OnClick="btnEditShifts_Click" runat="server" ValidationGroup="EditShifts" />
+                           <asp:TextBox runat="server" ID="txtEditSLDuration" placeholder="SL Duration"></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="rfvTxtEditSLDuration" ErrorMessage="Required" ControlToValidate="txtEditSLDuration" runat="server" ForeColor="Red" ValidationGroup="EditShifts" />
+                           
+                             <asp:Button ID="btnEditShifts" Text="Update Shifts" OnClick="btnEditShifts_Click" runat="server" ValidationGroup="EditShifts" />
                         </div>
                     </div>
                 </div>
@@ -605,5 +622,4 @@
             </ContentTemplate>
         </asp:UpdatePanel>
     </asp:Panel>
-
 </asp:Content>

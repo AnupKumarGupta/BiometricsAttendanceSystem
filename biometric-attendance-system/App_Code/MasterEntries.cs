@@ -521,7 +521,7 @@ public class MasterEntries
     /// </summary>
     /// <param name="shift">Shift type object</param>
     /// <returns>True if entry is successfull else False</returns>
-    public bool AddShift(Shifts shift)
+    public bool AddShift(MasterShifts shift)
     {
         DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
         List<SqlParameter> lstShift = new List<SqlParameter>();
@@ -529,6 +529,7 @@ public class MasterEntries
         lstShift.Add(new SqlParameter("@firstHalfEnd", shift.FirstHalfEnd));
         lstShift.Add(new SqlParameter("@secondHalfStart", shift.SecondHalfStart));
         lstShift.Add(new SqlParameter("@secondHalfEnd", shift.SecondHalfEnd));
+        lstShift.Add(new SqlParameter("@slDuration", shift.SLDuration));
         lstShift.Add(new SqlParameter("@isActive", false));
         lstShift.Add(new SqlParameter("@createdOn", DateTime.Now));
         lstShift.Add(new SqlParameter("@updatedOn", DateTime.Now));
@@ -555,7 +556,7 @@ public class MasterEntries
     /// Get all shifts
     /// </summary>
     /// <returns>List of Shifts object</returns>
-    public List<Shifts> GetAllShifts()
+    public List<MasterShifts> GetAllShifts()
     {
         DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
         DataTable dt = new DataTable();
@@ -564,17 +565,18 @@ public class MasterEntries
         using (DBDataHelper objDDBDataHelper = new DBDataHelper())
         {
             ds = objDDBDataHelper.GetDataSet("spGetAllShifts", SQLTextType.Stored_Proc);
-            List<Shifts> lstShifts = new List<Shifts>();
+            List<MasterShifts> lstShifts = new List<MasterShifts>();
 
             foreach (DataRow rows in ds.Tables[0].Rows)
             {
-                Shifts objShifts = new Shifts();
+                MasterShifts objShifts = new MasterShifts();
                 objShifts.Id = Convert.ToInt32(ds.Tables[0].Rows[i][0]);
                 objShifts.FirstHalfStart = TimeSpan.Parse(ds.Tables[0].Rows[i][1].ToString());
                 objShifts.FirstHalfEnd = TimeSpan.Parse(ds.Tables[0].Rows[i][2].ToString());
                 objShifts.SecondHalfStart = TimeSpan.Parse(ds.Tables[0].Rows[i][3].ToString());
                 objShifts.SecondHalfEnd = TimeSpan.Parse(ds.Tables[0].Rows[i][4].ToString());
-                objShifts.IsActive = Convert.ToBoolean(ds.Tables[0].Rows[i][5]);
+                objShifts.SLDuration = TimeSpan.Parse(ds.Tables[0].Rows[i][5].ToString());
+                objShifts.IsActive = Convert.ToBoolean(ds.Tables[0].Rows[i][6]);
                 lstShifts.Add(objShifts);
                 i++;
             }
@@ -582,19 +584,19 @@ public class MasterEntries
         }
     }
 
-    public void GetShiftsById(int Id, out Shifts objShift) //to be edited
+    public void GetShiftsById(int Id, out MasterShifts objShift) //to be edited
     {
         DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
         DataTable dt = new DataTable();
         List<SqlParameter> lst = new List<SqlParameter>();
-        lst.Add(new SqlParameter ("@id",Id));
+        lst.Add(new SqlParameter("@id", Id));
         DataSet ds;
         int i = 0;
-                Shifts objShifts1 = new Shifts();
+        MasterShifts objShifts1 = new MasterShifts();
         using (DBDataHelper objDDBDataHelper = new DBDataHelper())
         {
-            ds = objDDBDataHelper.GetDataSet("spGetShiftsById", SQLTextType.Stored_Proc,lst);
-            List<Shifts> lstShifts = new List<Shifts>();
+            ds = objDDBDataHelper.GetDataSet("spGetShiftsById", SQLTextType.Stored_Proc, lst);
+            List<MasterShifts> lstShifts = new List<MasterShifts>();
 
             foreach (DataRow rows in ds.Tables[0].Rows)
             {
@@ -603,13 +605,14 @@ public class MasterEntries
                 objShifts1.FirstHalfEnd = TimeSpan.Parse(ds.Tables[0].Rows[i][2].ToString());
                 objShifts1.SecondHalfStart = TimeSpan.Parse(ds.Tables[0].Rows[i][3].ToString());
                 objShifts1.SecondHalfEnd = TimeSpan.Parse(ds.Tables[0].Rows[i][4].ToString());
+                objShifts1.SLDuration = TimeSpan.Parse(ds.Tables[0].Rows[i][5].ToString());
                 i++;
             }
             objShift = objShifts1;
         }
     }
 
-    public bool UpdateShifts(int shiftId, Shifts objShift) 
+    public bool UpdateShifts(int shiftId, MasterShifts objShift)
     {
         DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
         List<SqlParameter> lstShift = new List<SqlParameter>();
@@ -618,6 +621,7 @@ public class MasterEntries
         lstShift.Add(new SqlParameter("@firstHalfEnd", objShift.FirstHalfEnd));
         lstShift.Add(new SqlParameter("@secondHalfStart", objShift.SecondHalfStart));
         lstShift.Add(new SqlParameter("@secondHalfEnd", objShift.SecondHalfEnd));
+        lstShift.Add(new SqlParameter("@slDuration", objShift.SLDuration));
         lstShift.Add(new SqlParameter("@updatedOn", DateTime.Now));
         DataTable dt = new DataTable();
         DataSet ds;
