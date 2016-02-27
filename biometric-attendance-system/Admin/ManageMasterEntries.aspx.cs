@@ -18,7 +18,7 @@ public partial class ManageMasterEntries : System.Web.UI.Page
             pnlLeaveAssignedByRole.Visible = false;
             pnlDepartment.Visible = false;
             pnlLeave.Visible = false;
-            pnlDuration.Visible = false;
+           // pnlDuration.Visible = false;
             pnlRole.Visible = false;
             pnlShifts.Visible = false;
         }
@@ -33,7 +33,7 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         pnlLeave.Visible = false;
         pnlRole.Visible = false;
         pnlShifts.Visible = false;
-        pnlDuration.Visible = false;
+       // pnlDuration.Visible = false;
         grdDepartmentBind();
     }
 
@@ -130,7 +130,7 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         pnlLeave.Visible = true;
         pnlRole.Visible = false;
         pnlShifts.Visible = false;
-        pnlDuration.Visible = false;
+       // pnlDuration.Visible = false;
         grdLeaveBind();
     }
 
@@ -163,7 +163,7 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         pnlRole.Visible = true;
         pnlLeave.Visible = false;
         pnlShifts.Visible = false;
-        pnlDuration.Visible = false;
+       // pnlDuration.Visible = false;
         grdRoleBind();
     }
 
@@ -226,7 +226,7 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         pnlRole.Visible = false;
         pnlLeave.Visible = false;
         pnlLeaveAssignedByRole.Visible = false;
-        pnlDuration.Visible = false;
+      //  pnlDuration.Visible = false;
         pnlShifts.Visible = true;
         grdShiftsBind();
     }

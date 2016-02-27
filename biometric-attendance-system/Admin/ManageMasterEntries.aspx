@@ -401,7 +401,7 @@
         </asp:UpdatePanel>
     </asp:Panel>
 
-    <asp:Panel ID="pnlDuration" runat="server" Visible="false">
+   <%-- <asp:Panel ID="pnlDuration" runat="server" Visible="false">
         <div>
             <asp:UpdatePanel ID="upnlDuration" runat="server">
                 <ContentTemplate>
@@ -464,9 +464,9 @@
                 </ContentTemplate>
             </asp:UpdatePanel>
         </div>
-    </asp:Panel>
+    </asp:Panel>--%>
 
-    <asp:Panel ID="pnlEditDuration" runat="server" DefaultButton="lkbClose6" CssClass="modalPopup" Style="display: none; width: 61% !important; height: auto;">
+  <%--  <asp:Panel ID="pnlEditDuration" runat="server" DefaultButton="lkbClose6" CssClass="modalPopup" Style="display: none; width: 61% !important; height: auto;">
         <asp:Button ID="btnforPopupRef6" runat="server" Style="display: none" />
         <cc1:ModalPopupExtender ID="popupEditDuration" runat="server" Enabled="True" TargetControlID="btnforPopupRef6"
             CancelControlID="lkbClose6" PopupControlID="pnlEditDuration" BackgroundCssClass="modalBackground">
@@ -487,7 +487,7 @@
                 <div class="modal-footer"></div>
             </ContentTemplate>
         </asp:UpdatePanel>
-    </asp:Panel>
+    </asp:Panel>--%>
 
     <asp:Panel ID="pnlShifts" runat="server" Visible="false">
         <div>
