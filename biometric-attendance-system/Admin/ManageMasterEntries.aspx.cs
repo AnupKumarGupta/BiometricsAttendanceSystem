@@ -211,11 +211,12 @@ public partial class ManageMasterEntries : System.Web.UI.Page
     protected void lnkbtnShifts_Click(object sender, EventArgs e)
     {
         MasterShifts objShift = new MasterShifts();
+        objShift.Name = txtName.Text;
         objShift.FirstHalfStart = TimeSpan.Parse(txtFirstHalfStart.Text);
         objShift.FirstHalfEnd = TimeSpan.Parse(txtFirstHalfEnd.Text);
         objShift.SecondHalfStart = TimeSpan.Parse(txtSecondHalfStart.Text);
         objShift.SecondHalfEnd = TimeSpan.Parse(txtSecondHalfEnd.Text);
-        objShift.SLDuration = TimeSpan.Parse(txtSLDuration.Text);
+        objShift.SHLDuration = TimeSpan.Parse(txtSLDuration.Text);
         MasterEntries objMasterEntry = new MasterEntries();
         objMasterEntry.AddShift(objShift);
         grdShiftsBind();
@@ -245,11 +246,12 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         MasterShifts objShift = new MasterShifts();
         objMasterEntry.GetShiftsById(Id, out objShift);
         Session["shiftId"] = Id;
+        txtEditName.Text = objShift.Name.ToString();
         txtEditFirstHalfStart.Text = objShift.FirstHalfStart.ToString();
         txtEditFirstHalfEnd.Text = objShift.FirstHalfEnd.ToString();
         txtEditSecondHalfStart.Text = objShift.SecondHalfStart.ToString();
         txtEditSecondHalfEnd.Text = objShift.SecondHalfEnd.ToString();
-        txtEditSLDuration.Text = objShift.SLDuration.ToString();
+        txtEditSLDuration.Text = objShift.SHLDuration.ToString();
         popupEditShifts.Show();
     }
 
@@ -258,11 +260,12 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         MasterEntries objMasterEntry = new MasterEntries();
         int Id = Convert.ToInt32(Session["shiftId"]);
         MasterShifts objShift = new MasterShifts();
+        objShift.Name = txtEditName.Text;
         objShift.FirstHalfStart = TimeSpan.Parse(txtEditFirstHalfStart.Text);
         objShift.FirstHalfEnd = TimeSpan.Parse(txtEditFirstHalfEnd.Text);
         objShift.SecondHalfStart = TimeSpan.Parse(txtEditSecondHalfStart.Text);
         objShift.SecondHalfEnd = TimeSpan.Parse(txtEditSecondHalfEnd.Text);
-        objShift.SLDuration = TimeSpan.Parse(txtEditSecondHalfEnd.Text);
+        objShift.SHLDuration = TimeSpan.Parse(txtEditSecondHalfEnd.Text);
         objMasterEntry.UpdateShifts(Id, objShift);
         grdShiftsBind();
         popupEditShifts.Hide();

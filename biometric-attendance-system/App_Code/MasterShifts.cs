@@ -9,10 +9,11 @@ using System.Web;
 public class MasterShifts
 {
     public int Id { get; set; }
+    public string Name { get; set; }
     public TimeSpan FirstHalfStart { get; set; }
     public TimeSpan FirstHalfEnd { get; set; }
     public TimeSpan SecondHalfStart { get; set; }
     public TimeSpan SecondHalfEnd { get; set; }
-    public TimeSpan SLDuration { get; set; }
+    public TimeSpan SHLDuration { get; set; }
     public bool IsActive { get; set; }
 }

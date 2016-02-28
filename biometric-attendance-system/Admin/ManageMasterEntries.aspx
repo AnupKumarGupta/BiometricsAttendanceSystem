@@ -495,6 +495,10 @@
                 <ContentTemplate>
                     <div class="row">
                         <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
+                            <asp:TextBox runat="server" ID="txtName" placeholder="Shift Name" ValidationGroup="Shifts"></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="rfvTxtName" ErrorMessage="Required" ControlToValidate="txtName" runat="server" ForeColor="Red" ValidationGroup="Shifts" />
+                        </div>
+                        <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
                             <asp:TextBox runat="server" ID="txtFirstHalfStart" placeholder="First Half Start Timing" ValidationGroup="Shifts"></asp:TextBox>
                             <asp:RequiredFieldValidator ID="rfvFirstHalfStart" ErrorMessage="Required" ControlToValidate="txtFirstHalfStart" runat="server" ForeColor="Red" ValidationGroup="Shifts" />
                         </div>
@@ -532,6 +536,14 @@
                                 <Columns>
                                     <asp:TemplateField>
                                         <HeaderTemplate>
+                                            <asp:Label Text="Name" runat="server" />
+                                        </HeaderTemplate>
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblName" runat="server" Text='<%#Eval("Name")%>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField>
+                                        <HeaderTemplate>
                                             <asp:Label Text="First Half Start Timing" runat="server" />
                                         </HeaderTemplate>
                                         <ItemTemplate>
@@ -567,7 +579,7 @@
                                             <asp:Label Text="SL Duration" runat="server" />
                                         </HeaderTemplate>
                                         <ItemTemplate>
-                                            <asp:Label ID="lblSLDuration" runat="server" Text='<%#Eval("SLDuration")%>'></asp:Label>
+                                            <asp:Label ID="lblSLDuration" runat="server" Text='<%#Eval("SHLDuration")%>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField>
@@ -603,6 +615,8 @@
                     </div>
                     <div style="min-height: 120px; width: 100%">
                         <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
+                            <asp:TextBox runat="server" ID="txtEditName" placeholder="Edit Name"></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" ErrorMessage="Required" ControlToValidate="txtEditName" runat="server" ForeColor="Red" ValidationGroup="EditShifts" />
                             <asp:TextBox runat="server" ID="txtEditFirstHalfStart" placeholder="First Half Start Timing"></asp:TextBox>
                             <asp:RequiredFieldValidator ID="rfvEditFirstHalfStart" ErrorMessage="Required" ControlToValidate="txtEditFirstHalfStart" runat="server" ForeColor="Red" ValidationGroup="EditShifts" />
                             <asp:TextBox runat="server" ID="txtEditFirstHalfEnd" placeholder="First Half End Timing"></asp:TextBox>
