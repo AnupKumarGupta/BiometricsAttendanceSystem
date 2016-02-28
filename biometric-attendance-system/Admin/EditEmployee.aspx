@@ -46,23 +46,38 @@
         </div>
         <br />
         <br />
+        <div class="row">
+            <div class="col s8 m3 l2 offset-s2 offset-m4 offset-l4">
+                <asp:TextBox runat="server" ID="txtContactNumber" placeholder="Contact Number">
+                </asp:TextBox>
+                <%--                <asp:RequiredFieldValidator SetFocusOnError="true" ErrorMessage=" Required" ControlToValidate="txtContactNumber" CssClass="input-field btn grey lighten-4 teal-text" runat="server" />--%>
+                <%--                <asp:RegularExpressionValidator SetFocusOnError="true" runat="server" ControlToValidate="txtContactNumber" ErrorMessage=" Invalid Mobile Number" CssClass="input-field btn grey lighten-4 teal-text" ValidationExpression="^([0-9]*){10}$"></asp:RegularExpressionValidator>--%>
+            </div>
+            <div class="col s8 m3 l2 offset-s2">
+                <asp:DropDownList ID="ddlShifts" runat="server" Visible="true" CssClass="input-field btn grey lighten-4 teal-text">
+                </asp:DropDownList>
+            </div>
+        </div>
+
+        <br />
+        <center></center>
         <div class="col s8 m6 l4 offset-s2 offset-m4 offset-l4">
             <asp:RadioButton ID="rdrbtnFemale" GroupName="Gender" Text="Female" CssClass="with-gap" Checked="true" runat="server" />
-            <asp:RadioButton ID="rdrbtnMale" GroupName="Gender" Text="Male" CssClass="with-gap" runat="server" />
+            &nbsp;
+                    <asp:RadioButton ID="rdrbtnMale" GroupName="Gender" Text="Male" CssClass="with-gap" runat="server" />
         </div>
-        <div class="col s8 m6 l4 offset-s2 offset-m4 offset-l4">
-            <asp:TextBox runat="server" ID="txtContactNumber" placeholder="Contact Number">
-            </asp:TextBox>
-            <asp:RequiredFieldValidator SetFocusOnError="true" ErrorMessage=" Required" ControlToValidate="txtContactNumber" CssClass="input-field btn grey lighten-4 teal-text" runat="server" />
-            <asp:RegularExpressionValidator SetFocusOnError="true" runat="server" ControlToValidate="txtContactNumber" ErrorMessage=" Invalid Mobile Number" CssClass="input-field btn grey lighten-4 teal-text" ValidationExpression="^([0-9]*){10}$"></asp:RegularExpressionValidator>
-        </div>
+        </center>
         <br />
         <br />
-        <div class="col s8 m6 l4 offset-s2 offset-m4 offset-l4">
-            <asp:LinkButton ID="lnkUpdateEmployee" runat="server" CssClass="btn waves-teal" OnClick="lnkUpdateEmployee_Click">
-            Update Employee
-            </asp:LinkButton>
-        </div>
+        <br />
+        <br />
+        <center>
+                 <div class="col s8 m6 l4 offset-s2 offset-m4 offset-l4">
+                        <asp:LinkButton ID="lnkUpdateEmployee" runat="server" CssClass="btn waves-teal" OnClick="lnkUpdateEmployee_Click">
+                                Update Employee
+                        </asp:LinkButton>
+                 </div>
+        </center>
     </div>
 </asp:Content>
 

@@ -47,6 +47,10 @@ public partial class Admin_EditEmployee : System.Web.UI.Page
         ddlRoles.DataTextField = "Name";
         ddlRoles.DataValueField = "Id";
         ddlRoles.DataBind();
+        ddlShifts.DataSource = objMasterEntries.GetAllShifts();
+        ddlShifts.DataTextField = "Id";
+        ddlShifts.DataValueField = "Id";
+        ddlShifts.DataBind();
     }
     protected void setControlValues()
     {
@@ -60,5 +64,6 @@ public partial class Admin_EditEmployee : System.Web.UI.Page
         ddlDepartments.SelectedValue = objEmployee.DepartmentId.ToString();
         ddlRoles.SelectedValue = objEmployee.RoleId.ToString();
         ddlDays.SelectedValue = objEmployee.WeeklyOffDay.ToString();
+        ddlShifts.SelectedValue = objEmployee.ShiftId.ToString();
     }
 }
