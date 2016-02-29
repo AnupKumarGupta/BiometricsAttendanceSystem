@@ -1145,7 +1145,7 @@ public class ManageReports
         {
             List<SqlParameter> list_params_Assigned = new List<SqlParameter>()
             {   new SqlParameter("@employeeId", employeeId), 
-                new SqlParameter("@sessionStartDate", sessionEndDate),
+                new SqlParameter("@sessionStartDate", sessionStartDate),
                 new SqlParameter("@sessionEndDate", sessionEndDate)
             };
             dtAssignedLeaves = helper.GetDataTable("spGetLeavesAssignedToEmployeeSessionWise", SQLTextType.Stored_Proc, list_params_Assigned);
@@ -1165,15 +1165,15 @@ public class ManageReports
         {
             DateTime SessionStartDate = new DateTime();
             DateTime SessionEndDate = new DateTime();
-            if (startDate.Month > 7)
+            if (Date.Month > 7)
             {
-                SessionStartDate = new DateTime(startDate.Year, 08, 01);
-                SessionEndDate = new DateTime(startDate.Year + 1, 07, 31);
+                SessionStartDate = new DateTime(Date.Year, 08, 01);
+                SessionEndDate = new DateTime(Date.Year + 1, 07, 31);
             }
             else
             {
-                SessionStartDate = new DateTime(startDate.Year - 1, 08, 01);
-                SessionEndDate = new DateTime(startDate.Year, 07, 31);
+                SessionStartDate = new DateTime(Date.Year - 1, 08, 01);
+                SessionEndDate = new DateTime(Date.Year, 07, 31);
             }
 
             List<SqlParameter> list_params = new List<SqlParameter>()
@@ -1181,7 +1181,7 @@ public class ManageReports
                 new SqlParameter("@employeeId", employeeId), 
                 new SqlParameter("@sessionStart", SessionStartDate), 
                 new SqlParameter("@sessionEnd", SessionEndDate), 
-                new SqlParameter("@monthStartDate", startDate)
+                new SqlParameter("@monthStartDate", Date)
             };
 
             dtLeavesAvailed = helper.GetDataTable("spGetLeavesAvailedUptoPreviousMonthEmployeeWise", SQLTextType.Stored_Proc, list_params);
@@ -1374,7 +1374,6 @@ public class ManageReports
         }
         return lstLeaveAssignedRecord;
     }
-
     public bool UpdateLeavesAssignedPerSessionEmployeeWise(LeaveAssignedPerSession objLeaveAssignedPerSession, DateTime sessionStartDate, DateTime sessionEndDate)
     {
         DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
