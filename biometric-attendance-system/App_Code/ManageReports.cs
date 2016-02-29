@@ -1129,28 +1129,11 @@ public class ManageReports
 
     #region Leave Balance Table
 
-    public List<LeavesCount> GetLeavesAssignedPerSessionEmployeeWise(int employeeId, DateTime startDate)
-    {
-        DataTable dtAssignedLeaves;
-        DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
-        List<LeavesCount> lstLeavesAssigned = new List<LeavesCount>();
-
-        using (DBDataHelper helper = new DBDataHelper())
-        {
-            List<SqlParameter> list_params_Assigned = new List<SqlParameter>() { new SqlParameter("@employeeId", employeeId), new SqlParameter("@session", startDate) };
-            dtAssignedLeaves = helper.GetDataTable("spGetLeavesAssignedToEmployeeSessionWise", SQLTextType.Stored_Proc, list_params_Assigned);
-            foreach (DataRow row in dtAssignedLeaves.Rows)
-            {
-                LeavesCount objLeavesCount = new LeavesCount();
-                objLeavesCount.LeaveId = row[0] == DBNull.Value ? 0 : Int32.Parse(row[0].ToString());
-                objLeavesCount.LeaveName = row[1] == DBNull.Value ? "" : row[1].ToString();
-                objLeavesCount.LeaveCount = row[2] == DBNull.Value ? 0 : Int32.Parse(row[2].ToString());
-                lstLeavesAssigned.Add(objLeavesCount);
-            }
-        }
-        return lstLeavesAssigned;
-    }
-    public List<LeavesCount> GetLeavesDueOfEmployee(int employeeId, DateTime startDate)
+    ///
+    ///
+    ///
+    /// TO BE DONE EDITING
+    public List<LeavesCount> GetLeavesDueOfEmployee(int employeeId, DateTime Date)
     {
         DataTable dtAssignedLeaves, dtLeavesAvailed;
         DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
@@ -1159,9 +1142,16 @@ public class ManageReports
         List<LeavesCount> lstLeavesDue = new List<LeavesCount>();
 
         #region Leaves Assigned Count
+        DateTime sessionStartDate = (Date.Month >= 8) ? new DateTime(Date.Year, 8, 01) : new DateTime(Date.Year - 1, 8, 01);
+        DateTime sessionEndDate = (Date.Month <= 7) ? new DateTime(Date.Year, 7, 31) : new DateTime(Date.Year + 1, 7, 31);
+
         using (DBDataHelper helper = new DBDataHelper())
         {
-            List<SqlParameter> list_params_Assigned = new List<SqlParameter>() { new SqlParameter("@employeeId", employeeId), new SqlParameter("@session", startDate) };
+            List<SqlParameter> list_params_Assigned = new List<SqlParameter>()
+            {   new SqlParameter("@employeeId", employeeId), 
+                new SqlParameter("@sessionStartDate", sessionEndDate),
+                new SqlParameter("@sessionEndDate", sessionEndDate)
+            };
             dtAssignedLeaves = helper.GetDataTable("spGetLeavesAssignedToEmployeeSessionWise", SQLTextType.Stored_Proc, list_params_Assigned);
             foreach (DataRow row in dtAssignedLeaves.Rows)
             {
@@ -1316,6 +1306,54 @@ public class ManageReports
         }
         return lstLeavesBalanceRecord;
     }
+
+    #endregion
+
+    #region Update Leave Balance
+    public void UpdateLeaveBalanceTable(DateTime OldSessionStartDate, DateTime OldSessionEndDate, DateTime NewSessionStartDate, DateTime NewSessionEndDate)
+    {
+        MasterEntries objMasterEntries = new MasterEntries();
+        List<Departments> lstDepartments = objMasterEntries.GetAllDepartments();
+        foreach (var item in lstDepartments)
+        {
+            //List<LeavesBalanceRecord> lst = GetDataForMonthlyLeaveBalanceTable();
+
+        }
+    }
+
+    #endregion
+
+    #endregion
+
+    #region New Code v2.0
+    public List<LeavesCount> GetLeavesAssignedPerSessionEmployeeWise(int employeeId, DateTime Date)
+    {
+        DataTable dtAssignedLeaves;
+        DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
+        List<LeavesCount> lstLeavesAssigned = new List<LeavesCount>();
+
+        DateTime sessionStartDate = (Date.Month >= 8) ? new DateTime(Date.Year, 8, 01) : new DateTime(Date.Year - 1, 8, 01);
+        DateTime sessionEndDate = (Date.Month <= 7) ? new DateTime(Date.Year, 7, 31) : new DateTime(Date.Year + 1, 7, 31);
+
+        using (DBDataHelper helper = new DBDataHelper())
+        {
+            List<SqlParameter> list_params_Assigned = new List<SqlParameter>()
+            {   new SqlParameter("@employeeId", employeeId), 
+                new SqlParameter("@sessionStartDate", sessionEndDate),
+                new SqlParameter("@sessionEndDate", sessionEndDate)
+            };
+            dtAssignedLeaves = helper.GetDataTable("spGetLeavesAssignedToEmployeeSessionWise", SQLTextType.Stored_Proc, list_params_Assigned);
+            foreach (DataRow row in dtAssignedLeaves.Rows)
+            {
+                LeavesCount objLeavesCount = new LeavesCount();
+                objLeavesCount.LeaveId = row[0] == DBNull.Value ? 0 : Int32.Parse(row[0].ToString());
+                objLeavesCount.LeaveName = row[1] == DBNull.Value ? "" : row[1].ToString();
+                objLeavesCount.LeaveCount = row[2] == DBNull.Value ? 0 : Int32.Parse(row[2].ToString());
+                lstLeavesAssigned.Add(objLeavesCount);
+            }
+        }
+        return lstLeavesAssigned;
+    }
     public List<LeaveAssignedRecord> GetLeavesAssignedPerSession(int departmentId, DateTime startDate)
     {
         DataTable dtAssignedLeaves;
@@ -1340,21 +1378,6 @@ public class ManageReports
         }
         return lstLeaveAssignedRecord;
     }
-    #endregion
-
-    #region Update Leave Balance
-    public void UpdateLeaveBalanceTable(DateTime OldSessionStartDate, DateTime OldSessionEndDate, DateTime NewSessionStartDate, DateTime NewSessionEndDate)
-    {
-        MasterEntries objMasterEntries = new MasterEntries();
-        List<Departments> lstDepartments = objMasterEntries.GetAllDepartments();
-        foreach (var item in lstDepartments)
-        {
-            //List<LeavesBalanceRecord> lst = GetDataForMonthlyLeaveBalanceTable();
-
-        }
-    }
-
-    #endregion
 
     #endregion
 }

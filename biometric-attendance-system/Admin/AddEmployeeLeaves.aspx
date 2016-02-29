@@ -9,11 +9,14 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-   Employee Id <asp:TextBox ID="txtEmployeeId" runat="server" />
-  <%--  <asp:DropDownList ID="ddlShowLeaves" runat="server" AppendDataBoundItems="true" AutoPostBack="true" CssClass="dropdown-button btn 12 m2 s2" OnSelectedIndexChanged="ddlShowDepartment_SelectedIndexChanged">
+    <%--  
+        <asp:DropDownList ID="ddlShowLeaves" runat="server" AppendDataBoundItems="true" AutoPostBack="true" CssClass="dropdown-button btn 12 m2 s2" OnSelectedIndexChanged="ddlShowDepartment_SelectedIndexChanged">
         <asp:ListItem Value="0">--Select Department--</asp:ListItem>
-    </asp:DropDownList>--%>
-  <%--  <asp:GridView ID="grid1" runat="server" AutoGenerateColumns="false" Width="100%" OnRowDataBound="grid1_RowDataBound">
+    </asp:DropDownList>
+    --%>
+
+    <%--  
+      <asp:GridView ID="grid1" runat="server" AutoGenerateColumns="false" Width="100%" OnRowDataBound="grid1_RowDataBound">
         <Columns>
             <asp:BoundField DataField="EmployeeId" HeaderText="Id" />
             <asp:BoundField DataField="EmployeeName" HeaderText="Name" />
@@ -28,6 +31,7 @@
                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>
-    </asp:GridView>--%>
+    </asp:GridView>
+    --%>
 </asp:Content>
 
