@@ -26,6 +26,14 @@
                     </asp:GridView>
                 </ItemTemplate>
             </asp:TemplateField>
+            <asp:TemplateField>
+                <HeaderTemplate>
+                    <asp:Label ID="lblAction" Text="Edit" runat="server" />
+                </HeaderTemplate>
+                <ItemTemplate>
+                    <%--<asp:LinkButton ID="lkbEditLeaveAssingedByRole" Text="Edit" OnClick="lkbEditLeaveAssingedByRole_Click" CommandArgument='<%#Eval("Id")%>' runat="server" />--%>
+                </ItemTemplate>
+            </asp:TemplateField>
         </Columns>
     </asp:GridView>
 </asp:Content>
