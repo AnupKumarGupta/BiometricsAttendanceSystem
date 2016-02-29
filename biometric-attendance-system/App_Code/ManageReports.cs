@@ -1129,10 +1129,6 @@ public class ManageReports
 
     #region Leave Balance Table
 
-    ///
-    ///
-    ///
-    /// TO BE DONE EDITING
     public List<LeavesCount> GetLeavesDueOfEmployee(int employeeId, DateTime Date)
     {
         DataTable dtAssignedLeaves, dtLeavesAvailed;
@@ -1379,5 +1375,29 @@ public class ManageReports
         return lstLeaveAssignedRecord;
     }
 
+    public bool UpdateLeavesAssignedPerSessionEmployeeWise(LeaveAssignedPerSession objLeaveAssignedPerSession, DateTime sessionStartDate, DateTime sessionEndDate)
+    {
+        DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
+       
+        List<SqlParameter> lstParams = new List<SqlParameter>();
+
+        lstParams.Add(new SqlParameter("@employeeId", objLeaveAssignedPerSession.EmployeeId));
+        lstParams.Add(new SqlParameter("@leaveTypeId", objLeaveAssignedPerSession.leaveType));
+        lstParams.Add(new SqlParameter("@noOfLeaves", objLeaveAssignedPerSession.leaveCount));
+        lstParams.Add(new SqlParameter("@sessionStartDate", sessionStartDate));
+        lstParams.Add(new SqlParameter("@sessionEndDate", sessionEndDate));
+        try
+        {
+            using (DBDataHelper objDDBDataHelper = new DBDataHelper())
+            {
+                objDDBDataHelper.ExecSQL("spUpdateLeavesAssignedPerSession", SQLTextType.Stored_Proc, lstParams);
+            }
+            return true;
+        }
+        catch (Exception ex)
+        {
+            return false;
+        }
+    }
     #endregion
 }
