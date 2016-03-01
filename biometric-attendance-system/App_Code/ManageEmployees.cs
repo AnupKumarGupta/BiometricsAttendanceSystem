@@ -178,7 +178,6 @@ public class ManageEmployees
             return objEmployee;
         }
     }
-
     public List<Employees> GetEmployeesByRole(int roleId)
     {
         DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
