@@ -43,4 +43,17 @@ public partial class Admin_ViewEmployeeLeaves : System.Web.UI.Page
         }
     }
 
+
+    protected void lkbEditLeaveAssinged_Click(object sender, EventArgs e)
+    {
+        popupEditLeaveAssigned.Show();
+        LinkButton b = (LinkButton)sender;
+        int departmentId = Convert.ToInt32(ddlShowDepartment.SelectedValue);
+        ManageReports objManageReports = new ManageReports();
+        lstLeaveAssignedRecord = objManageReports.GetLeavesAssignedPerSession(departmentId, DateTime.Now);
+        int Id = Convert.ToInt32(b.CommandArgument);
+        var y = lstLeaveAssignedRecord.Select(x => x).Where(d => d.EmployeeId == Id).FirstOrDefault();
+        EditgvLeaves.DataSource = y.lstAssignedRecord;
+        EditgvLeaves.DataBind();
+    }
 }
