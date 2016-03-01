@@ -417,10 +417,39 @@ public class ManageLeaves
 
         return lstLeavesOldStockViewModel;
     }
-    
+
     #endregion
 
-    #region 
-    
+    #region Code v2.0
+
+    public List<LeavesCount> GetLeavesCountAssignedByRole(int roleId)
+    {
+        DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
+        DataSet ds;
+        int i = 0;
+        using (DBDataHelper objDDBDataHelper = new DBDataHelper())
+        {
+            string query = @"SELECT LeaveTypeId,NoOfLeaves 
+                             FROM tblLeaveAssignedByRole
+                             WHERE RoleId = 1  AND
+                                   IsDeleted = 0";
+
+            ds = objDDBDataHelper.GetDataSet(query, SQLTextType.Query);
+
+            List<LeavesCount> lstLeavesCount = new List<LeavesCount>();
+
+            foreach (DataRow rows in ds.Tables[0].Rows)
+            {
+                LeavesCount objLeavesCount = new LeavesCount();
+
+                objLeavesCount.LeaveId = Convert.ToInt32(ds.Tables[0].Rows[i][0]);
+                objLeavesCount.LeaveCount = Convert.ToInt32(ds.Tables[0].Rows[i][1]);
+                lstLeavesCount.Add(objLeavesCount);
+                i++;
+            }
+            return lstLeavesCount;
+        }
+    }
+
     #endregion
 }
