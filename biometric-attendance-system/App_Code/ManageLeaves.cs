@@ -451,5 +451,17 @@ public class ManageLeaves
         }
     }
 
+    public bool UpdateLeavesAssginedPerSessionRoleWise(DateTime Session)
+    {
+        MasterEntries objMasterEntries = new MasterEntries();
+        List<Role> lstRole = new List<Role>();
+        lstRole =  objMasterEntries.GetAllRoles();
+
+        foreach (Role role in lstRole)
+        {
+            //List<LeavesCount> GetLeavesCountAssignedByRole
+        }
+        return true;
+    }
     #endregion
 }
