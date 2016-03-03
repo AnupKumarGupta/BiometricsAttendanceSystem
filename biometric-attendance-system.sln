@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "biometric-attendance-system", "http://localhost:52190", "{C7523DD8-38F1-4A3A-85A5-81FCF1AAA8A8}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "biometric-attendance-system(3)", "http://localhost:52190", "{C7523DD8-38F1-4A3A-85A5-81FCF1AAA8A8}"
 	ProjectSection(WebsiteProperties) = preProject
 		UseIISExpress = "true"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
@@ -24,6 +24,27 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "biometric-attendance-system
 		SlnRelativePath = "biometric-attendance-system\"
 	EndProjectSection
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Connection", "http://localhost:6312", "{596275BC-1C4A-4896-B99B-8F00C23EE97B}"
+	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "true"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_6312"
+		Debug.AspNetCompiler.PhysicalPath = "Connection\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_6312\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_6312"
+		Release.AspNetCompiler.PhysicalPath = "Connection\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_6312\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "Connection\"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +52,8 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C7523DD8-38F1-4A3A-85A5-81FCF1AAA8A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C7523DD8-38F1-4A3A-85A5-81FCF1AAA8A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{596275BC-1C4A-4896-B99B-8F00C23EE97B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{596275BC-1C4A-4896-B99B-8F00C23EE97B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
