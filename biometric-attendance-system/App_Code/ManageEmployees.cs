@@ -178,5 +178,31 @@ public class ManageEmployees
             return objEmployee;
         }
     }
+    public List<Employees> GetEmployeesByRole(int roleId)
+    {
+        DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
+        DataSet ds;
+        using (DBDataHelper objDDBDataHelper = new DBDataHelper())
+        {
+            List<SqlParameter> lstEmployeeDetail = new List<SqlParameter>();
+            lstEmployeeDetail.Add(new SqlParameter("@roleId", roleId));
+            ds = objDDBDataHelper.GetDataSet("spGetAllEmployeesByRole", SQLTextType.Stored_Proc, lstEmployeeDetail);
+            List<Employees> lstEmployee = new List<Employees>();
+            int i = 0;
+            foreach (DataRow rows in ds.Tables[0].Rows)
+            {
+                Employees objEmployee = new Employees();
+                objEmployee.Id = Convert.ToInt32(ds.Tables[0].Rows[i][0]);
+                objEmployee.Name = ds.Tables[0].Rows[i][1].ToString();
+                objEmployee.RoleId = Convert.ToInt32(ds.Tables[0].Rows[i][2]);
+                objEmployee.RoleName = ds.Tables[0].Rows[i][3].ToString();
+                objEmployee.DepartmentId = Convert.ToInt32(ds.Tables[0].Rows[i][4]);
+                objEmployee.DepartmentName = ds.Tables[0].Rows[i][5].ToString();
+                lstEmployee.Add(objEmployee);
+                i++;
+            }
+            return lstEmployee;
+        }
+    }
 
 }
