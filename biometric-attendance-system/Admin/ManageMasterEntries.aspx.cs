@@ -20,6 +20,7 @@ public partial class ManageMasterEntries : System.Web.UI.Page
             pnlLeave.Visible = false;
            // pnlDuration.Visible = false;
             pnlRole.Visible = false;
+        pnlSession.Visible = false;
             pnlShifts.Visible = false;
         }
     }
@@ -33,7 +34,8 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         pnlLeave.Visible = false;
         pnlRole.Visible = false;
         pnlShifts.Visible = false;
-       // pnlDuration.Visible = false;
+        // pnlDuration.Visible = false;
+        pnlSession.Visible = false;
         grdDepartmentBind();
     }
 
@@ -130,7 +132,8 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         pnlLeave.Visible = true;
         pnlRole.Visible = false;
         pnlShifts.Visible = false;
-       // pnlDuration.Visible = false;
+        pnlSession.Visible = false;
+        // pnlDuration.Visible = false;
         grdLeaveBind();
     }
 
@@ -162,6 +165,7 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         pnlDepartment.Visible = false;
         pnlRole.Visible = true;
         pnlLeave.Visible = false;
+        pnlSession.Visible = false;
         pnlShifts.Visible = false;
        // pnlDuration.Visible = false;
         grdRoleBind();
@@ -226,6 +230,7 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         pnlDepartment.Visible = false;
         pnlRole.Visible = false;
         pnlLeave.Visible = false;
+        pnlSession.Visible = false;
         pnlLeaveAssignedByRole.Visible = false;
       //  pnlDuration.Visible = false;
         pnlShifts.Visible = true;
@@ -405,14 +410,14 @@ public partial class ManageMasterEntries : System.Web.UI.Page
     }
 
 
-
-
-
-
-
-
-
-
-   
+    protected void btnSession_Click(object sender, EventArgs e)
+    {
+        pnlLeaveAssignedByRole.Visible = false;
+        pnlDepartment.Visible = false;
+        pnlRole.Visible = false;
+        pnlLeave.Visible = false;
+        pnlSession.Visible = true;
+        pnlShifts.Visible = false;
+    }
 }
 

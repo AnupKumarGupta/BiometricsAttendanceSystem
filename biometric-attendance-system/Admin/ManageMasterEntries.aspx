@@ -17,6 +17,7 @@
                 <asp:Button ID="btnRoles" runat="server" Text="Roles" CssClass="waves-effect waves-ripple btn-large" OnClick="btnRoles_Click" />
 <%--                <asp:Button ID="btnDuration" runat="server" Text="Duration" CssClass="waves-effect waves-ripple btn-large" OnClick="btnDuration_Click" />--%>
                 <asp:Button ID="btnShifts" runat="server" Text="Shifts" CssClass="waves-effect waves-ripple btn-large" OnClick="btnShifts_Click" />
+                <asp:Button ID="btnSession" runat="server" Text="Session" CssClass="waves-effect waves-ripple btn-large" OnClick="btnSession_Click" />
                 <asp:Button ID="btnReports" runat="server" Text="Reports" CssClass="waves-effect waves-ripple btn-large" OnClick="btnReports_Click" />
             </div>
             <div class="row center">
@@ -636,4 +637,61 @@
             </ContentTemplate>
         </asp:UpdatePanel>
     </asp:Panel>
+
+    <asp:Panel ID="pnlSession" runat="server" Visible="true">
+        <div>
+            <asp:UpdatePanel ID="upnlSession" runat="server">
+                <ContentTemplate>
+                    <br />
+                    <div class="row">
+                        <div class="col s8 l8 m8 offset-l2 offset-s2 offset-m2 card z-depth-1">
+                            <div class="row">
+                                <br />
+                                <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
+                                    <asp:TextBox runat="server" CssClass="input-field" ID="txtSessionStart" placeholder="Session Start Date" ValidationGroup="Session"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="rfvTxtSessionStart" runat="server" ErrorMessage="Required" ControlToValidate="txtSessionStart" ForeColor="Red" ValidationGroup="Session"></asp:RequiredFieldValidator>
+                                </div>
+                                 <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
+                                    <asp:TextBox runat="server" CssClass="input-field" ID="txtSessionEnd" placeholder="Session End Date" ValidationGroup="Session"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="rfvTxtSessionEnd" runat="server" ErrorMessage="Required" ControlToValidate="txtSessionStart" ForeColor="Red" ValidationGroup="Session"></asp:RequiredFieldValidator>
+                                </div>
+                               <%-- <div class="col s2 l2 m2">
+                                    <asp:LinkButton ID="LinkButton1" CssClass="btn waves-effect waves-light" runat="server" OnClick="lnkAddDepartment_Click" ValidationGroup="Department">
+                                         Add Department
+                                    </asp:LinkButton>
+                                </div>--%>
+                            </div>
+                            <div class="row">
+                                <div class="col s4 l4 m4 offset-l4 offset-m4 offset-s4" style="height: 300px">
+                                    <asp:GridView ID="gvSession" AutoGenerateColumns="false" CssClass="responsive-table striped" runat="server">
+                                        <Columns>
+                                            <asp:TemplateField>
+                                                <HeaderTemplate>
+                                                    <asp:Label CssClass="center" Text="Session Start" runat="server" />
+                                                </HeaderTemplate>
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lblSession" runat="server" Text='<%#Eval("Name")%>'></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                           <%-- <asp:TemplateField>
+                                                <ItemTemplate>
+                                                    <asp:LinkButton ID="lkbEditDepartment" Text="Edit" OnClick="lkbEditDepartment_Click" CommandArgument='<%#Eval("Id")%>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                             <asp:TemplateField>
+                                                <ItemTemplate>
+                                                    <asp:LinkButton ID="lkbDeleteDepartment" Text="Delete" OnClick="lkbDeleteDepartment_Click" CommandArgument='<%#Eval("Id")%>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>--%>
+                                        </Columns>
+                                    </asp:GridView>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
+    </asp:Panel>
+
 </asp:Content>

@@ -60,7 +60,7 @@
                             <%--<asp:Textbox DataField="LeaveName" HeaderText="LeaveName" />--%>
                             <%--<asp:BoundField DataField="LeaveCount" HeaderText="LeaveCount" />--%>
                     </asp:Repeater>
-                            <asp:Button ID="btnUpdate" Text="Update Leave" runat="server" />
+                            <asp:Button ID="btnUpdate" Text="Update Leave" OnClick="btnUpdate_Click" runat="server" />
                         </div>
                     </div>
                 </div>

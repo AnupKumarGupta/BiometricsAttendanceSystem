@@ -56,4 +56,15 @@ public partial class Admin_ViewEmployeeLeaves : System.Web.UI.Page
         EditgvLeaves.DataSource = y.lstAssignedRecord;
         EditgvLeaves.DataBind();
     }
+
+    protected void btnUpdate_Click(object sender, EventArgs e)
+    {
+        List<LeaveAssignedRecord> lstLeaveAssignedRecord = new List<LeaveAssignedRecord>();
+        foreach (RepeaterItem i in EditgvLeaves.Items)
+        {
+
+            TextBox txtLeaveCount = (TextBox)i.FindControl("txtLeaveCount");
+            TextBox txtLeaveCou = (TextBox)i.FindControl("txtLeaveCount");
+        }
+    }
 }
