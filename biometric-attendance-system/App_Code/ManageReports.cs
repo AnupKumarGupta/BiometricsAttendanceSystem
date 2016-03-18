@@ -740,7 +740,7 @@ public class ManageReports
 
                             // Remove short leave and assign Half leave if any short leave exists
                             objManageLeaves.AssignHalfDayLeaveRemovingShortDayLeave(objDailyAttendanceReportViewModel.EmployeeId, date);
-                            objDailyAttendanceReportViewModel.Status = Status.OnHalfDayLeave;
+                            objDailyAttendanceReportViewModel.Status = Status.OnHalfDayLeaveFirstHalf;
                         }
                     }
 
@@ -1374,7 +1374,7 @@ public class ManageReports
         }
         return lstLeaveAssignedRecord;
     }
-    
+
     #region Leave Assinged Per Session
     public bool UpdateLeavesAssignedPerSessionEmployeeWise(LeaveAssignedPerSession objLeaveAssignedPerSession, DateTime sessionStartDate, DateTime sessionEndDate)
     {
@@ -1461,12 +1461,10 @@ public class ManageReports
         return true;
     }
 
-    
     #endregion
 
-
     #region Basic Working
-    public TimeSpan GetTotalDurationOfEmployeeDateWise(int employeeId, DateTime date)
+    public TimeSpan GetDurationOfEmployeeDateWise(int employeeId, DateTime date)
     {
         List<SqlParameter> list_paramsForTotalDuration = new List<SqlParameter>() { new SqlParameter("@date", date), new SqlParameter("@employeeId", employeeId) };
         TimeSpan totalDuration = new TimeSpan();
@@ -1517,7 +1515,7 @@ public class ManageReports
             dt = helper.GetDataTable(query, SQLTextType.Query, list_params);
         }
         MasterShifts objMasterShift = new MasterShifts();
-        if (dt.Rows.Count > 0 )
+        if (dt.Rows.Count > 0)
         {
             objMasterShift.Id = (dt.Rows[0][0] == DBNull.Value) ? 0 : Convert.ToInt32(dt.Rows[0][0]);
             objMasterShift.Name = (dt.Rows[0][1] == DBNull.Value) ? string.Empty : (dt.Rows[0][1]).ToString();
@@ -1529,27 +1527,185 @@ public class ManageReports
         }
         return objMasterShift;
     }
-    public bool IsLeaveExist(int employeeId, DateTime date)
+    public int GetWeeklyOffForEmployee(int EmployeeId)
     {
-        
-        return true;
+        string query = @"select WeeklyOffDay from tblEmployees where EmployeeId = @employeeId ";
+        List<SqlParameter> list_params = new List<SqlParameter>()
+        {
+            new SqlParameter("@employeeId",EmployeeId)
+        };
+
+        DataTable dt;
+        using (DBDataHelper helper = new DBDataHelper())
+        {
+            dt = helper.GetDataTable(query, SQLTextType.Query, list_params);
+        }
+        int weeklyOff = Convert.ToInt32(dt.Rows[0][0]);
+        return weeklyOff;
     }
 
-    #endregion
-
-    #region DailyReportBasic
-    public List<DailyAttendanceReportViewModel> GetAllForDailyAttendanceEmployeeWise(int employeeId, DateTime date, TimeSpan relaxation)
+    private DayStatus GetStatusOfDayEmployeeWise(DateTime date, int employeeId)
     {
-        #region Present
+        DataTable dt;
+        DayStatus status = new DayStatus();
+        DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
 
-        #endregion
+        int weeklyOffDay = GetWeeklyOffForEmployee(employeeId);
 
-        #region Absent
+        if ((int)date.DayOfWeek == weeklyOffDay)
+        {
+            status = DayStatus.WeeklyOff;
+        }
+        else
+        {
+            List<SqlParameter> list_params = new List<SqlParameter>() { new SqlParameter("@date", date) };
+            string query = "SELECT Count(Date) As Count FROM [BiometricsAttendanceSystem].[dbo].[tblHolidays] WHERE [Status] =1 AND Date =@date";
+            try
+            {
+                using (DBDataHelper helper = new DBDataHelper())
+                {
+                    dt = helper.GetDataTable(query, SQLTextType.Query, list_params);
+                }
+                if (int.Parse(dt.Rows[0][0].ToString()) > 0)
+                    status = DayStatus.Holiday;
+                else
+                    status = DayStatus.Active;
+            }
+            catch (Exception)
+            {
 
-        #endregion
-
-        return new List<DailyAttendanceReportViewModel>();
+            }
+        }
+        return status;
     }
     #endregion
+
+    #region Reports_Data
+    public DailyAttendanceReportViewModel GetDataForDailyAttendanceReportEmployeeWise(int employeeId, DateTime date, TimeSpan relaxation)
+    {
+        DataTable dtEmployees;
+        DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
+        TimeSpan duration = GetDurationOfEmployeeDateWise(employeeId, date);
+
+        List<SqlParameter> list_params = new List<SqlParameter>()
+                                        { new SqlParameter("@date", date), 
+                                          new SqlParameter("@employeeId", employeeId) };
+
+        MasterShifts objShift = GetShiftForEmployee(employeeId); //Getting Shift Active as per Employee
+        ManageLeaves objManageLeaves = new ManageLeaves();
+
+        TimeSpan ShortLeaveDuration = objShift.SHLDuration;
+        TimeSpan HalfLeaveDuration = new TimeSpan(4, 0, 0); //Change According
+        TimeSpan totalDuration = objShift.SecondHalfEnd - objShift.FirstHalfStart;
+        DayStatus dayStatus = GetStatusOfDayEmployeeWise(date, employeeId);
+        DailyAttendanceReportViewModel objDailyAttendanceReportViewModel = new DailyAttendanceReportViewModel();
+
+        int typeOfLeave;// For the type of leave
+
+        #region Generate Data
+        try
+        {
+            using (DBDataHelper helper = new DBDataHelper())
+            {
+                dtEmployees = helper.GetDataTable("spGetEmployeesForDailyAttendanceReportByEmployeeId", SQLTextType.Stored_Proc, list_params);
+
+                foreach (DataRow row in dtEmployees.Rows)
+                {
+                    objDailyAttendanceReportViewModel.EmployeeId = Int32.Parse(row[1].ToString());
+                    objDailyAttendanceReportViewModel.Name = row[0].ToString();
+                    objDailyAttendanceReportViewModel.FirstHalfStartTime = objShift.FirstHalfStart.ToString();
+                    objDailyAttendanceReportViewModel.FirstHalfEndTime = objShift.FirstHalfEnd.ToString();
+                    objDailyAttendanceReportViewModel.SecondHalfStartTime = objShift.SecondHalfStart.ToString();
+                    objDailyAttendanceReportViewModel.SecondHalfEndTime = objShift.SecondHalfEnd.ToString();
+                    objDailyAttendanceReportViewModel.Relaxation = relaxation.ToString();
+                    objDailyAttendanceReportViewModel.Date = date;
+
+                    #region If Present
+                    if (row[2] != DBNull.Value) //Entry Time is Not  Null ---- Employee is Present
+                    {
+                        objDailyAttendanceReportViewModel.InTime = row[2].ToString();
+                        objDailyAttendanceReportViewModel.OutTime = row[3] == DBNull.Value ? objShift.SecondHalfEnd.ToString() : row[3].ToString(); //IfExitPunch is Null
+
+                        if (row[3] == DBNull.Value)
+                        {
+                            if (dayStatus != DayStatus.WeeklyOff)
+                                objDailyAttendanceReportViewModel.Status = BAS.Enums.Status.PresentWithNoOutPunch;//Exit Time is Null
+                            else
+                                objDailyAttendanceReportViewModel.Status = BAS.Enums.Status.WeeklyOffPresentWithNoOutPunch;
+                        }
+                        else
+                        {
+                            if (objDailyAttendanceReportViewModel._inTime.TimeOfDay >= relaxation + objShift.FirstHalfStart)// If Late
+                            {
+                                if (duration <= totalDuration - ShortLeaveDuration) // Short Leave Duration 
+                                {
+                                    objManageLeaves.AssignLeave(employeeId, date, (int)BAS.Enums.LeaveTypes.SHL);
+                                    objDailyAttendanceReportViewModel.Status = BAS.Enums.Status.OnShortLeave;
+                                }
+                                else if (duration < totalDuration - HalfLeaveDuration) //First Half Leave --- Late + Working Duration is less 
+                                {
+                                    objManageLeaves.AssignLeave(employeeId, date, (int)BAS.Enums.LeaveTypes.HDL);
+                                    objDailyAttendanceReportViewModel.Status = BAS.Enums.Status.OnHalfDayLeaveFirstHalf;
+                                }
+                            }
+                            else if (duration < totalDuration - HalfLeaveDuration) //Second Half Leave  --- Not Late + Working Duration is less
+                            {
+                                objManageLeaves.AssignLeave(employeeId, date, (int)BAS.Enums.LeaveTypes.HDL);
+                                objDailyAttendanceReportViewModel.Status = BAS.Enums.Status.OnHalfDayLeaveSecondHalf;
+                            }
+                            else
+                            {
+                                if (dayStatus != DayStatus.WeeklyOff)
+                                    objDailyAttendanceReportViewModel.Status = BAS.Enums.Status.Present;
+                                else
+                                    objDailyAttendanceReportViewModel.Status = BAS.Enums.Status.WeeklyOffPresent;
+
+                            }
+                        } //
+
+                    }
+                    #endregion
+                    #region If Absent
+                    else  //Entry Time is Null
+                    {
+                        objDailyAttendanceReportViewModel.InTime = "00:00:00.0000000";
+                        objDailyAttendanceReportViewModel.OutTime = "00:00:00.0000000";
+                        if (dayStatus == DayStatus.Holiday)
+                        {
+                            objDailyAttendanceReportViewModel.Status = Status.Holiday;
+                        }
+                        else if (dayStatus == DayStatus.WeeklyOff)
+                        {
+                            objDailyAttendanceReportViewModel.Status = Status.WeeklyOff;
+                        }
+                        else if (objManageLeaves.IsEmployeeOnLeave(objDailyAttendanceReportViewModel.EmployeeId, date, out typeOfLeave))
+                        {
+                            objDailyAttendanceReportViewModel.Status = (Status)typeOfLeave;
+                        }
+                        else
+                        {
+                            objDailyAttendanceReportViewModel.Status = Status.LeaveWithoutPay;
+                        }
+                    }
+
+                    #endregion
+
+                }
+
+            }
+        }
+        catch (Exception)
+        {
+
+        }
+        #endregion
+
+        return objDailyAttendanceReportViewModel;
+    }
+
+    #endregion   
+ 
     #endregion
+
+
 }

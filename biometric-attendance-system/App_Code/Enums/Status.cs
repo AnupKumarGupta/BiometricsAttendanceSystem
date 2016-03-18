@@ -10,10 +10,13 @@ namespace BAS.Enums
         WeeklyOffPresent = 5,
         WeeklyOff =6,
         WeeklyOffPresentWithNoOutPunch = 7,
-        Absent = 8,
+        LeaveWithoutPay = 8,
         Late = 9,
         OnShortLeave = 10,
-        OnHalfDayLeave = 11,
-        Holiday = 12
+        OnHalfDayLeaveFirstHalf = 11,
+        OnHalfDayLeaveSecondHalf = 12,
+        Holiday = 13,
+        OnHalfDayLeave = 30,
+        Absent =31
     }
 }

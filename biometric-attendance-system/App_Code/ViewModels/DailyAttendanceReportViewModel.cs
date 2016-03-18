@@ -19,6 +19,20 @@ public class DailyAttendanceReportViewModel
         set { _firstHalfStartTime = DateTime.Parse(value); }
     }
 
+    public DateTime _firstHalfEndTime;
+    public string FirstHalfEndTime
+    {
+        get { return _firstHalfEndTime.ToShortTimeString(); }
+        set { _firstHalfEndTime = DateTime.Parse(value); }
+    }
+
+    public DateTime _secondHalfStartTime;
+    public string SecondHalfStartTime
+    {
+        get { return _secondHalfStartTime.ToShortTimeString(); }
+        set { _secondHalfStartTime = DateTime.Parse(value); }
+    }
+
     public DateTime _secondHalfEndTime;
     public string SecondHalfEndTime
     {
