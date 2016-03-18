@@ -57,8 +57,6 @@
                             <asp:Label ID="txtLeave"  runat="server" Text='<%# Eval("LeaveName") %>' />
                             <asp:TextBox ID="txtLeaveCount"  runat="server" Text='<%# Eval("LeaveCount") %>' />
                         </ItemTemplate>
-                            <%--<asp:Textbox DataField="LeaveName" HeaderText="LeaveName" />--%>
-                            <%--<asp:BoundField DataField="LeaveCount" HeaderText="LeaveCount" />--%>
                     </asp:Repeater>
                             <asp:Button ID="btnUpdate" Text="Update Leave" OnClick="btnUpdate_Click" runat="server" />
                         </div>

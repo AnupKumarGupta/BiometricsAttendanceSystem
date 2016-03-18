@@ -1,5 +1,9 @@
-﻿using System;
+﻿using DALHelper;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -7,6 +11,7 @@ using System.Web.UI.WebControls;
 
 public partial class Admin_ViewEmployeeLeaves : System.Web.UI.Page
 {
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -52,6 +57,7 @@ public partial class Admin_ViewEmployeeLeaves : System.Web.UI.Page
         ManageReports objManageReports = new ManageReports();
         lstLeaveAssignedRecord = objManageReports.GetLeavesAssignedPerSession(departmentId, DateTime.Now);
         int Id = Convert.ToInt32(b.CommandArgument);
+        Session["empId"] = Id;
         var y = lstLeaveAssignedRecord.Select(x => x).Where(d => d.EmployeeId == Id).FirstOrDefault();
         EditgvLeaves.DataSource = y.lstAssignedRecord;
         EditgvLeaves.DataBind();
@@ -60,11 +66,30 @@ public partial class Admin_ViewEmployeeLeaves : System.Web.UI.Page
     protected void btnUpdate_Click(object sender, EventArgs e)
     {
         List<LeaveAssignedRecord> lstLeaveAssignedRecord = new List<LeaveAssignedRecord>();
-        foreach (RepeaterItem i in EditgvLeaves.Items)
+        DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
+        DataSet ds;
+        int leaveId;
+        LeaveAssignedPerSession objLeaveAssignedPerSession = new LeaveAssignedPerSession();
+        ManageReports objManageReports = new ManageReports();
+            foreach (RepeaterItem i in EditgvLeaves.Items)
         {
-
             TextBox txtLeaveCount = (TextBox)i.FindControl("txtLeaveCount");
-            TextBox txtLeaveCou = (TextBox)i.FindControl("txtLeaveCount");
+            Label txtLeaveName = (Label)i.FindControl("txtLeave");
+            string leaveName = txtLeaveName.Text;
+            List<SqlParameter> lstParams = new List<SqlParameter>();
+            lstParams.Add(new SqlParameter("@name", leaveName));
+            string query = "Select Id from tblTypeOfLeave where Name = @name";
+            using (DBDataHelper objDDBDataHelper = new DBDataHelper())
+            {
+                ds = objDDBDataHelper.GetDataSet(query, SQLTextType.Query,lstParams);
+                leaveId = Convert.ToInt32(ds.Tables[0].Rows[0][0]);
+            }
+            objLeaveAssignedPerSession.EmployeeId = Convert.ToInt32(Session["empId"]);
+            objLeaveAssignedPerSession.leaveCount = Convert.ToInt32(txtLeaveCount.Text);
+            objLeaveAssignedPerSession.leaveType = leaveId;
+            objManageReports.UpdateLeavesAssignedPerSessionEmployeeWise(objLeaveAssignedPerSession, DateTime.Now, DateTime.Now);
         }
+        
+        popupEditLeaveAssigned.Hide();
     }
 }
