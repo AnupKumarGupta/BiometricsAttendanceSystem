@@ -1464,7 +1464,73 @@ public class ManageReports
     #endregion
 
 
+    #region Basic Working
+    public TimeSpan GetTotalDurationOfEmployeeDateWise(int employeeId, DateTime date)
+    {
+        List<SqlParameter> list_paramsForTotalDuration = new List<SqlParameter>() { new SqlParameter("@date", date), new SqlParameter("@employeeId", employeeId) };
+        TimeSpan totalDuration = new TimeSpan();
 
+        DataTable dtTotalDuration;
+        using (DBDataHelper helper = new DBDataHelper())
+        {
+            dtTotalDuration = helper.GetDataTable("spGetTotalDurationOfEmployeesDatewise", SQLTextType.Stored_Proc, list_paramsForTotalDuration);
+            foreach (DataRow row in dtTotalDuration.Rows)
+            {
+                totalDuration = row[0] == DBNull.Value ? new TimeSpan(0, 0, 0) : new TimeSpan(0, Int32.Parse(row[0].ToString()), 0);
+            }
+        }
+        return totalDuration;
+    }
+    public string GetPunchRecordsEmployeeDateWise(int employeeId, DateTime date)
+    {
+        List<SqlParameter> list_paramsForPunchRecords = new List<SqlParameter>() { new SqlParameter("@date", date), new SqlParameter("@employeeId", employeeId) };
+        string punchRecords = "";
+        DataTable dtPunchRecords;
+
+        using (DBDataHelper helper = new DBDataHelper())
+        {
+            dtPunchRecords = helper.GetDataTable("spGetPunchRecordsOfEmployeeDateWise", SQLTextType.Stored_Proc, list_paramsForPunchRecords);
+            foreach (DataRow rowPunchRecords in dtPunchRecords.Rows)
+            {
+                punchRecords += rowPunchRecords[0].ToString() + " in(AKGEC), " + rowPunchRecords[1].ToString() + " out(AKGEC). ";
+            }
+        }
+        return punchRecords == "" ? "No Punch Records" : punchRecords;
+    }
+    public MasterShifts GetShiftForEmployee(int employeeId)
+    {
+        string query = @"Select tblMasterShifts.Id,tblMasterShifts.Name,tblMasterShifts.FirstHalfStart,tblMasterShifts.FirstHalfEnd,
+                        tblMasterShifts.SecondHalfStart,tblMasterShifts.SecondHalfEnd,tblMasterShifts.SHLDuration
+                        FROM tblMasterShifts,tblEmployees 
+                        WHERE EmployeeId=@employeeId AND
+		                tblMasterShifts.Id = tblEmployees.ShiftId AND
+		                tblMasterShifts.isDeleted = 0";
+        List<SqlParameter> list_params = new List<SqlParameter>()
+        {
+            new SqlParameter("@employeeId",employeeId)
+        };
+
+        DataTable dt;
+        using (DBDataHelper helper = new DBDataHelper())
+        {
+            dt = helper.GetDataTable(query, SQLTextType.Query, list_params);
+        }
+        MasterShifts objMasterShift = new MasterShifts();
+        if (dt.Rows.Count > 0 )
+        {
+            objMasterShift.Id = (dt.Rows[0][0] == DBNull.Value) ? 0 : Convert.ToInt32(dt.Rows[0][0]);
+            objMasterShift.Name = (dt.Rows[0][1] == DBNull.Value) ? string.Empty : (dt.Rows[0][1]).ToString();
+            objMasterShift.FirstHalfStart = (dt.Rows[0][2] == DBNull.Value) ? new TimeSpan() : (TimeSpan)(dt.Rows[0][2]);
+            objMasterShift.FirstHalfEnd = (dt.Rows[0][3] == DBNull.Value) ? new TimeSpan() : (TimeSpan)(dt.Rows[0][3]);
+            objMasterShift.SecondHalfStart = (dt.Rows[0][4] == DBNull.Value) ? new TimeSpan() : (TimeSpan)(dt.Rows[0][4]);
+            objMasterShift.SecondHalfEnd = (dt.Rows[0][5] == DBNull.Value) ? new TimeSpan() : (TimeSpan)(dt.Rows[0][5]);
+            objMasterShift.SHLDuration = (dt.Rows[0][6] == DBNull.Value) ? new TimeSpan() : (TimeSpan)(dt.Rows[0][6]);
+        }
+        return objMasterShift;
+    }
+
+    #endregion
+    
     #endregion
 
  
