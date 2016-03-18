@@ -11,6 +11,8 @@ public class DailyAttendanceReportViewModel
     public DailyAttendanceReportViewModel() { }
     public int EmployeeId { get; set; }
     public string Name { get; set; }
+    public int DepartmentId { get; set; }
+    public string DepartmentName { get; set; }
 
     public DateTime _firstHalfStartTime;
     public string FirstHalfStartTime

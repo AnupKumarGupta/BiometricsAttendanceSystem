@@ -881,9 +881,8 @@ public class ManageReports
                 }
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            //
         }
         return lstDailyAttendanceReportViewModel;
     }
@@ -1581,7 +1580,7 @@ public class ManageReports
     #endregion
 
     #region Reports_Data
-    public DailyAttendanceReportViewModel GetDataForDailyAttendanceReportEmployeeWise(int employeeId, DateTime date, TimeSpan relaxation)
+    public DailyAttendanceReportViewModel GetDataForReportEmployeeWise(int employeeId, DateTime date, TimeSpan relaxation)
     {
         DataTable dtEmployees;
         DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
@@ -1703,9 +1702,70 @@ public class ManageReports
         return objDailyAttendanceReportViewModel;
     }
 
-    #endregion   
- 
     #endregion
 
+    #region Reports
+    
+    public List<DailyAttendanceReportViewModel> GetDailyAttendanceDetailedReport(DateTime date, TimeSpan relaxation)
+    {
+        ManageEmployees objManageEmployees = new ManageEmployees();
+        List<Employees> lstEmployees = objManageEmployees.GetAllEmployees();
+        List<DailyAttendanceReportViewModel> lstDailyAttendanceReportViewModel = new List<DailyAttendanceReportViewModel>();
+        foreach (Employees employee in lstEmployees)
+        {
+            DailyAttendanceReportViewModel objDailyAttendanceReportViewModel = GetDataForReportEmployeeWise(employee.Id, date, relaxation);
+            objDailyAttendanceReportViewModel.DepartmentId = employee.DepartmentId;
+            objDailyAttendanceReportViewModel.DepartmentName = employee.DepartmentName;
+            objDailyAttendanceReportViewModel.Date = date;
+            lstDailyAttendanceReportViewModel.Add(objDailyAttendanceReportViewModel);
+        }
+        return lstDailyAttendanceReportViewModel;
+    }
+    public List<DailyAttendanceReportViewModel> GetMonthlyAttendanceDetailedReport(int employeeId, DateTime startDate,DateTime endDate, TimeSpan relaxation)// aspx file mai check kar lena ki startDate < endDate
+    {
+        List<DailyAttendanceReportViewModel> lstMonthlyAttendanceReportViewModel = new List<DailyAttendanceReportViewModel>();
 
+        for (DateTime date = startDate; date <= endDate; date.AddDays(1))
+        {
+            DailyAttendanceReportViewModel objMonthlyAttendanceReportViewModel = new DailyAttendanceReportViewModel();
+            objMonthlyAttendanceReportViewModel = GetDataForReportEmployeeWise(employeeId, date, relaxation);
+            objMonthlyAttendanceReportViewModel.Date = date;
+            lstMonthlyAttendanceReportViewModel.Add(objMonthlyAttendanceReportViewModel);
+        }
+        return lstMonthlyAttendanceReportViewModel;
+    }
+    public List<DailyAttendanceReportViewModel> GetDailyAbsent(DateTime date, TimeSpan relaxation)
+    {
+        List<DailyAttendanceReportViewModel> lstDailyAttendanceReportViewModel = new List<DailyAttendanceReportViewModel>();
+        lstDailyAttendanceReportViewModel = GetDailyAttendanceDetailedReport(date, relaxation).Where(x => x.Status == Status.Absent).ToList();
+        return lstDailyAttendanceReportViewModel;
+    }
+    public List<DailyAttendanceReportViewModel> GetDailyPresent(DateTime date, TimeSpan relaxation)
+    {
+        List<DailyAttendanceReportViewModel> lstDailyAttendanceReportViewModel = new List<DailyAttendanceReportViewModel>();
+        lstDailyAttendanceReportViewModel = GetDailyAttendanceDetailedReport(date, relaxation).Where(x => x.Status == Status.Present).ToList();
+        return lstDailyAttendanceReportViewModel;
+    }
+    public List<DailyAttendanceReportViewModel> GetDailyLateComers(DateTime date, TimeSpan relaxation)
+    {
+        List<DailyAttendanceReportViewModel> lstDailyAttendanceReportViewModel = new List<DailyAttendanceReportViewModel>();
+        lstDailyAttendanceReportViewModel = GetDailyAttendanceDetailedReport(date, relaxation).Where(x => x._inTime >= x._firstHalfStartTime + relaxation).ToList();
+        return lstDailyAttendanceReportViewModel;
+    }
+    public List<DailyAttendanceReportViewModel> GetMonthlyLateComers(DateTime startDate, DateTime endDate, TimeSpan relaxation)
+    {
+        List<DailyAttendanceReportViewModel> lstDailyAttendanceReportViewModel = new List<DailyAttendanceReportViewModel>();
+        for (DateTime date = startDate; date <= endDate; date.AddDays(1))
+        {
+            List<DailyAttendanceReportViewModel> objDailyAttendanceReportViewModel = GetDailyLateComers(date, relaxation);
+           lstDailyAttendanceReportViewModel = lstDailyAttendanceReportViewModel.Concat(objDailyAttendanceReportViewModel).ToList();
+        }
+        return lstDailyAttendanceReportViewModel;
+    }
+    
+    #endregion
+    
+    #endregion
+
+    // Leave Forwarding i.e. to next session 
 }
