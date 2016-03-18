@@ -319,6 +319,7 @@ public class ManageLeaves
         List<SqlParameter> lst_params = new List<SqlParameter>();
         lst_params.Add(new SqlParameter("@date", date));
         lst_params.Add(new SqlParameter("@employeeId", employeeId));
+
         string query = "SELECT Count([EmployeeId]) FROM [BiometricsAttendanceSystem].[dbo].[tblLeave] Where [Date] = @date AND [EmployeeId] =@employeeId AND [isDeleted]=0";
         DataTable dt = new DataTable();
 
@@ -326,6 +327,7 @@ public class ManageLeaves
         {
             dt = objDDBDataHelper.GetDataTable(query, SQLTextType.Query, lst_params);
         }
+
         if (Int32.Parse(dt.Rows[0][0].ToString()) == 0)
         {
             return false;
@@ -510,6 +512,30 @@ public class ManageLeaves
         
 //        return true;
 //    }
+        public TimeSpan GetShortLeaveDurationByShiftId(int shiftId)
+        {
+        DataTable dt;
+        TimeSpan dr = new TimeSpan();
+        string query = "SELECT SHLDuration FROM tblMasterShifts WHERE Id=@shiftId AND isDeleted = 0";
+        List<SqlParameter> lst_params = new List<SqlParameter> { 
+            new SqlParameter("@shiftId",shiftId)
+        };
+        try
+        {
+            using (DBDataHelper helper = new DBDataHelper())
+            {
+                dt = helper.GetDataTable(query, SQLTextType.Query,lst_params);
+                dr = dt.Rows[0][0] == DBNull.Value ? new TimeSpan(0, 0, 0) : TimeSpan.Parse(dt.Rows[0][0].ToString());
+            }
+        }
+        catch (Exception ex)
+        {
+            dr = new TimeSpan(0, 0, 0);
+        }
+        return dr;
+    }
+    
+    
 
     #endregion
 }

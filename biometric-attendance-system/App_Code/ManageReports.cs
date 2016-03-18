@@ -1461,6 +1461,7 @@ public class ManageReports
         return true;
     }
 
+    
     #endregion
 
 
@@ -1528,8 +1529,27 @@ public class ManageReports
         }
         return objMasterShift;
     }
+    public bool IsLeaveExist(int employeeId, DateTime date)
+    {
+        
+        return true;
+    }
 
     #endregion
-    
+
+    #region DailyReportBasic
+    public List<DailyAttendanceReportViewModel> GetAllForDailyAttendanceEmployeeWise(int employeeId, DateTime date, TimeSpan relaxation)
+    {
+        #region Present
+
+        #endregion
+
+        #region Absent
+
+        #endregion
+
+        return new List<DailyAttendanceReportViewModel>();
+    }
+    #endregion
     #endregion
 }
