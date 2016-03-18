@@ -1530,7 +1530,22 @@ public class ManageReports
     }
 
     #endregion
-    
+    public int GetWeeklyOffForEmployee(int EmployeeId)
+    {
+        string query = @"select WeeklyOffDay from tblEmployees where EmployeeId = @employeeId ";
+        List<SqlParameter> list_params = new List<SqlParameter>()
+        {
+            new SqlParameter("@employeeId",EmployeeId)
+        };
+
+        DataTable dt;
+        using (DBDataHelper helper = new DBDataHelper())
+        {
+            dt = helper.GetDataTable(query, SQLTextType.Query, list_params);
+        }
+        int weeklyOff = Convert.ToInt32(dt.Rows[0][0]);
+        return weeklyOff;
+    }
     #endregion
 
  
