@@ -16,20 +16,23 @@ public partial class Reports_DailyAttendanceBasicReport : System.Web.UI.Page
         if (!IsPostBack)
             BindDropDowns();
     }
+
     protected void Calendar1_SelectionChanged(object sender, EventArgs e)
     {
         txt_date.Text = Calendar1.SelectedDate.Date.ToString("d");
     }
+
     protected void btn_report_Click(object sender, EventArgs e)
     {
         btnExport.Visible = true;
         ManageReports objManageReports = new ManageReports();
         TimeSpan relaxationTime = new TimeSpan();
         relaxationTime = TimeSpan.Parse(ddlRelaxation.SelectedValue.ToString());
-        var data = objManageReports.GetDataForDailyAttendanceReport(Convert.ToInt32(ddlDepartments.SelectedValue.ToString()), Calendar1.SelectedDate.Date, relaxationTime);
+        var data = objManageReports.GetDailyAttendanceDetailedReport(Calendar1.SelectedDate.Date, relaxationTime);
         grid_dailyAttendance.DataSource = data;
         grid_dailyAttendance.DataBind();
     }
+
     protected void BindDropDowns()
     {
         MasterEntries objMasterEntries = new MasterEntries();
