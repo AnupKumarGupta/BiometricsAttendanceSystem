@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Attendance Basic" Language="C#" MasterPageFile="~/MasterPages/Admin.master" AutoEventWireup="true" CodeFile="DailyAttendanceBasicReport.aspx.cs" Inherits="Reports_DailyAttendanceBasicReport" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/MasterPages/Admin.master" CodeFile="DailyAttendanceBasicReport.aspx.cs" Inherits="Reports_DailyAttendanceBasicReport" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
@@ -123,4 +123,5 @@
         <asp:Button Text="Export to PDF" ID="btnExport" CssClass="btn waves-button-input" OnClick="btnExport_Click" Visible="false" runat="server" />
     </div>
 </asp:Content>
+
 
