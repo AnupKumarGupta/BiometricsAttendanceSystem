@@ -1737,7 +1737,7 @@ public class ManageReports
     public List<DailyAttendanceReportViewModel> GetDailyAbsent(DateTime date, TimeSpan relaxation)
     {
         List<DailyAttendanceReportViewModel> lstDailyAttendanceReportViewModel = new List<DailyAttendanceReportViewModel>();
-        lstDailyAttendanceReportViewModel = GetDailyAttendanceDetailedReport(date, relaxation).Where(x => x.Status == Status.Absent).ToList();
+        lstDailyAttendanceReportViewModel = GetDailyAttendanceDetailedReport(date, relaxation).Where(x => x.Status == Status.LeaveWithoutPay).ToList();
         return lstDailyAttendanceReportViewModel;
     }
     public List<DailyAttendanceReportViewModel> GetDailyPresent(DateTime date, TimeSpan relaxation)
@@ -1762,7 +1762,12 @@ public class ManageReports
         }
         return lstDailyAttendanceReportViewModel;
     }
-    
+    public List<DailyAttendanceReportViewModel> GetDailyAttendanceDetailedReportDepartmentWise(int departmentId,DateTime date, TimeSpan relaxation)
+    {
+        List<DailyAttendanceReportViewModel> lstDailyAttendanceReportViewModel = new List<DailyAttendanceReportViewModel>();
+        lstDailyAttendanceReportViewModel = GetDailyAttendanceDetailedReport(date, relaxation).Where(x => x.DepartmentId == departmentId).ToList();
+        return lstDailyAttendanceReportViewModel;
+    }
     #endregion
     
     #endregion

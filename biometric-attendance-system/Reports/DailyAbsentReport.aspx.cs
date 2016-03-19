@@ -13,8 +13,8 @@ public partial class Reports_DailyAbsentReport : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
-            BindDropDowns();
+        //if (!IsPostBack)
+        //    BindDropDowns();
     }
     protected void Calendar1_SelectionChanged(object sender, EventArgs e)
     {
@@ -26,19 +26,11 @@ public partial class Reports_DailyAbsentReport : System.Web.UI.Page
         ManageReports objManageReports = new ManageReports();
         TimeSpan relaxationTime = new TimeSpan();
         relaxationTime = TimeSpan.Parse(ddlRelaxation.SelectedValue.ToString());
-        var data = objManageReports.GetDataForMonthlyAbsentReport(Convert.ToInt32(ddlDepartments.SelectedValue.ToString()), Calendar1.SelectedDate.Date, Calendar1.SelectedDate.Date, relaxationTime);
+
+        var data = objManageReports.GetDailyAbsent(Calendar1.SelectedDate.Date, relaxationTime);
         grid_dailyAbsent.DataSource = data;
         grid_dailyAbsent.DataBind();
     }
-    protected void BindDropDowns()
-    {
-        MasterEntries objMasterEntries = new MasterEntries();
-        ddlDepartments.DataSource = objMasterEntries.GetAllDepartments();
-        ddlDepartments.DataTextField = "Name";
-        ddlDepartments.DataValueField = "Id";
-        ddlDepartments.DataBind();
-    }
-
     protected void btnExport_Click(object sender, EventArgs e)
     {
         using (StringWriter sw = new StringWriter())
