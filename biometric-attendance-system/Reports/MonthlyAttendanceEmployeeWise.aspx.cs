@@ -1,13 +1,13 @@
-﻿using iTextSharp.text;
-using iTextSharp.text.html.simpleparser;
-using iTextSharp.text.pdf;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using iTextSharp.text;
+using iTextSharp.text.html.simpleparser;
+using iTextSharp.text.pdf;
+using System.IO;
 
 public partial class Reports_MonthlyAttendanceEmployeeWise : System.Web.UI.Page
 {
@@ -32,7 +32,7 @@ public partial class Reports_MonthlyAttendanceEmployeeWise : System.Web.UI.Page
         int EmployeeId = 0;
         Int32.TryParse(txtEmployeeId.Text, out EmployeeId);
         MonthlyReportOfEmployee objMonthlyReportOfEmployee = new MonthlyReportOfEmployee();
-        var data = objManageReports.GetDataForMonthlyAttendanceReportByEmployeeId(EmployeeId, Calendar1.SelectedDate.Date, Calendar2.SelectedDate.Date, relaxationTime, out objMonthlyReportOfEmployee);
+        var data = objManageReports.GetMonthlyAttendanceDetailedReport(EmployeeId, Calendar1.SelectedDate.Date, Calendar2.SelectedDate.Date, relaxationTime, out objMonthlyReportOfEmployee);
         grid_monthly_attendanceDetailed.DataSource = data;
         grid_monthly_attendanceDetailed.DataBind();
         if (data.Count != 0)

@@ -1723,10 +1723,10 @@ public class ManageReports
         }
         return lstDailyAttendanceReportViewModel;
     }
-    public List<DailyAttendanceReportViewModel> GetMonthlyAttendanceDetailedReport(int employeeId, DateTime startDate,DateTime endDate, TimeSpan relaxation)// aspx file mai check kar lena ki startDate < endDate
+    public List<DailyAttendanceReportViewModel> GetMonthlyAttendanceDetailedReport(int employeeId, DateTime startDate,DateTime endDate, TimeSpan relaxation, out MonthlyReportOfEmployee objDailyAttendanceReportViewModel)// aspx file mai check kar lena ki startDate < endDate
     {
         List<DailyAttendanceReportViewModel> lstMonthlyAttendanceReportViewModel = new List<DailyAttendanceReportViewModel>();
-
+        objDailyAttendanceReportViewModel = new MonthlyReportOfEmployee();
         for (DateTime date = startDate; date <= endDate; date.AddDays(1))
         {
             DailyAttendanceReportViewModel objMonthlyAttendanceReportViewModel = new DailyAttendanceReportViewModel();
