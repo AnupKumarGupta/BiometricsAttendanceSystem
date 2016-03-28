@@ -1542,7 +1542,6 @@ public class ManageReports
         int weeklyOff = Convert.ToInt32(dt.Rows[0][0]);
         return weeklyOff;
     }
-
     private DayStatus GetStatusOfDayEmployeeWise(DateTime date, int employeeId)
     {
         DataTable dt;
@@ -1595,7 +1594,7 @@ public class ManageReports
 
         TimeSpan ShortLeaveDuration = objShift.SHLDuration;
         TimeSpan HalfLeaveDuration = new TimeSpan(4, 0, 0); //Change According
-        TimeSpan totalDuration = objShift.SecondHalfEnd - objShift.FirstHalfStart;
+        TimeSpan totalDuration = new DateTime(1, 1, 1, objShift.SecondHalfEnd.Hours, objShift.SecondHalfEnd.Minutes, objShift.SecondHalfEnd.Seconds) - new DateTime(1, 1, 1, objShift.FirstHalfStart.Hours, objShift.FirstHalfStart.Minutes, objShift.FirstHalfStart.Seconds);
         DayStatus dayStatus = GetStatusOfDayEmployeeWise(date, employeeId);
         DailyAttendanceReportViewModel objDailyAttendanceReportViewModel = new DailyAttendanceReportViewModel();
 
@@ -1618,7 +1617,7 @@ public class ManageReports
                     objDailyAttendanceReportViewModel.SecondHalfEndTime = objShift.SecondHalfEnd.ToString();
                     objDailyAttendanceReportViewModel.Relaxation = relaxation.ToString();
                     objDailyAttendanceReportViewModel.Date = date;
-
+                    objDailyAttendanceReportViewModel.Duration = duration;
                     #region If Present
                     if (row[2] != DBNull.Value) //Entry Time is Not  Null ---- Employee is Present
                     {
@@ -1634,20 +1633,23 @@ public class ManageReports
                         }
                         else
                         {
-                            if (objDailyAttendanceReportViewModel._inTime.TimeOfDay >= relaxation + objShift.FirstHalfStart)// If Late
+
+
+                            if (objDailyAttendanceReportViewModel._inTime.TimeOfDay >= relaxation + objShift.FirstHalfStart)// IF Late
                             {
-                                if (duration <= totalDuration - ShortLeaveDuration) // Short Leave Duration 
-                                {
-                                    objManageLeaves.AssignLeave(employeeId, date, (int)BAS.Enums.LeaveTypes.SHL);
-                                    objDailyAttendanceReportViewModel.Status = BAS.Enums.Status.OnShortLeave;
-                                }
-                                else if (duration < totalDuration - HalfLeaveDuration) //First Half Leave --- Late + Working Duration is less 
+                                if(duration+HalfLeaveDuration <= totalDuration)
                                 {
                                     objManageLeaves.AssignLeave(employeeId, date, (int)BAS.Enums.LeaveTypes.HDL);
                                     objDailyAttendanceReportViewModel.Status = BAS.Enums.Status.OnHalfDayLeaveFirstHalf;
                                 }
+                                else
+                                {
+                                    objManageLeaves.AssignLeave(employeeId, date, (int)BAS.Enums.LeaveTypes.SHL);
+                                    objDailyAttendanceReportViewModel.Status = BAS.Enums.Status.OnShortLeave;
+                                }
+
                             }
-                            else if (duration < totalDuration - HalfLeaveDuration) //Second Half Leave  --- Not Late + Working Duration is less
+                            else if (duration + HalfLeaveDuration < duration)// Second Half Leave
                             {
                                 objManageLeaves.AssignLeave(employeeId, date, (int)BAS.Enums.LeaveTypes.HDL);
                                 objDailyAttendanceReportViewModel.Status = BAS.Enums.Status.OnHalfDayLeaveSecondHalf;
