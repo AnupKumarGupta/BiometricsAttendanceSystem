@@ -26,7 +26,7 @@ public partial class Reports_DailyPresentReport : System.Web.UI.Page
         ManageReports objManageReports = new ManageReports();
         TimeSpan relaxationTime = new TimeSpan();
         relaxationTime = TimeSpan.Parse(ddlRelaxation.SelectedValue.ToString());
-        var data = objManageReports.GetDataForMonthlyPresentReport(Convert.ToInt32(ddlDepartments.SelectedValue.ToString()), Calendar1.SelectedDate.Date, Calendar1.SelectedDate.Date, relaxationTime);
+        var data = objManageReports.GetDailyPresent(Calendar1.SelectedDate.Date, relaxationTime);
         grid_dailyPresent.DataSource = data;
         grid_dailyPresent.DataBind();
     }

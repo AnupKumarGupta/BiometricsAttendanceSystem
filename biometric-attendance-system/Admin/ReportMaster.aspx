@@ -18,7 +18,7 @@
             <asp:LinkButton Text="Daily Attendance Detailed Report" ID="DailyAttendanceDetailedReport" href="../Reports/DetailedDailyAttendanceReport.aspx" target="_blank" CssClass="btn" runat="server" />
             <br />
             <br />
-            <asp:LinkButton Text="Monthly Attendance EmployeeWise Basic" ID="MonthlyAttendanceEmployeeWiseBasic" href="../Reports/MonthlyAttendanceEmployeeWiseBasic.aspx" target="_blank" CssClass="btn" runat="server" />
+            <asp:LinkButton Text="Monthly Attendance EmployeeWise Basic" ID="MonthlyAttendanceEmployeeWiseBasic" href="../Reports/EmployeeWiseBasicMonthlyAttendance.aspx" target="_blank" CssClass="btn" runat="server" />
             <br />
             <br />
             <asp:LinkButton Text="Monthly Attendance EmployeeWise Detailed" ID="MonthlyAttendanceEmployeeWise" href="../Reports/MonthlyAttendanceEmployeeWise.aspx" target="_blank" CssClass="btn" runat="server" />
