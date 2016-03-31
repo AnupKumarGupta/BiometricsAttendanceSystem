@@ -36,7 +36,7 @@ public partial class Reports_MonthlyLateComers : System.Web.UI.Page
         TimeSpan relaxationTime = new TimeSpan();
         relaxationTime = TimeSpan.Parse(ddlRelaxation.SelectedValue.ToString());
         ManageReports objManageReports = new ManageReports();
-        var data = objManageReports.GetDataForMonthlyLateReport(Convert.ToInt32(ddlDepartments.SelectedValue.ToString()), Calendar1.SelectedDate.Date, Calendar2.SelectedDate.Date, relaxationTime);
+        var data = objManageReports.GetMonthlyLateComers(Calendar1.SelectedDate.Date, Calendar2.SelectedDate.Date, relaxationTime);
         grid_lateComers.DataSource = data;
         grid_lateComers.DataBind();
     }

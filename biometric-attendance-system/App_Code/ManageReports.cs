@@ -1757,7 +1757,7 @@ public class ManageReports
     public List<DailyAttendanceReportViewModel> GetMonthlyLateComers(DateTime startDate, DateTime endDate, TimeSpan relaxation)
     {
         List<DailyAttendanceReportViewModel> lstDailyAttendanceReportViewModel = new List<DailyAttendanceReportViewModel>();
-        for (DateTime date = startDate; date <= endDate; date.AddDays(1))
+        for (DateTime date = startDate; date <= endDate;date = date.AddDays(1))
         {
             List<DailyAttendanceReportViewModel> objDailyAttendanceReportViewModel = GetDailyLateComers(date, relaxation);
            lstDailyAttendanceReportViewModel = lstDailyAttendanceReportViewModel.Concat(objDailyAttendanceReportViewModel).ToList();
