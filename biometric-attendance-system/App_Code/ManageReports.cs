@@ -1727,7 +1727,7 @@ public class ManageReports
     {
         List<DailyAttendanceReportViewModel> lstMonthlyAttendanceReportViewModel = new List<DailyAttendanceReportViewModel>();
         objDailyAttendanceReportViewModel = new MonthlyReportOfEmployee();
-        for (DateTime date = startDate; date <= endDate; date.AddDays(1))
+        for (DateTime date = startDate; date <= endDate;date = date.AddDays(1))
         {
             DailyAttendanceReportViewModel objMonthlyAttendanceReportViewModel = new DailyAttendanceReportViewModel();
             objMonthlyAttendanceReportViewModel = GetDataForReportEmployeeWise(employeeId, date, relaxation);

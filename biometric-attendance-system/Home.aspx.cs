@@ -39,7 +39,7 @@ public partial class Home : System.Web.UI.Page
                     if (RoleId == 1)
                         Response.Redirect("~/Admin/ManageMasterEntries.aspx", false);
                     else
-                        Response.Redirect("Home.aspx", false);
+                        Response.Redirect("~/Admin/ManageMasterEntries.aspx", false);
                 }
                 else
                 {

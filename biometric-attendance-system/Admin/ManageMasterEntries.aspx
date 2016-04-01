@@ -655,11 +655,11 @@
                                     <asp:TextBox runat="server" CssClass="input-field" ID="txtSessionEnd" placeholder="Session End Date" ValidationGroup="Session"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="rfvTxtSessionEnd" runat="server" ErrorMessage="Required" ControlToValidate="txtSessionStart" ForeColor="Red" ValidationGroup="Session"></asp:RequiredFieldValidator>
                                 </div>
-                               <%-- <div class="col s2 l2 m2">
-                                    <asp:LinkButton ID="LinkButton1" CssClass="btn waves-effect waves-light" runat="server" OnClick="lnkAddDepartment_Click" ValidationGroup="Department">
-                                         Add Department
+                                <div class="col s2 l2 m2">
+                                    <asp:LinkButton ID="LinkButton1" CssClass="btn waves-effect waves-light" runat="server"  ValidationGroup="Session">
+                                        <i class="material-icons">add </i> Add Session
                                     </asp:LinkButton>
-                                </div>--%>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col s4 l4 m4 offset-l4 offset-m4 offset-s4" style="height: 300px">
