@@ -1579,7 +1579,7 @@ public class ManageReports
     public MasterShifts GetShiftForEmployeeDateWise(int employeeId, DateTime date)
     {
         int shiftId = 0;
-        if (! IsShiftEntryDateWiseExists(employeeId, date, out shiftId))
+        if (!IsShiftEntryDateWiseExists(employeeId, date, out shiftId))
         {
             string shiftQuery = @"Select ShiftId from tblEmployees Where EmployeeId=@employeeId AND isDeleted = 0";
             List<SqlParameter> list_params_1 = new List<SqlParameter>()
@@ -1594,7 +1594,7 @@ public class ManageReports
             }
             if (dtShiftId.Rows.Count > 0)
             {
-                shiftId =Convert.ToInt32(dtShiftId.Rows[0][0].ToString());
+                shiftId = Convert.ToInt32(dtShiftId.Rows[0][0].ToString());
             }
         }
 
@@ -1697,13 +1697,19 @@ public class ManageReports
                     #region If Present
                     if (row[2] != DBNull.Value) //Entry Time is Not  Null ---- Employee is Present
                     {
-                        if (TimeSpan.Parse(row[2].ToString()) > (TimeSpan.Parse(objDailyAttendanceReportViewModel.FirstHalfEndTime) + relaxation))
-                        {
-                            objDailyAttendanceReportViewModel.LateByDuration = TimeSpan.Parse(row[2].ToString()) - TimeSpan.Parse(objDailyAttendanceReportViewModel.FirstHalfEndTime) + relaxation;
-                        }
+                        TimeSpan empEntryTime = TimeSpan.Parse("00:" + row[2].ToString());
+                        TimeSpan empExitTime = TimeSpan.Parse("00:" + row[3].ToString());
 
-                        objDailyAttendanceReportViewModel.InTime = row[2].ToString();
-                        objDailyAttendanceReportViewModel.OutTime = row[3] == DBNull.Value ? objShift.SecondHalfEnd.ToString() : row[3].ToString(); //IfExitPunch is Null
+                        var bnm = (DateTime.Parse(objDailyAttendanceReportViewModel.FirstHalfStartTime)).TimeOfDay;
+
+                        if (empEntryTime > (DateTime.Parse(objDailyAttendanceReportViewModel.FirstHalfStartTime)).TimeOfDay + relaxation)
+                        {
+                            objDailyAttendanceReportViewModel.LateByDuration = empEntryTime - (DateTime.Parse(objDailyAttendanceReportViewModel.FirstHalfStartTime)).TimeOfDay - relaxation;
+                        }
+                        //objDailyAttendanceReportViewModel.InTime = DateTime
+                        objDailyAttendanceReportViewModel.InTime = Convert.ToDateTime(empEntryTime.ToString()).ToString();
+
+                        objDailyAttendanceReportViewModel.OutTime = row[3] == DBNull.Value ? Convert.ToDateTime(objShift.SecondHalfEnd.ToString()).ToString() :Convert.ToDateTime(empExitTime.ToString()).ToString();//IfExitPunch is Null 
 
                         if (row[3] == DBNull.Value)
                         {
@@ -1775,7 +1781,6 @@ public class ManageReports
         }
         catch (Exception)
         {
-
         }
         #endregion
 

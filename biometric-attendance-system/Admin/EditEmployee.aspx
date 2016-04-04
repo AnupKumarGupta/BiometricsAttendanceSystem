@@ -22,13 +22,13 @@
             </div>
             <div class="col s8 m3 l2 offset-s2">
                 <asp:DropDownList ID="ddlDays" runat="server" Visible="true" CssClass="input-field btn grey lighten-4 teal-text">
-                    <asp:ListItem Text="Sunday" Value="1"></asp:ListItem>
-                    <asp:ListItem Text="Monday" Value="2"></asp:ListItem>
-                    <asp:ListItem Text="Tuesday" Value="3"></asp:ListItem>
-                    <asp:ListItem Text="Wednesday" Value="4"></asp:ListItem>
-                    <asp:ListItem Text="Thursday" Value="5"></asp:ListItem>
-                    <asp:ListItem Text="Friday" Value="6"></asp:ListItem>
-                    <asp:ListItem Text="Saturday" Value="7"></asp:ListItem>
+                    <asp:ListItem Text="Monday" Value="1"></asp:ListItem>
+                    <asp:ListItem Text="Tuesday" Value="2"></asp:ListItem>
+                    <asp:ListItem Text="Wednesday" Value="3"></asp:ListItem>
+                    <asp:ListItem Text="Thursday" Value="4"></asp:ListItem>
+                    <asp:ListItem Text="Friday" Value="5"></asp:ListItem>
+                    <asp:ListItem Text="Saturday" Value="6"></asp:ListItem>
+                    <asp:ListItem Text="Sunday" Value="7"></asp:ListItem>
                 </asp:DropDownList>
             </div>
             <asp:RequiredFieldValidator SetFocusOnError="true" ErrorMessage="Required" ControlToValidate="txtDateOfJoining" CssClass="input-field btn grey lighten-4 teal-text" runat="server" />
