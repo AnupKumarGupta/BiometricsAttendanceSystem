@@ -1597,7 +1597,6 @@ public class ManageReports
         TimeSpan totalDuration = new DateTime(1, 1, 1, objShift.SecondHalfEnd.Hours, objShift.SecondHalfEnd.Minutes, objShift.SecondHalfEnd.Seconds) - new DateTime(1, 1, 1, objShift.FirstHalfStart.Hours, objShift.FirstHalfStart.Minutes, objShift.FirstHalfStart.Seconds);
         DayStatus dayStatus = GetStatusOfDayEmployeeWise(date, employeeId);
         DailyAttendanceReportViewModel objDailyAttendanceReportViewModel = new DailyAttendanceReportViewModel();
-
         int typeOfLeave;// For the type of leave
 
         #region Generate Data
@@ -1618,9 +1617,15 @@ public class ManageReports
                     objDailyAttendanceReportViewModel.Relaxation = relaxation.ToString();
                     objDailyAttendanceReportViewModel.Date = date;
                     objDailyAttendanceReportViewModel.Duration = duration;
+                    
                     #region If Present
                     if (row[2] != DBNull.Value) //Entry Time is Not  Null ---- Employee is Present
                     {
+                        if (TimeSpan.Parse(row[2].ToString()) > (TimeSpan.Parse(objDailyAttendanceReportViewModel.FirstHalfEndTime) + relaxation))
+                        {
+                            objDailyAttendanceReportViewModel.LateByDuration = TimeSpan.Parse(row[2].ToString()) - TimeSpan.Parse(objDailyAttendanceReportViewModel.FirstHalfEndTime) + relaxation;
+                        }
+                        
                         objDailyAttendanceReportViewModel.InTime = row[2].ToString();
                         objDailyAttendanceReportViewModel.OutTime = row[3] == DBNull.Value ? objShift.SecondHalfEnd.ToString() : row[3].ToString(); //IfExitPunch is Null
 
@@ -1634,7 +1639,6 @@ public class ManageReports
                         else
                         {
 
-
                             if (objDailyAttendanceReportViewModel._inTime.TimeOfDay >= relaxation + objShift.FirstHalfStart)// IF Late
                             {
                                 if(duration+HalfLeaveDuration <= totalDuration)
@@ -1647,7 +1651,6 @@ public class ManageReports
                                     objManageLeaves.AssignLeave(employeeId, date, (int)BAS.Enums.LeaveTypes.SHL);
                                     objDailyAttendanceReportViewModel.Status = BAS.Enums.Status.OnShortLeave;
                                 }
-
                             }
                             else if (duration + HalfLeaveDuration < duration)// Second Half Leave
                             {
@@ -1660,7 +1663,6 @@ public class ManageReports
                                     objDailyAttendanceReportViewModel.Status = BAS.Enums.Status.Present;
                                 else
                                     objDailyAttendanceReportViewModel.Status = BAS.Enums.Status.WeeklyOffPresent;
-
                             }
                         } //
 
@@ -1723,16 +1725,55 @@ public class ManageReports
         }
         return lstDailyAttendanceReportViewModel;
     }
-    public List<DailyAttendanceReportViewModel> GetMonthlyAttendanceDetailedReport(int employeeId, DateTime startDate,DateTime endDate, TimeSpan relaxation, out MonthlyReportOfEmployee objDailyAttendanceReportViewModel)// aspx file mai check kar lena ki startDate < endDate
+    public List<DailyAttendanceReportViewModel> GetMonthlyAttendanceDetailedReport(int employeeId, DateTime startDate, DateTime endDate, TimeSpan relaxation, out MonthlyReportOfEmployee objMonthlyReportOfEmployee)// aspx file mai check kar lena ki startDate < endDate
     {
         List<DailyAttendanceReportViewModel> lstMonthlyAttendanceReportViewModel = new List<DailyAttendanceReportViewModel>();
-        objDailyAttendanceReportViewModel = new MonthlyReportOfEmployee();
+        objMonthlyReportOfEmployee = new MonthlyReportOfEmployee();
         for (DateTime date = startDate; date <= endDate;date = date.AddDays(1))
         {
             DailyAttendanceReportViewModel objMonthlyAttendanceReportViewModel = new DailyAttendanceReportViewModel();
             objMonthlyAttendanceReportViewModel = GetDataForReportEmployeeWise(employeeId, date, relaxation);
             objMonthlyAttendanceReportViewModel.Date = date;
             lstMonthlyAttendanceReportViewModel.Add(objMonthlyAttendanceReportViewModel);
+        }
+
+        foreach (var item in lstMonthlyAttendanceReportViewModel)
+        {
+          objMonthlyReportOfEmployee.TotalDuration += item.Duration;
+            DayStatus daystatus = GetStatusOfDay(item.Date);
+            if (daystatus == DayStatus.Active)
+            {
+                if (item.Status == Status.Present || item.Status == Status.PresentWithNoOutPunch)
+                {
+                    objMonthlyReportOfEmployee.PresentDays++;
+                }
+                else
+                {
+                    objMonthlyReportOfEmployee.AbsentDays++;
+                }
+            }
+            else if (daystatus == DayStatus.WeeklyOff)
+            {
+                if (item.Status == Status.Present)
+                {
+                    item.Status = Status.WeeklyOffPresent;
+                    objMonthlyReportOfEmployee.PresentDays++;
+                }
+                else if (item.Status == Status.PresentWithNoOutPunch)
+                {
+                    item.Status = Status.WeeklyOffPresentWithNoOutPunch;
+                    objMonthlyReportOfEmployee.PresentDays++;
+                }
+                else
+                {
+                    item.Status = Status.WeeklyOff;
+                }
+            }
+            else //Holiday
+            {
+                objMonthlyReportOfEmployee.Holidays++;
+                item.Status = Status.Holiday;
+            }
         }
         return lstMonthlyAttendanceReportViewModel;
     }
