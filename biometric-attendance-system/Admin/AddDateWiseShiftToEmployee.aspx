@@ -27,7 +27,7 @@
             <asp:RequiredFieldValidator ID="rfvDdlRole" ErrorMessage="Required" ControlToValidate="ddlShift" runat="server" ValidationGroup="shift" InitialValue="0" ForeColor="Red" SetFocusOnError="True" />
         </div>
         <div class="col s4 m4 l4 offset-s1 offset-m1 offset-l1 card">
-            <asp:Button Text="Add Shift" ID="btnAddSession"  runat="server" ValidationGroup="shift" />
+            <asp:Button Text="Add Shift" ID="btnAddSession"  runat="server" OnClick="btnAddSession_Click" ValidationGroup="shift" />
         </div>
     </div>
 
