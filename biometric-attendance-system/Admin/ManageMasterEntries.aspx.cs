@@ -276,14 +276,14 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         popupEditShifts.Hide();
     }
 
-    protected void lkbDeleteShift_Click(object sender, EventArgs e)
-    {
-        LinkButton b = (LinkButton)sender;
-        int Id = Convert.ToInt32(b.CommandArgument);
-        MasterEntries objMasterEntry = new MasterEntries();
-        objMasterEntry.DeleteShift(Id);
-        grdShiftsBind();
-    }
+    //protected void lkbDeleteShift_Click(object sender, EventArgs e)
+    //{
+    //    LinkButton b = (LinkButton)sender;
+    //    int Id = Convert.ToInt32(b.CommandArgument);
+    //    MasterEntries objMasterEntry = new MasterEntries();
+    //    objMasterEntry.DeleteShift(Id);
+    //    grdShiftsBind();
+    //}
 
     #endregion
 
@@ -296,6 +296,7 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         ddlLeave.Items.Clear();
         ddlLeave.Items.Add("select");
         pnlDepartment.Visible = false;
+        pnlSession.Visible = false;
         pnlRole.Visible = false;
         pnlLeave.Visible = false;
         pnlShifts.Visible = false;

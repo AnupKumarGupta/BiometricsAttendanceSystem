@@ -312,10 +312,11 @@ public class MasterEntries
         DataTable dt = new DataTable();
         DataSet ds;
         int i = 0;
+        string query = "Select * from tblLeaveAssignedByRole where Id = @id";
         LeaveAssignedByRole objLeaves1 = new LeaveAssignedByRole();
         using (DBDataHelper objDDBDataHelper = new DBDataHelper())
         {
-            ds = objDDBDataHelper.GetDataSet("spGetLeaveAssignedByRoleById", SQLTextType.Stored_Proc, lstparameter);
+            ds = objDDBDataHelper.GetDataSet(query, SQLTextType.Query, lstparameter);
             List<LeaveAssignedByRole> lstLeaveType = new List<LeaveAssignedByRole>();
             Leaves objLeave = new Leaves();
             foreach (DataRow rows in ds.Tables[0].Rows)
@@ -343,11 +344,12 @@ public class MasterEntries
         lstparameter.Add(new SqlParameter("@noOfLeaves", noOfLeaves));
         lstparameter.Add(new SqlParameter("@isPromoted", isPromoted));
         lstparameter.Add(new SqlParameter("@updatedAt", DateTime.Now));
+        string query = "Update tblLeaveAssignedByRole set NoOfLeaves = @noOfLeaves , IsPromoted = @isPromoted, UpdatedAt = @updatedAt where Id=@id";
         DataTable dt = new DataTable();
         DataSet ds;
         using (DBDataHelper objDDBDataHelper = new DBDataHelper())
         {
-            ds = objDDBDataHelper.GetDataSet("spUpdateLeavesAssignedByRole", SQLTextType.Stored_Proc, lstparameter);
+            ds = objDDBDataHelper.GetDataSet(query, SQLTextType.Query, lstparameter);
         }
         return true;
     }
@@ -529,7 +531,7 @@ public class MasterEntries
         lstShift.Add(new SqlParameter("@firstHalfEnd", shift.FirstHalfEnd));
         lstShift.Add(new SqlParameter("@secondHalfStart", shift.SecondHalfStart));
         lstShift.Add(new SqlParameter("@secondHalfEnd", shift.SecondHalfEnd));
-        lstShift.Add(new SqlParameter("@slDuration", shift.SHLDuration));
+        lstShift.Add(new SqlParameter("@shlDuration", shift.SHLDuration));
         lstShift.Add(new SqlParameter("@isActive", false));
         lstShift.Add(new SqlParameter("@createdOn", DateTime.Now));
         lstShift.Add(new SqlParameter("@updatedOn", DateTime.Now));

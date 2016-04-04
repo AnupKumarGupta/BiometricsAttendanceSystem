@@ -588,11 +588,11 @@
                                             <asp:LinkButton ID="lkbEditShift" Text="Edit" OnClick="lkbEditShift_Click" CommandArgument='<%#Eval("Id")%>' runat="server" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                     <asp:TemplateField>
+                                     <%--<asp:TemplateField>
                                         <ItemTemplate>
                                             <asp:LinkButton ID="lkbDeleteShift" Text="Delete" OnClick="lkbDeleteShift_Click" CommandArgument='<%#Eval("Id")%>' runat="server" />
                                         </ItemTemplate>
-                                    </asp:TemplateField>
+                                    </asp:TemplateField>--%>
                                 </Columns>
                             </asp:GridView>
                         </div>
