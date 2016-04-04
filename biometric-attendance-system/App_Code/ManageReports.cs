@@ -1542,7 +1542,7 @@ public class ManageReports
         int weeklyOff = Convert.ToInt32(dt.Rows[0][0]);
         return weeklyOff;
     }
-    private DayStatus GetStatusOfDayEmployeeWise(DateTime date, int employeeId)
+    public DayStatus GetStatusOfDayEmployeeWise(DateTime date, int employeeId)
     {
         DataTable dt;
         DayStatus status = new DayStatus();
@@ -1576,6 +1576,82 @@ public class ManageReports
         }
         return status;
     }
+    public MasterShifts GetShiftForEmployeeDateWise(int employeeId, DateTime date)
+    {
+        int shiftId = 0;
+        if (! IsShiftEntryDateWiseExists(employeeId, date, out shiftId))
+        {
+            string shiftQuery = @"Select ShiftId from tblEmployees Where EmployeeId=@employeeId AND isDeleted = 0";
+            List<SqlParameter> list_params_1 = new List<SqlParameter>()
+                {
+                    new SqlParameter("@employeeId",employeeId)
+                };
+
+            DataTable dtShiftId;
+            using (DBDataHelper helper = new DBDataHelper())
+            {
+                dtShiftId = helper.GetDataTable(shiftQuery, SQLTextType.Query, list_params_1);
+            }
+            if (dtShiftId.Rows.Count > 0)
+            {
+                shiftId =Convert.ToInt32(dtShiftId.Rows[0][0].ToString());
+            }
+        }
+
+        string query = @"Select * from tblMasterShifts Where Id=@shiftId";
+        List<SqlParameter> list_params = new List<SqlParameter>()
+        {
+            new SqlParameter("@shiftId",shiftId)
+        };
+
+        DataTable dt;
+        using (DBDataHelper helper = new DBDataHelper())
+        {
+            dt = helper.GetDataTable(query, SQLTextType.Query, list_params);
+        }
+        MasterShifts objMasterShift = new MasterShifts();
+        if (dt.Rows.Count > 0)
+        {
+            objMasterShift.Id = (dt.Rows[0][0] == DBNull.Value) ? 0 : Convert.ToInt32(dt.Rows[0][0]);
+            objMasterShift.Name = (dt.Rows[0][1] == DBNull.Value) ? string.Empty : (dt.Rows[0][1]).ToString();
+            objMasterShift.FirstHalfStart = (dt.Rows[0][2] == DBNull.Value) ? new TimeSpan() : (TimeSpan)(dt.Rows[0][2]);
+            objMasterShift.FirstHalfEnd = (dt.Rows[0][3] == DBNull.Value) ? new TimeSpan() : (TimeSpan)(dt.Rows[0][3]);
+            objMasterShift.SecondHalfStart = (dt.Rows[0][4] == DBNull.Value) ? new TimeSpan() : (TimeSpan)(dt.Rows[0][4]);
+            objMasterShift.SecondHalfEnd = (dt.Rows[0][5] == DBNull.Value) ? new TimeSpan() : (TimeSpan)(dt.Rows[0][5]);
+            objMasterShift.SHLDuration = (dt.Rows[0][6] == DBNull.Value) ? new TimeSpan() : (TimeSpan)(dt.Rows[0][6]);
+        }
+        return objMasterShift;
+    }
+    public bool IsShiftEntryDateWiseExists(int employeeId, DateTime date, out int shiftId)
+    {
+        string query = @"Select * from tblDateWiseShift Where EmployeeId = @employeeId And [Date] = @date";
+
+        List<SqlParameter> list_params = new List<SqlParameter>()
+        {
+            new SqlParameter("@employeeId",employeeId),
+            new SqlParameter("@date",date)
+        };
+
+        DataTable dt;
+        using (DBDataHelper helper = new DBDataHelper())
+        {
+            dt = helper.GetDataTable(query, SQLTextType.Query, list_params);
+        }
+
+        shiftId = dt.Rows.Count > 0 ? Convert.ToInt32(dt.Rows[0][0].ToString()) : 0;
+
+        if (dt.Rows.Count > 0)
+        {
+            shiftId = Convert.ToInt32(dt.Rows[0][0].ToString());
+            return true;
+        }
+        else
+        {
+            shiftId = 0;
+            return false;
+        }
+    }
+
     #endregion
 
     #region Reports_Data
@@ -1589,7 +1665,7 @@ public class ManageReports
                                         { new SqlParameter("@date", date), 
                                           new SqlParameter("@employeeId", employeeId) };
 
-        MasterShifts objShift = GetShiftForEmployee(employeeId); //Getting Shift Active as per Employee
+        MasterShifts objShift = GetShiftForEmployeeDateWise(employeeId, date); //Getting Shift Active as per Employee
         ManageLeaves objManageLeaves = new ManageLeaves();
 
         TimeSpan ShortLeaveDuration = objShift.SHLDuration;
@@ -1617,7 +1693,7 @@ public class ManageReports
                     objDailyAttendanceReportViewModel.Relaxation = relaxation.ToString();
                     objDailyAttendanceReportViewModel.Date = date;
                     objDailyAttendanceReportViewModel.Duration = duration;
-                    
+
                     #region If Present
                     if (row[2] != DBNull.Value) //Entry Time is Not  Null ---- Employee is Present
                     {
@@ -1625,7 +1701,7 @@ public class ManageReports
                         {
                             objDailyAttendanceReportViewModel.LateByDuration = TimeSpan.Parse(row[2].ToString()) - TimeSpan.Parse(objDailyAttendanceReportViewModel.FirstHalfEndTime) + relaxation;
                         }
-                        
+
                         objDailyAttendanceReportViewModel.InTime = row[2].ToString();
                         objDailyAttendanceReportViewModel.OutTime = row[3] == DBNull.Value ? objShift.SecondHalfEnd.ToString() : row[3].ToString(); //IfExitPunch is Null
 
@@ -1641,7 +1717,7 @@ public class ManageReports
 
                             if (objDailyAttendanceReportViewModel._inTime.TimeOfDay >= relaxation + objShift.FirstHalfStart)// IF Late
                             {
-                                if(duration+HalfLeaveDuration <= totalDuration)
+                                if (duration + HalfLeaveDuration <= totalDuration)
                                 {
                                     objManageLeaves.AssignLeave(employeeId, date, (int)BAS.Enums.LeaveTypes.HDL);
                                     objDailyAttendanceReportViewModel.Status = BAS.Enums.Status.OnHalfDayLeaveFirstHalf;
@@ -1706,10 +1782,12 @@ public class ManageReports
         return objDailyAttendanceReportViewModel;
     }
 
+
+
     #endregion
 
     #region Reports
-    
+
     public List<DailyAttendanceReportViewModel> GetDailyAttendanceDetailedReport(DateTime date, TimeSpan relaxation)
     {
         ManageEmployees objManageEmployees = new ManageEmployees();
@@ -1729,7 +1807,7 @@ public class ManageReports
     {
         List<DailyAttendanceReportViewModel> lstMonthlyAttendanceReportViewModel = new List<DailyAttendanceReportViewModel>();
         objMonthlyReportOfEmployee = new MonthlyReportOfEmployee();
-        for (DateTime date = startDate; date <= endDate;date = date.AddDays(1))
+        for (DateTime date = startDate; date <= endDate; date = date.AddDays(1))
         {
             DailyAttendanceReportViewModel objMonthlyAttendanceReportViewModel = new DailyAttendanceReportViewModel();
             objMonthlyAttendanceReportViewModel = GetDataForReportEmployeeWise(employeeId, date, relaxation);
@@ -1739,7 +1817,7 @@ public class ManageReports
 
         foreach (var item in lstMonthlyAttendanceReportViewModel)
         {
-          objMonthlyReportOfEmployee.TotalDuration += item.Duration;
+            objMonthlyReportOfEmployee.TotalDuration += item.Duration;
             DayStatus daystatus = GetStatusOfDay(item.Date);
             if (daystatus == DayStatus.Active)
             {
@@ -1798,21 +1876,21 @@ public class ManageReports
     public List<DailyAttendanceReportViewModel> GetMonthlyLateComers(DateTime startDate, DateTime endDate, TimeSpan relaxation)
     {
         List<DailyAttendanceReportViewModel> lstDailyAttendanceReportViewModel = new List<DailyAttendanceReportViewModel>();
-        for (DateTime date = startDate; date <= endDate;date = date.AddDays(1))
+        for (DateTime date = startDate; date <= endDate; date = date.AddDays(1))
         {
             List<DailyAttendanceReportViewModel> objDailyAttendanceReportViewModel = GetDailyLateComers(date, relaxation);
-           lstDailyAttendanceReportViewModel = lstDailyAttendanceReportViewModel.Concat(objDailyAttendanceReportViewModel).ToList();
+            lstDailyAttendanceReportViewModel = lstDailyAttendanceReportViewModel.Concat(objDailyAttendanceReportViewModel).ToList();
         }
         return lstDailyAttendanceReportViewModel;
     }
-    public List<DailyAttendanceReportViewModel> GetDailyAttendanceDetailedReportDepartmentWise(int departmentId,DateTime date, TimeSpan relaxation)
+    public List<DailyAttendanceReportViewModel> GetDailyAttendanceDetailedReportDepartmentWise(int departmentId, DateTime date, TimeSpan relaxation)
     {
         List<DailyAttendanceReportViewModel> lstDailyAttendanceReportViewModel = new List<DailyAttendanceReportViewModel>();
         lstDailyAttendanceReportViewModel = GetDailyAttendanceDetailedReport(date, relaxation).Where(x => x.DepartmentId == departmentId).ToList();
         return lstDailyAttendanceReportViewModel;
     }
     #endregion
-    
+
     #endregion
 
     // Leave Forwarding i.e. to next session 
