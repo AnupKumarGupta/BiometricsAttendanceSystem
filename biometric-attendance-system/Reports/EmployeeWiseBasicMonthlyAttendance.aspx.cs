@@ -51,7 +51,7 @@ public partial class Reports_EmployeeWiseBasicMonthlyAttendance : System.Web.UI.
         lblAbsentDays.Text = objMonthlyReportOfEmployee.AbsentDays.ToString();
         lblAbsentDays.Text = "AbsentDays : " + objMonthlyReportOfEmployee.AbsentDays.ToString();
         lblWeeklyOff.Text = "WeeklyOff : " + objMonthlyReportOfEmployee.WeeklyOff.ToString();
-    }
+     }
 
     protected void btnExport_Click(object sender, EventArgs e)
     {
