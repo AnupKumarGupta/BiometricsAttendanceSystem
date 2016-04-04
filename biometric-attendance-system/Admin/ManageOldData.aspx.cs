@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -46,9 +47,41 @@ public partial class Admin_ManageOldData : System.Web.UI.Page
     }
     protected void lkbEditData_Click(object sender, EventArgs e)
     {
+        LeavesOldStockViewModel objLeavesOldStockViewModel = new LeavesOldStockViewModel();
         popupEditData.Show();
         LinkButton b = (LinkButton)sender;
         lblName.Text = b.CommandArgument.Split(';')[1];
         Session["id"] = Convert.ToInt32(b.CommandArgument.Split(';')[0]);
+        objLeavesOldStockViewModel = getDataForOldLeavesByEmployeeId(new DateTime(),new DateTime(), Convert.ToInt32(Session["id"]));
+        txtEditEL.Text = objLeavesOldStockViewModel.elCount.ToString();
+        txtEditSL.Text = objLeavesOldStockViewModel.slCount.ToString();
+    }
+
+    public LeavesOldStockViewModel getDataForOldLeavesByEmployeeId(DateTime sessionStartDate, DateTime sessionEndDate, int employeeId)
+    {
+        List<LeavesOldStockViewModel> lstLeavesOldStockViewModel = new List<LeavesOldStockViewModel>();
+        DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
+        DBDataHelper helper = new DBDataHelper();
+        List<SqlParameter> lst_params = new List<SqlParameter>();
+        lst_params.Add(new SqlParameter("@employeeId", employeeId));
+        DataTable dt = new DataTable();
+        string query = "SELECT tblEmployeesMaster.Id, Name ,[SLCount],[ELCount],[SessionStartDate],[SesssionEndDate] FROM[tblLeavesOldStock] right outer join tblEmployeesMaster On tblEmployeesMaster.Id = tblLeavesOldStock.EmployeeId Where tblLeavesOldStock.EmployeeId = @employeeId";
+        LeavesOldStockViewModel objLeavesOldStockViewModel = new LeavesOldStockViewModel();
+        using (DBDataHelper objDDBDataHelper = new DBDataHelper())
+        {
+            dt = objDDBDataHelper.GetDataTable(query, SQLTextType.Query, lst_params);
+            foreach (DataRow row in dt.Rows)
+            {
+                objLeavesOldStockViewModel.employeeId = row[0] == DBNull.Value ? 0 : Int32.Parse(row[0].ToString());
+                objLeavesOldStockViewModel.employeeName = row[1] == DBNull.Value ? "" : row[1].ToString();
+                objLeavesOldStockViewModel.slCount = row[2] == DBNull.Value ? 0 : Int32.Parse(row[2].ToString());
+                objLeavesOldStockViewModel.elCount = row[3] == DBNull.Value ? 0 : Int32.Parse(row[3].ToString());
+                objLeavesOldStockViewModel.sessionStartDate = row[4] == DBNull.Value ? DateTime.Now : DateTime.Parse(row[4].ToString());
+                objLeavesOldStockViewModel.sessionEndDate = row[5] == DBNull.Value ? DateTime.Now : DateTime.Parse(row[5].ToString());
+                
+            }
+        }
+
+        return objLeavesOldStockViewModel;
     }
 }
