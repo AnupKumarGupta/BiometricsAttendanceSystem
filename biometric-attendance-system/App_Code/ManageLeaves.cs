@@ -452,68 +452,8 @@ public class ManageLeaves
             return lstLeavesCount;
         }
     }
-
-//    public bool AddLeavesAssginedPerSessionRoleWise(DateTime sessionStartDate)
-//    {
-//        DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
-//        MasterEntries objMasterEntries = new MasterEntries();
-//        List<Role> lstRole = new List<Role>();
-//        lstRole = objMasterEntries.GetAllRoles();
-//        DateTime sessionEndDate = new DateTime(sessionStartDate.Year + 1, 7, 31);
-
-//        #region Roles
-        
-//        foreach (Role role in lstRole)
-//        {
-//            ManageEmployees objManageEmployees = new ManageEmployees();
-
-//            List<Employees> lstEmployees = objManageEmployees.GetEmployeesByRole(role.Id);
-//            List<LeavesCount> lstLeaveDetails = new List<LeavesCount>();
-//            lstLeaveDetails = GetLeavesCountAssignedByRole(role.Id);
-           
-//            #region List of Employees
-        
-//            foreach (Employees objEmployees in lstEmployees)
-//            {
-//                #region List of Leaves
-                
-//                foreach (LeavesCount LeaveDetails in lstLeaveDetails)
-//                {
-
-//                    using (DBDataHelper objDDBDataHelper = new DBDataHelper())
-//                    {
-//                        string query = @"INSERT INTO [dbo].[tblLeaveAssignedPerSession]
-//                                 VALUES
-//                                (@employeeId,
-//                                 @leaveTypeId, 
-//                                 @noOfLeaves,
-//                                 @sessionStartDate,
-//                                 @sessionEndDate)";
-
-//                        List<SqlParameter> list_params = new List<SqlParameter>() 
-//                        { 
-//                            new SqlParameter("@employeeId", objEmployees.Id),
-//                            new SqlParameter("@leaveTypeId", LeaveDetails.LeaveId),
-//                            new SqlParameter("@noOfLeaves", LeaveDetails.LeaveCount),
-//                            new SqlParameter("@sessionStartDate", sessionStartDate),
-//                            new SqlParameter("@sessionEndDate", sessionEndDate),
-//                        };
-
-//                        objDDBDataHelper.ExecSQL(query, SQLTextType.Query, list_params);
-//                    }
-//                }
-
-//                #endregion
-//            }
-            
-//            #endregion
-//        }
-//        #endregion
-        
-//        return true;
-//    }
-        public TimeSpan GetShortLeaveDurationByShiftId(int shiftId)
-        {
+    public TimeSpan GetShortLeaveDurationByShiftId(int shiftId)
+    {
         DataTable dt;
         TimeSpan dr = new TimeSpan();
         string query = "SELECT SHLDuration FROM tblMasterShifts WHERE Id=@shiftId AND isDeleted = 0";
@@ -524,7 +464,7 @@ public class ManageLeaves
         {
             using (DBDataHelper helper = new DBDataHelper())
             {
-                dt = helper.GetDataTable(query, SQLTextType.Query,lst_params);
+                dt = helper.GetDataTable(query, SQLTextType.Query, lst_params);
                 dr = dt.Rows[0][0] == DBNull.Value ? new TimeSpan(0, 0, 0) : TimeSpan.Parse(dt.Rows[0][0].ToString());
             }
         }
@@ -534,8 +474,8 @@ public class ManageLeaves
         }
         return dr;
     }
-    
-    
+
+
 
     #endregion
 }

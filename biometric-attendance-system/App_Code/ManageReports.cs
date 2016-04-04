@@ -1126,184 +1126,6 @@ public class ManageReports
     }
     #endregion
 
-    #region Leave Balance Table
-
-    public List<LeavesCount> GetLeavesDueOfEmployee(int employeeId, DateTime Date)
-    {
-        DataTable dtAssignedLeaves, dtLeavesAvailed;
-        DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
-        List<LeavesCount> lstLeavesAssigned = new List<LeavesCount>();
-        List<LeavesCount> lstLeavesAvailed = new List<LeavesCount>();
-        List<LeavesCount> lstLeavesDue = new List<LeavesCount>();
-
-        #region Leaves Assigned Count
-        DateTime sessionStartDate = (Date.Month >= 8) ? new DateTime(Date.Year, 8, 01) : new DateTime(Date.Year - 1, 8, 01);
-        DateTime sessionEndDate = (Date.Month <= 7) ? new DateTime(Date.Year, 7, 31) : new DateTime(Date.Year + 1, 7, 31);
-
-        using (DBDataHelper helper = new DBDataHelper())
-        {
-            List<SqlParameter> list_params_Assigned = new List<SqlParameter>()
-            {   new SqlParameter("@employeeId", employeeId), 
-                new SqlParameter("@sessionStartDate", sessionStartDate),
-                new SqlParameter("@sessionEndDate", sessionEndDate)
-            };
-            dtAssignedLeaves = helper.GetDataTable("spGetLeavesAssignedToEmployeeSessionWise", SQLTextType.Stored_Proc, list_params_Assigned);
-            foreach (DataRow row in dtAssignedLeaves.Rows)
-            {
-                LeavesCount objLeavesCount = new LeavesCount();
-                objLeavesCount.LeaveId = row[0] == DBNull.Value ? 0 : Int32.Parse(row[0].ToString());
-                objLeavesCount.LeaveName = row[1] == DBNull.Value ? "" : row[1].ToString();
-                objLeavesCount.LeaveCount = row[2] == DBNull.Value ? 0 : Int32.Parse(row[2].ToString());
-                lstLeavesAssigned.Add(objLeavesCount);
-            }
-        }
-        #endregion
-
-        #region Leaves Availed Upto That Month
-        using (DBDataHelper helper = new DBDataHelper())
-        {
-            DateTime SessionStartDate = new DateTime();
-            DateTime SessionEndDate = new DateTime();
-            if (Date.Month > 7)
-            {
-                SessionStartDate = new DateTime(Date.Year, 08, 01);
-                SessionEndDate = new DateTime(Date.Year + 1, 07, 31);
-            }
-            else
-            {
-                SessionStartDate = new DateTime(Date.Year - 1, 08, 01);
-                SessionEndDate = new DateTime(Date.Year, 07, 31);
-            }
-
-            List<SqlParameter> list_params = new List<SqlParameter>()
-            { 
-                new SqlParameter("@employeeId", employeeId), 
-                new SqlParameter("@sessionStart", SessionStartDate), 
-                new SqlParameter("@sessionEnd", SessionEndDate), 
-                new SqlParameter("@monthStartDate", Date)
-            };
-
-            dtLeavesAvailed = helper.GetDataTable("spGetLeavesAvailedUptoPreviousMonthEmployeeWise", SQLTextType.Stored_Proc, list_params);
-
-            foreach (DataRow row in dtLeavesAvailed.Rows)
-            {
-                LeavesCount objLeavesCount = new LeavesCount();
-                objLeavesCount.LeaveId = row[0] == DBNull.Value ? 0 : Int32.Parse(row[0].ToString());
-                objLeavesCount.LeaveName = row[1] == DBNull.Value ? "" : row[1].ToString();
-                objLeavesCount.LeaveCount = row[2] == DBNull.Value ? 0 : Int32.Parse(row[2].ToString());
-                lstLeavesAvailed.Add(objLeavesCount);
-            }
-        }
-
-        #endregion
-
-        #region Leaves Due
-        foreach (LeavesCount item in lstLeavesAssigned)
-        {
-            LeavesCount objLeavesCount = new LeavesCount();
-            objLeavesCount.LeaveId = item.LeaveId;
-            objLeavesCount.LeaveName = item.LeaveName;
-            objLeavesCount.LeaveCount = item.LeaveCount - (lstLeavesAvailed.Select(x => x).Where(y => y.LeaveId == item.LeaveId).FirstOrDefault()).LeaveCount;
-            lstLeavesDue.Add(objLeavesCount);
-        }
-        #endregion
-
-        return lstLeavesDue;
-    }
-    public List<LeavesCount> GetLeavesAvailedByEmployee(int employeeId, DateTime monthStart, DateTime monthEnd)
-    {
-        DataTable dtLeavesAvailed;
-        DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
-        List<LeavesCount> lstLeavesAvailed = new List<LeavesCount>();
-
-        #region Leaves Availed  That Month
-        using (DBDataHelper helper = new DBDataHelper())
-        {
-
-            List<SqlParameter> list_params = new List<SqlParameter>()
-            { 
-                new SqlParameter("@employeeId", employeeId), 
-                new SqlParameter("@monthStartDate", monthStart), 
-                new SqlParameter("@monthEndDate", monthEnd)
-            };
-
-            dtLeavesAvailed = helper.GetDataTable("spGetLeavesAvailedByMonthEmployeeWise", SQLTextType.Stored_Proc, list_params);
-
-            foreach (DataRow row in dtLeavesAvailed.Rows)
-            {
-                LeavesCount objLeavesCount = new LeavesCount();
-                objLeavesCount.LeaveId = row[0] == DBNull.Value ? 0 : Int32.Parse(row[0].ToString());
-                objLeavesCount.LeaveName = row[1] == DBNull.Value ? "" : row[1].ToString();
-                objLeavesCount.LeaveCount = row[2] == DBNull.Value ? 0 : Int32.Parse(row[2].ToString());
-                lstLeavesAvailed.Add(objLeavesCount);
-            }
-        }
-
-        #endregion
-        return lstLeavesAvailed;
-    }
-    public List<LeavesCount> GetLeavesBalanceByEmployee(List<LeavesCount> lstLeavesDueOfEmployee, List<LeavesCount> lstLeavesAvailedByEmployee)
-    {
-        List<LeavesCount> lstLeavesBalance = new List<LeavesCount>();
-        foreach (LeavesCount item in lstLeavesDueOfEmployee)
-        {
-            LeavesCount objLeavesCount = new LeavesCount();
-            objLeavesCount.LeaveId = item.LeaveId;
-            objLeavesCount.LeaveName = item.LeaveName;
-            objLeavesCount.LeaveCount = item.LeaveCount - (lstLeavesAvailedByEmployee.Select(x => x).Where(y => y.LeaveId == item.LeaveId).FirstOrDefault()).LeaveCount;
-            lstLeavesBalance.Add(objLeavesCount);
-        }
-        return lstLeavesBalance;
-    }
-    public List<LeavesBalanceRecord> GetDataForMonthlyLeaveBalanceTable(int departmentId, DateTime startDate, DateTime endDate)
-    {
-        List<LeavesBalanceRecord> lstLeavesBalanceRecord = new List<LeavesBalanceRecord>();
-
-        DataTable dtEmployees;
-        DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
-        List<SqlParameter> list_params = new List<SqlParameter>() { new SqlParameter("@departmentId", departmentId) };
-        try
-        {
-            using (DBDataHelper helper = new DBDataHelper())
-            {
-                dtEmployees = helper.GetDataTable("spGetLeavesOldStockDepartmentWise", SQLTextType.Stored_Proc, list_params);
-                foreach (DataRow row in dtEmployees.Rows)
-                {
-                    LeavesBalanceRecord objLeavesBalanceRecord = new LeavesBalanceRecord();
-
-                    objLeavesBalanceRecord.EmployeeId = Int32.Parse(row[0].ToString());
-                    objLeavesBalanceRecord.Name = row[1].ToString();
-                    List<LeavesCount> LeavesOldStack = new List<LeavesCount>()
-                    {
-                        new LeavesCount {
-                            LeaveId = (int)BAS.Enums.LeaveTypes.SL,
-                            LeaveName=BAS.Enums.LeaveTypes.SL.ToString(), 
-                            LeaveCount = row[2] == DBNull.Value ? 0: Int32.Parse(row[2].ToString())
-                        },
-                        new LeavesCount {
-                            LeaveId = (int)BAS.Enums.LeaveTypes.EL, 
-                            LeaveName=BAS.Enums.LeaveTypes.EL.ToString(),
-                            LeaveCount = row[3] == DBNull.Value ? 0: Int32.Parse(row[3].ToString())
-                        }
-                    };
-                    objLeavesBalanceRecord.lstLeavesOldStack = LeavesOldStack;
-                    objLeavesBalanceRecord.lstLeavesDue = GetLeavesDueOfEmployee(objLeavesBalanceRecord.EmployeeId, startDate);
-                    objLeavesBalanceRecord.lstLeavesAvailed = GetLeavesAvailedByEmployee(objLeavesBalanceRecord.EmployeeId, startDate, endDate);
-                    objLeavesBalanceRecord.lstLeavesBalance = GetLeavesBalanceByEmployee(objLeavesBalanceRecord.lstLeavesDue, objLeavesBalanceRecord.lstLeavesAvailed);
-
-                    lstLeavesBalanceRecord.Add(objLeavesBalanceRecord);
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-
-        }
-        return lstLeavesBalanceRecord;
-    }
-
-    #endregion
-
     #region Update Leave Balance
     public void UpdateLeaveBalanceTable(DateTime OldSessionStartDate, DateTime OldSessionEndDate, DateTime NewSessionStartDate, DateTime NewSessionEndDate)
     {
@@ -1709,7 +1531,7 @@ public class ManageReports
                         //objDailyAttendanceReportViewModel.InTime = DateTime
                         objDailyAttendanceReportViewModel.InTime = Convert.ToDateTime(empEntryTime.ToString()).ToString();
 
-                        objDailyAttendanceReportViewModel.OutTime = row[3] == DBNull.Value ? Convert.ToDateTime(objShift.SecondHalfEnd.ToString()).ToString() :Convert.ToDateTime(empExitTime.ToString()).ToString();//IfExitPunch is Null 
+                        objDailyAttendanceReportViewModel.OutTime = row[3] == DBNull.Value ? Convert.ToDateTime(objShift.SecondHalfEnd.ToString()).ToString() : Convert.ToDateTime(empExitTime.ToString()).ToString();//IfExitPunch is Null 
 
                         if (row[3] == DBNull.Value)
                         {
@@ -1786,9 +1608,6 @@ public class ManageReports
 
         return objDailyAttendanceReportViewModel;
     }
-
-
-
     #endregion
 
     #region Reports
@@ -1895,6 +1714,190 @@ public class ManageReports
         return lstDailyAttendanceReportViewModel;
     }
     #endregion
+
+    #region Leave Balance Table
+
+    public List<LeavesCount> GetLeavesDueOfEmployee(int employeeId, DateTime Date)
+    {
+        DataTable dtAssignedLeaves, dtLeavesAvailed;
+        DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
+        List<LeavesCount> lstLeavesAssigned = new List<LeavesCount>();
+        List<LeavesCount> lstLeavesAvailed = new List<LeavesCount>();
+        List<LeavesCount> lstLeavesDue = new List<LeavesCount>();
+
+        #region Leaves Assigned Count
+        DateTime sessionStartDate = (Date.Month >= 8) ? new DateTime(Date.Year, 8, 01) : new DateTime(Date.Year - 1, 8, 01);
+        DateTime sessionEndDate = (Date.Month <= 7) ? new DateTime(Date.Year, 7, 31) : new DateTime(Date.Year + 1, 7, 31);
+
+        using (DBDataHelper helper = new DBDataHelper())
+        {
+            List<SqlParameter> list_params_Assigned = new List<SqlParameter>()
+            {   new SqlParameter("@employeeId", employeeId), 
+                new SqlParameter("@sessionStartDate", sessionStartDate),
+                new SqlParameter("@sessionEndDate", sessionEndDate)
+            };
+            dtAssignedLeaves = helper.GetDataTable("spGetLeavesAssignedToEmployeeSessionWise", SQLTextType.Stored_Proc, list_params_Assigned);
+            foreach (DataRow row in dtAssignedLeaves.Rows)
+            {
+                LeavesCount objLeavesCount = new LeavesCount();
+                objLeavesCount.LeaveId = row[0] == DBNull.Value ? 0 : Int32.Parse(row[0].ToString());
+                objLeavesCount.LeaveName = row[1] == DBNull.Value ? "" : row[1].ToString();
+                objLeavesCount.LeaveCount = row[2] == DBNull.Value ? 0 : Int32.Parse(row[2].ToString());
+                lstLeavesAssigned.Add(objLeavesCount);
+            }
+        }
+        #endregion
+
+        #region Leaves Availed Upto That Month
+        using (DBDataHelper helper = new DBDataHelper())
+        {
+            DateTime SessionStartDate = new DateTime();
+            DateTime SessionEndDate = new DateTime();
+            if (Date.Month > 7)
+            {
+                SessionStartDate = new DateTime(Date.Year, 08, 01);
+                SessionEndDate = new DateTime(Date.Year + 1, 07, 31);
+            }
+            else
+            {
+                SessionStartDate = new DateTime(Date.Year - 1, 08, 01);
+                SessionEndDate = new DateTime(Date.Year, 07, 31);
+            }
+
+            List<SqlParameter> list_params = new List<SqlParameter>()
+            { 
+                new SqlParameter("@employeeId", employeeId), 
+                new SqlParameter("@sessionStart", SessionStartDate), 
+                new SqlParameter("@sessionEnd", SessionEndDate), 
+                new SqlParameter("@monthStartDate", Date)
+            };
+
+            dtLeavesAvailed = helper.GetDataTable("spGetLeavesAvailedUptoPreviousMonthEmployeeWise", SQLTextType.Stored_Proc, list_params);
+
+            foreach (DataRow row in dtLeavesAvailed.Rows)
+            {
+                LeavesCount objLeavesCount = new LeavesCount();
+                objLeavesCount.LeaveId = row[0] == DBNull.Value ? 0 : Int32.Parse(row[0].ToString());
+                objLeavesCount.LeaveName = row[1] == DBNull.Value ? "" : row[1].ToString();
+                objLeavesCount.LeaveCount = row[2] == DBNull.Value ? 0 : Int32.Parse(row[2].ToString());
+                lstLeavesAvailed.Add(objLeavesCount);
+            }
+        }
+
+        #endregion
+
+        #region Leaves Due
+        foreach (LeavesCount item in lstLeavesAssigned)
+        {
+            LeavesCount objLeavesCount = new LeavesCount();
+            objLeavesCount.LeaveId = item.LeaveId;
+            objLeavesCount.LeaveName = item.LeaveName;
+            objLeavesCount.LeaveCount = item.LeaveCount - (lstLeavesAvailed.Select(x => x).Where(y => y.LeaveId == item.LeaveId).FirstOrDefault()).LeaveCount;
+            lstLeavesDue.Add(objLeavesCount);
+        }
+        #endregion
+
+        return lstLeavesDue;
+    }
+    public List<LeavesCount> GetLeavesAvailedByEmployee(int employeeId, DateTime monthStart, DateTime monthEnd)
+    {
+        DataTable dtLeavesAvailed;
+        DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
+        List<LeavesCount> lstLeavesAvailed = new List<LeavesCount>();
+
+        #region Leaves Availed  That Month
+        using (DBDataHelper helper = new DBDataHelper())
+        {
+
+            List<SqlParameter> list_params = new List<SqlParameter>()
+            { 
+                new SqlParameter("@employeeId", employeeId), 
+                new SqlParameter("@monthStartDate", monthStart), 
+                new SqlParameter("@monthEndDate", monthEnd)
+            };
+
+            dtLeavesAvailed = helper.GetDataTable("spGetLeavesAvailedByMonthEmployeeWise", SQLTextType.Stored_Proc, list_params);
+
+            foreach (DataRow row in dtLeavesAvailed.Rows)
+            {
+                LeavesCount objLeavesCount = new LeavesCount();
+                objLeavesCount.LeaveId = row[0] == DBNull.Value ? 0 : Int32.Parse(row[0].ToString());
+                objLeavesCount.LeaveName = row[1] == DBNull.Value ? "" : row[1].ToString();
+                objLeavesCount.LeaveCount = row[2] == DBNull.Value ? 0 : Int32.Parse(row[2].ToString());
+                lstLeavesAvailed.Add(objLeavesCount);
+            }
+        }
+
+        #endregion
+        return lstLeavesAvailed;
+    }
+    public List<LeavesCount> GetLeavesBalanceByEmployee(List<LeavesCount> lstLeavesDueOfEmployee, List<LeavesCount> lstLeavesAvailedByEmployee)
+    {
+        List<LeavesCount> lstLeavesBalance = new List<LeavesCount>();
+        foreach (LeavesCount item in lstLeavesDueOfEmployee)
+        {
+            LeavesCount objLeavesCount = new LeavesCount();
+            objLeavesCount.LeaveId = item.LeaveId;
+            objLeavesCount.LeaveName = item.LeaveName;
+            objLeavesCount.LeaveCount = item.LeaveCount - (lstLeavesAvailedByEmployee.Select(x => x).Where(y => y.LeaveId == item.LeaveId).FirstOrDefault()).LeaveCount;
+            lstLeavesBalance.Add(objLeavesCount);
+        }
+        return lstLeavesBalance;
+    }
+    public List<LeavesBalanceRecord> GetDataForMonthlyLeaveBalanceTable(int departmentId, DateTime startDate, DateTime endDate)
+    {
+        List<LeavesBalanceRecord> lstLeavesBalanceRecord = new List<LeavesBalanceRecord>();
+
+        DataTable dtEmployees;
+        DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
+        List<SqlParameter> list_params = new List<SqlParameter>() { new SqlParameter("@departmentId", departmentId) };
+        try
+        {
+            using (DBDataHelper helper = new DBDataHelper())
+            {
+                dtEmployees = helper.GetDataTable("spGetLeavesOldStockDepartmentWise", SQLTextType.Stored_Proc, list_params);
+                foreach (DataRow row in dtEmployees.Rows)
+                {
+                    LeavesBalanceRecord objLeavesBalanceRecord = new LeavesBalanceRecord();
+
+                    objLeavesBalanceRecord.EmployeeId = Int32.Parse(row[0].ToString());
+                    objLeavesBalanceRecord.Name = row[1].ToString();
+                    List<LeavesCount> LeavesOldStack = new List<LeavesCount>()
+                    {
+                        new LeavesCount {
+                            LeaveId = (int)BAS.Enums.LeaveTypes.SL,
+                            LeaveName=BAS.Enums.LeaveTypes.SL.ToString(), 
+                            LeaveCount = row[2] == DBNull.Value ? 0: Int32.Parse(row[2].ToString())
+                        },
+                        new LeavesCount {
+                            LeaveId = (int)BAS.Enums.LeaveTypes.EL, 
+                            LeaveName=BAS.Enums.LeaveTypes.EL.ToString(),
+                            LeaveCount = row[3] == DBNull.Value ? 0: Int32.Parse(row[3].ToString())
+                        }
+                    };
+                    objLeavesBalanceRecord.lstLeavesOldStack = LeavesOldStack;
+                    objLeavesBalanceRecord.lstLeavesDue = GetLeavesDueOfEmployee(objLeavesBalanceRecord.EmployeeId, startDate);
+                    objLeavesBalanceRecord.lstLeavesAvailed = GetLeavesAvailedByEmployee(objLeavesBalanceRecord.EmployeeId, startDate, endDate);
+                    objLeavesBalanceRecord.lstLeavesBalance = GetLeavesBalanceByEmployee(objLeavesBalanceRecord.lstLeavesDue, objLeavesBalanceRecord.lstLeavesAvailed);
+
+                    lstLeavesBalanceRecord.Add(objLeavesBalanceRecord);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+
+        }
+        return lstLeavesBalanceRecord;
+    }
+
+    #endregion
+
+    #region UpdationOfSessionWiseLeaveGrant
+
+
+    #endregion
+
 
     #endregion
 
