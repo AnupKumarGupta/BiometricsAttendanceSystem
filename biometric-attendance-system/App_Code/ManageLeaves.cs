@@ -95,7 +95,7 @@ public class ManageLeaves
             }
             return true;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             return false;
         }
@@ -127,7 +127,7 @@ public class ManageLeaves
             }
             return true;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             return false;
         }
@@ -160,7 +160,7 @@ public class ManageLeaves
             }
             return true;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             return false;
         }
@@ -185,7 +185,7 @@ public class ManageLeaves
             }
             return true;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             return false;
         }
@@ -286,7 +286,7 @@ public class ManageLeaves
                 dr = dt.Rows[0][0] == DBNull.Value ? new TimeSpan(0, 0, 0) : TimeSpan.Parse(dt.Rows[0][0].ToString());
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             dr = new TimeSpan(0, 0, 0);
         }
@@ -306,7 +306,7 @@ public class ManageLeaves
 
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             new TimeSpan(0, 0, 0);
         }
@@ -348,7 +348,7 @@ public class ManageLeaves
                 }
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -388,7 +388,7 @@ public class ManageLeaves
                 }
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -433,10 +433,12 @@ public class ManageLeaves
         {
             string query = @"SELECT LeaveTypeId,NoOfLeaves 
                              FROM tblLeaveAssignedByRole
-                             WHERE RoleId = 1  AND
+                             WHERE RoleId = @roleId  AND
                                    IsDeleted = 0";
-
-            ds = objDDBDataHelper.GetDataSet(query, SQLTextType.Query);
+            List<SqlParameter> lstParams = new List<SqlParameter>(){
+                 new SqlParameter("@roleId",roleId)
+            };
+            ds = objDDBDataHelper.GetDataSet(query, SQLTextType.Query, lstParams);
 
             List<LeavesCount> lstLeavesCount = new List<LeavesCount>();
 
@@ -468,13 +470,44 @@ public class ManageLeaves
                 dr = dt.Rows[0][0] == DBNull.Value ? new TimeSpan(0, 0, 0) : TimeSpan.Parse(dt.Rows[0][0].ToString());
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             dr = new TimeSpan(0, 0, 0);
         }
         return dr;
     }
 
+    //    public List<LeavesCount> GetLeavesCountAssignedToEmployee(int employeeId, int roleId)
+    //    {
+    //        DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
+    //        DataSet ds;
+    //        int i = 0;
+    //        using (DBDataHelper objDDBDataHelper = new DBDataHelper())
+    //        {
+    //            string query = @"SELECT LeaveTypeId,NoOfLeaves 
+    //                             FROM tblLeaveAssignedByRole
+    //                             WHERE RoleId = 1  AND
+    //                                   IsDeleted = 0";
+
+    //            List<SqlParameter> lstParams = new List<SqlParameter>(){
+    //                 new SqlParameter("@roleId",roleId)
+    //            };
+    //            ds = objDDBDataHelper.GetDataSet(query, SQLTextType.Query, lstParams);
+
+    //            List<LeavesCount> lstLeavesCount = new List<LeavesCount>();
+
+    //            foreach (DataRow rows in ds.Tables[0].Rows)
+    //            {
+    //                LeavesCount objLeavesCount = new LeavesCount();
+
+    //                objLeavesCount.LeaveId = Convert.ToInt32(ds.Tables[0].Rows[i][0]);
+    //                objLeavesCount.LeaveCount = Convert.ToInt32(ds.Tables[0].Rows[i][1]);
+    //                lstLeavesCount.Add(objLeavesCount);
+    //                i++;
+    //            }
+    //            return lstLeavesCount;
+    //        }
+    //    }
 
 
     #endregion

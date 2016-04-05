@@ -47,7 +47,7 @@ public class ManageReports
             objEmployees = objEmployees1;
             return true;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             objEmployees = null;
             return false;
@@ -89,7 +89,7 @@ public class ManageReports
             objEmployees = objEmployees1;
             return true;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             objEmployees = null;
             return false;
@@ -116,7 +116,7 @@ public class ManageReports
             objDepartments = objDepartments1;
             return true;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             objDepartments = null;
             return false;
@@ -160,7 +160,7 @@ public class ManageReports
             objEmployees = objEmployees1;
             return true;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             objEmployees = null;
             return false;
@@ -191,7 +191,7 @@ public class ManageReports
             }
             return objEmployees;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             return objEmployees;
 
@@ -224,7 +224,7 @@ public class ManageReports
             }
             return objEmployees;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             return objEmployees;
 
@@ -251,7 +251,7 @@ public class ManageReports
             }
             return objAttendances;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             return objAttendances;
         }
@@ -309,7 +309,7 @@ public class ManageReports
                 }
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             //
         }
@@ -359,7 +359,7 @@ public class ManageReports
             }
 
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             //
         }
@@ -410,7 +410,7 @@ public class ManageReports
             }
 
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             //
         }
@@ -459,7 +459,7 @@ public class ManageReports
         }
 
        // }
-        catch (Exception ex)
+        catch (Exception)
         {
             //
         }
@@ -617,7 +617,7 @@ public class ManageReports
                 }
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             //
         }
@@ -766,7 +766,7 @@ public class ManageReports
                 }
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             //
         }
@@ -908,7 +908,7 @@ public class ManageReports
             else
                 status = DayStatus.Active;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
 
         }
@@ -1066,7 +1066,7 @@ public class ManageReports
                 }
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             //
         }
@@ -1156,7 +1156,7 @@ public class ManageReports
         {
             List<SqlParameter> list_params_Assigned = new List<SqlParameter>()
             {   new SqlParameter("@employeeId", employeeId), 
-                new SqlParameter("@sessionStartDate", sessionEndDate),
+                new SqlParameter("@sessionStartDate", sessionStartDate),
                 new SqlParameter("@sessionEndDate", sessionEndDate)
             };
             dtAssignedLeaves = helper.GetDataTable("spGetLeavesAssignedToEmployeeSessionWise", SQLTextType.Stored_Proc, list_params_Assigned);
@@ -1221,7 +1221,7 @@ public class ManageReports
             return false;
         }
     }
-    
+
 
     #endregion
 
@@ -1825,7 +1825,7 @@ public class ManageReports
                 }
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
 
         }
@@ -1902,6 +1902,158 @@ public class ManageReports
 
     #endregion
 
+    #region LeaveOldStockUpdation
+
+    public void UpdateLeaveBalanceTable(DateTime sessionStartDate)
+    {
+
+        try
+        {
+            #region Vars
+
+            DateTime sessionEndDate = new DateTime(sessionStartDate.Year + 1, 7, 31);
+            int SLCountTaken = 0, ELCountTaken = 0, SLCountAssigned = 0, ELCountAssigned = 0, SLCountOld = 0, ELCountOld = 0, SLCountBalance = 0, ELCountBalance = 0;
+
+            #endregion
+
+            #region GetAllEmployees
+            ManageEmployees objManageEmployees = new ManageEmployees();
+            List<Employees> lstEmployees = objManageEmployees.GetAllEmployees();
+            #endregion
+
+            foreach (var employee in lstEmployees)
+            {
+                #region Get EL Taken By Emp
+
+                string queryELTaken = "Select Count(*) from tblLeave Where EmployeeId = @employeeId AND LeaveTypeId = 2 AND [Date] Between @sessionStartDate AND @sessionEndDate";
+                List<SqlParameter> list_params_el = new List<SqlParameter>()
+                        {   new SqlParameter("@employeeId", employee.Id), 
+                            new SqlParameter("@sessionStartDate", sessionStartDate),
+                            new SqlParameter("@sessionEndDate", sessionEndDate)
+                        };
+                DataTable dtEL;
+                using (DBDataHelper helper = new DBDataHelper())
+                {
+                    dtEL = helper.GetDataTable(queryELTaken, SQLTextType.Query, list_params_el);
+                    ELCountTaken = Convert.ToInt32(dtEL.Rows[0][0].ToString());
+                }
+
+                #endregion
+
+                #region Get SL Taken By Emp
+
+                string querySLTaken = "Select Count(*) from tblLeave Where EmployeeId = @employeeId AND LeaveTypeId = 5 AND [Date] Between @sessionStartDate AND @sessionEndDate";
+                List<SqlParameter> list_params = new List<SqlParameter>()
+                        {   new SqlParameter("@employeeId", employee.Id), 
+                            new SqlParameter("@sessionStartDate", sessionStartDate),
+                            new SqlParameter("@sessionEndDate", sessionEndDate)
+                        };
+                DataTable dtSL;
+                using (DBDataHelper helper = new DBDataHelper())
+                {
+                    dtSL = helper.GetDataTable(querySLTaken, SQLTextType.Query, list_params);
+                    SLCountTaken = Convert.ToInt32(dtSL.Rows[0][0].ToString());
+                }
+
+                #endregion
+
+                #region Get EL Assigned
+
+                string queryELAssigned = @"SELECT [NoOfLeaves]FROM [BiometricAttendanceManagementSystem].[dbo].[tblLeaveAssignedPerSession] WHERE EmployeeId = @employeeId AND LeaveTypeId = 2 AND [SessionStartDate] = @sessionStartDate";
+
+                List<SqlParameter> list_params_el2 = new List<SqlParameter>()
+                        {   new SqlParameter("@employeeId", employee.Id), 
+                            new SqlParameter("@sessionStartDate", sessionStartDate)
+                        };
+                DataTable dtELAssigned;
+                using (DBDataHelper helper = new DBDataHelper())
+                {
+                    dtELAssigned = helper.GetDataTable(queryELAssigned, SQLTextType.Query, list_params_el2);
+                    ELCountAssigned = Convert.ToInt32(dtELAssigned.Rows[0][0].ToString());
+                }
+                #endregion
+
+                #region Get SL Assigned
+
+                string querySLAssigned = @"SELECT [NoOfLeaves] FROM [BiometricAttendanceManagementSystem].[dbo].[tblLeaveAssignedPerSession] WHERE EmployeeId = @employeeId AND LeaveTypeId = 5 AND [SessionStartDate] = @sessionStartDate";
+
+                List<SqlParameter> list_params_sl2 = new List<SqlParameter>()
+                        {   new SqlParameter("@employeeId", employee.Id), 
+                            new SqlParameter("@sessionStartDate", sessionStartDate)
+                        };
+                DataTable dtSLAssigned;
+                using (DBDataHelper helper = new DBDataHelper())
+                {
+                    dtSLAssigned = helper.GetDataTable(querySLAssigned, SQLTextType.Query, list_params_sl2);
+                    SLCountAssigned = Convert.ToInt32(dtSLAssigned.Rows[0][0].ToString());
+                }
+                #endregion
+
+                #region Get Old Data
+                string queryOld = @"SELECT TOP 1000 
+                                       [SLCount]
+                                      ,[ELCount]
+                                       FROM [tblLeavesOldStock]
+                                       WHERE EmployeeId = @employeeId
+                                       AND SessionStartDate = @sessionStartDate";
+
+                List<SqlParameter> list_params_old = new List<SqlParameter>()
+                        {   new SqlParameter("@employeeId", employee.Id), 
+                            new SqlParameter("@sessionStartDate", sessionStartDate)
+                        };
+                DataTable dtOld;
+
+                using (DBDataHelper helper = new DBDataHelper())
+                {
+                    dtOld = helper.GetDataTable(queryOld, SQLTextType.Query, list_params_old);
+                    if (dtOld.Rows.Count > 0)
+                    {
+                        ELCountOld = Convert.ToInt32(dtOld.Rows[0][1].ToString());
+                        SLCountOld = Convert.ToInt32(dtOld.Rows[0][0].ToString());
+                    }
+                }
+                #endregion
+
+                #region Calculation Of Balance
+
+                ELCountBalance = ELCountOld + ELCountAssigned - ELCountTaken;
+                ELCountBalance = ELCountBalance > 30 ? 30 : ELCountBalance;
+                ELCountBalance = ELCountOld + ELCountAssigned - ELCountTaken;
+                ELCountBalance = ELCountBalance > 30 ? 30 : ELCountBalance;
+
+                SLCountBalance = SLCountOld + SLCountAssigned - SLCountTaken;
+                SLCountBalance = SLCountBalance > 30 ? 30 : SLCountBalance;
+                SLCountBalance = SLCountOld + SLCountAssigned - SLCountTaken;
+                SLCountBalance = SLCountBalance > 30 ? 30 : SLCountBalance;
+                #endregion
+
+                #region Insert New Data
+
+                string queryInset = @"INSERT INTO [tblLeavesOldStock] VALUES (@employeeId, @slCount,@elCount, @sessionStartDate,@sesssionEndDate)";
+
+                List<SqlParameter> list_params_insert = new List<SqlParameter>()
+                        {   new SqlParameter("@employeeId", employee.Id), 
+                            new SqlParameter("@slCount", SLCountBalance), 
+                            new SqlParameter("@elCount", ELCountBalance), 
+                            new SqlParameter("@sessionStartDate", sessionStartDate),
+                            new SqlParameter("@sessionEndDate", sessionEndDate)
+                        };
+
+                using (DBDataHelper helper = new DBDataHelper())
+                {
+                    helper.ExecSQL(queryInset, SQLTextType.Query, list_params_insert);
+                }
+                #endregion
+            }
+        }
+        catch (Exception)
+        {
+            
+        }
+
+    }
+
+    #endregion
 
     #endregion
 
