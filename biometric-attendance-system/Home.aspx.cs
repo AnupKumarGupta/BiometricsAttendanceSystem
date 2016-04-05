@@ -48,7 +48,7 @@ public partial class Home : System.Web.UI.Page
             }
         }
 
-        catch (Exception ex)
+        catch(Exception ex)
         {
             Console.WriteLine("{0}", ex);
         }

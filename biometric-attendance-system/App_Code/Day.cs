@@ -37,7 +37,7 @@ public class Day
             }
 
         }
-        catch (Exception ex)
+        catch(Exception)
         {
 
         }
