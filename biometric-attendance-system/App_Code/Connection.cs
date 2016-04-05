@@ -68,7 +68,7 @@ public class Connection
             // axCZKEM1.RefreshData(iMachineNumber);//the data in the device should be refreshed
         }
 
-            catch (Exception ex)
+            catch(Exception)
             {
                 return;
             }

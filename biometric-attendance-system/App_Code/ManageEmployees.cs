@@ -72,7 +72,7 @@ public class ManageEmployees
             }
             return true;
         }
-        catch (Exception ex)
+        catch(Exception)
         {
             return false;
         }
@@ -114,7 +114,7 @@ public class ManageEmployees
             }
             return true;
         }
-        catch (Exception ex)
+        catch(Exception)
         {
             return false;
         }

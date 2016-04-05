@@ -64,7 +64,7 @@ public class ManageAttendance
     //        status = Convert.ToInt32(ds.Tables[0].Rows[0][0]);
     //        return true;
     //    }
-    //    catch(Exception ex)
+    //    catch(Exception)
     //    {
     //        status = 0;
     //        return false;
@@ -86,7 +86,7 @@ public class ManageAttendance
     //            ds = objDDBDataHelper.GetDataSet("spGetEmployeesPresentDateWise", SQLTextType.Stored_Proc, lstAttendanceDetail);
     //        }
     //    }
-    //    catch (Exception ex)
+    //    catch(Exception)
     //    {
     //        return lstEmployees;
     //    }
