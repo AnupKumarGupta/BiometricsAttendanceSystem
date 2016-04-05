@@ -47,8 +47,6 @@ public partial class Admin_ViewEmployeeLeaves : System.Web.UI.Page
             grid2.DataBind();
         }
     }
-
-
     protected void lkbEditLeaveAssinged_Click(object sender, EventArgs e)
     {
         popupEditLeaveAssigned.Show();
@@ -62,7 +60,6 @@ public partial class Admin_ViewEmployeeLeaves : System.Web.UI.Page
         EditgvLeaves.DataSource = y.lstAssignedRecord;
         EditgvLeaves.DataBind();
     }
-
     protected void btnUpdate_Click(object sender, EventArgs e)
     {
         List<LeaveAssignedRecord> lstLeaveAssignedRecord = new List<LeaveAssignedRecord>();
@@ -103,5 +100,11 @@ public partial class Admin_ViewEmployeeLeaves : System.Web.UI.Page
         }
 
         popupEditLeaveAssigned.Hide();
+
+        int departmentId = Convert.ToInt32(ddlShowDepartment.SelectedValue);
+        ManageReports objManageReports1 = new ManageReports();
+        lstLeaveAssignedRecord = objManageReports1.GetLeavesAssignedPerSession(departmentId, DateTime.Now);
+        grid1.DataSource = lstLeaveAssignedRecord;
+        grid1.DataBind();
     }
 }

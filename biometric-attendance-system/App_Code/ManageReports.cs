@@ -1206,13 +1206,22 @@ public class ManageReports
         lstParams.Add(new SqlParameter("@employeeId", objLeaveAssignedPerSession.EmployeeId));
         lstParams.Add(new SqlParameter("@leaveTypeId", objLeaveAssignedPerSession.leaveType));
         lstParams.Add(new SqlParameter("@noOfLeaves", objLeaveAssignedPerSession.leaveCount));
-        lstParams.Add(new SqlParameter("@sessionStartDate", sessionStartDate));
-        lstParams.Add(new SqlParameter("@sessionEndDate", sessionEndDate));
+        lstParams.Add(new SqlParameter("@sessionStartDate", sessionStartDate.Date));
+        lstParams.Add(new SqlParameter("@sessionEndDate", sessionEndDate.Date));
+
+        string query = @"UPDATE [dbo].[tblLeaveAssignedPerSession]
+                            SET 
+                        [NoOfLeaves] = @noOfLeaves
+                            WHERE 
+                        EmployeeId = @employeeId AND
+		                LeaveTypeId = @leaveTypeId AND 
+		                CAST(SessionStartDate AS DATE) = CAST (@sessionStartDate AS DATE) AND
+		                CAST(SessionEndDate AS DATE) = CAST (@sessionEndDate AS DATE)";
         try
         {
             using (DBDataHelper objDDBDataHelper = new DBDataHelper())
             {
-                objDDBDataHelper.ExecSQL("spUpdateLeavesAssignedPerSession", SQLTextType.Stored_Proc, lstParams);
+                objDDBDataHelper.ExecSQL(query, SQLTextType.Query, lstParams);
             }
             return true;
         }
