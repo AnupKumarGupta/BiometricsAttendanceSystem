@@ -50,7 +50,7 @@
                         <h3 id="H4" class="modal-title">Edit Leave
                 <asp:LinkButton ID="lkbClose" runat="server" CssClass="left0 btn-close"><b class="glyphicon glyphicon-remove-sign"></b>&nbsp;x</asp:LinkButton></h3>
                     </div>
-                    <div style="min-height: 120px; width: 100%">
+                    <div style="min-height: 120px; width: 80%">
                         <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
                             <asp:Repeater ID="EditgvLeaves" runat="server">
                         <ItemTemplate>

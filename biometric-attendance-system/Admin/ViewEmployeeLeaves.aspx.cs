@@ -71,7 +71,7 @@ public partial class Admin_ViewEmployeeLeaves : System.Web.UI.Page
         int leaveId;
         LeaveAssignedPerSession objLeaveAssignedPerSession = new LeaveAssignedPerSession();
         ManageReports objManageReports = new ManageReports();
-            foreach (RepeaterItem i in EditgvLeaves.Items)
+        foreach (RepeaterItem i in EditgvLeaves.Items)
         {
             TextBox txtLeaveCount = (TextBox)i.FindControl("txtLeaveCount");
             Label txtLeaveName = (Label)i.FindControl("txtLeave");
@@ -81,15 +81,27 @@ public partial class Admin_ViewEmployeeLeaves : System.Web.UI.Page
             string query = "Select Id from tblTypeOfLeave where Name = @name";
             using (DBDataHelper objDDBDataHelper = new DBDataHelper())
             {
-                ds = objDDBDataHelper.GetDataSet(query, SQLTextType.Query,lstParams);
+                ds = objDDBDataHelper.GetDataSet(query, SQLTextType.Query, lstParams);
                 leaveId = Convert.ToInt32(ds.Tables[0].Rows[0][0]);
+            }
+
+            DateTime SessionStartDate, SessionEndDate;
+            if (DateTime.Now.Month >= 8)
+            {
+                SessionStartDate = new DateTime(DateTime.Now.Year, 08, 01);
+                SessionEndDate = new DateTime(DateTime.Now.Year+1, 07, 31);
+            }
+            else
+            {
+                SessionStartDate = new DateTime(DateTime.Now.Year-1, 08, 01);
+                SessionEndDate = new DateTime(DateTime.Now.Year, 07, 31);
             }
             objLeaveAssignedPerSession.EmployeeId = Convert.ToInt32(Session["empId"]);
             objLeaveAssignedPerSession.leaveCount = Convert.ToInt32(txtLeaveCount.Text);
             objLeaveAssignedPerSession.leaveType = leaveId;
-            objManageReports.UpdateLeavesAssignedPerSessionEmployeeWise(objLeaveAssignedPerSession, DateTime.Now, DateTime.Now);
+            objManageReports.UpdateLeavesAssignedPerSessionEmployeeWise(objLeaveAssignedPerSession, SessionStartDate,SessionEndDate);
         }
-        
+
         popupEditLeaveAssigned.Hide();
     }
 }
