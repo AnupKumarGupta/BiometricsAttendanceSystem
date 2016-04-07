@@ -1,6 +1,41 @@
 ﻿<%@ Page Title="MonthlyAttendanceEmployeeWiseBasic" Language="C#" MasterPageFile="~/MasterPages/Admin.master" AutoEventWireup="true" CodeFile="EmployeeWiseBasicMonthlyAttendance.aspx.cs" Inherits="Reports_EmployeeWiseBasicMonthlyAttendance" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css"/>
+    <script>
+  $(function() {
+    var availableTags = [
+      "ActionScript",
+      "AppleScript",
+      "Asp",
+      "BASIC",
+      "C",
+      "C++",
+      "Clojure",
+      "COBOL",
+      "ColdFusion",
+      "Erlang",
+      "Fortran",
+      "Groovy",
+      "Haskell",
+      "Java",
+      "JavaScript",
+      "Lisp",
+      "Perl",
+      "PHP",
+      "Python",
+      "Ruby",
+      "Scala",
+      "Scheme"
+    ];
+    $( "#tags" ).autocomplete({
+      source: availableTags
+    });
+  });
+  </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div class="row">
@@ -12,12 +47,15 @@
                     <a href="../Admin/ReportMaster.aspx" class="grey-text">Reports &nbsp;&nbsp;></a>
                     <a href="#!" class="teal-text">&nbsp;&nbsp;Monthly Leave Balance &nbsp;&nbsp;</a>
                 </div>
+                <input id="tags"/>
                 <asp:TextBox ID="txtEmployeeId" placeholder="Employee Id" CssClass="col input-field offset-l1 offset-m1 offset-s1 l4 m4 s4" runat="server"></asp:TextBox>
                 <asp:DropDownList ID="ddlRelaxation" runat="server" CssClass=" col input-field btn grey lighten-4 teal-text l4 m4 s4 offset-l1 offset-m1 offset-s1">
                     <asp:ListItem Value="00:05:00">5 minutes</asp:ListItem>
                     <asp:ListItem Value="00:10:00">10 minutes</asp:ListItem>
                     <asp:ListItem Value="00:15:00">15 minutes</asp:ListItem>
                     <asp:ListItem Value="00:20:00">20 minutes</asp:ListItem>
+                </asp:DropDownList>
+                 <asp:DropDownList ID="ddlName" runat="server" CssClass=" col input-field btn grey lighten-4 teal-text l4 m4 s4 offset-l1 offset-m1 offset-s1">
                 </asp:DropDownList>
             </div>
             <div class="row">

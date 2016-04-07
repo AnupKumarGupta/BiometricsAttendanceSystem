@@ -13,7 +13,8 @@ public partial class Reports_EmployeeWiseBasicMonthlyAttendance : System.Web.UI.
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (!IsPostBack)
+            BindDropDown();
     }
 
     protected void Calendar1_SelectionChanged(object sender, EventArgs e)
@@ -24,6 +25,18 @@ public partial class Reports_EmployeeWiseBasicMonthlyAttendance : System.Web.UI.
     {
         txt_end_date.Text = Calendar2.SelectedDate.Date.ToString("d");
     }
+
+    protected void BindDropDown()
+    {
+        ddlName.Items.Clear();
+        ddlName.Items.Add("select");
+        ManageEmployees objEmployee = new ManageEmployees();
+        ddlName.DataSource =  objEmployee.GetAllEmployees();
+        ddlName.DataTextField = "Name";
+        ddlName.DataValueField = "Id";
+        ddlName.DataBind();
+    }
+
     protected void btn_report_Click(object sender, EventArgs e)
     {
         btnExport.Visible = true;
