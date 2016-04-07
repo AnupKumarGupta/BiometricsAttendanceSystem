@@ -78,7 +78,7 @@
                     </asp:TemplateField>
                     <asp:TemplateField>
                         <HeaderTemplate>
-                            <asp:Label Text="A. InTime" runat="server" />
+                            <asp:Label Text="A. InTime" ToolTip="Actual In Time" runat="server" />
                         </HeaderTemplate>
                         <ItemTemplate>
                             <asp:Label ID="lblInTime" runat="server" Text='<%#Eval("InTime")%>'></asp:Label>
@@ -86,7 +86,7 @@
                     </asp:TemplateField>
                     <asp:TemplateField>
                         <HeaderTemplate>
-                            <asp:Label Text="A. OutTime" runat="server" />
+                            <asp:Label Text="A. OutTime" ToolTip="Actual Out Time" runat="server" />
                         </HeaderTemplate>
                         <ItemTemplate>
                             <asp:Label ID="lblOutTime" runat="server" Text='<%#Eval("OutTime")%>'></asp:Label>

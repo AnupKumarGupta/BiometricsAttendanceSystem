@@ -3,6 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <asp:ScriptManager ID="scriptManagerDepartment" runat="server" />
     <div class="row">
         <div class="col s12 breadcrumb">
             <br />
@@ -25,8 +26,13 @@
             <div class="col s8 m4 l4 offset-l4 offset-m4">
                 <br />
                 <br />
-                <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged"></asp:Calendar>
-                <asp:TextBox runat="server" ID="txt_date" />
+                <asp:UpdatePanel ID="upDate" runat="server">
+                    <ContentTemplate>
+                        <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged"></asp:Calendar>
+                        <asp:TextBox runat="server" ID="txt_date" />
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+
             </div>
         </div>
         <div class="col s8 m4 l4 offset-s2 offset-m5 offset-l5">
@@ -70,7 +76,7 @@
                 </asp:TemplateField>
                 <asp:TemplateField>
                     <HeaderTemplate>
-                        <asp:Label Text="A. InTime" runat="server" />
+                        <asp:Label Text="A. InTime" ToolTip="Actual In Time" runat="server" />
                     </HeaderTemplate>
                     <ItemTemplate>
                         <asp:Label ID="lblInTime" runat="server" Text='<%#Eval("InTime")%>'></asp:Label>
@@ -78,7 +84,7 @@
                 </asp:TemplateField>
                 <asp:TemplateField>
                     <HeaderTemplate>
-                        <asp:Label Text="A. OutTime" runat="server" />
+                        <asp:Label Text="A. OutTime" ToolTip="Actual Out Time" runat="server" />
                     </HeaderTemplate>
                     <ItemTemplate>
                         <asp:Label ID="lblOutTime" runat="server" Text='<%#Eval("OutTime")%>'></asp:Label>

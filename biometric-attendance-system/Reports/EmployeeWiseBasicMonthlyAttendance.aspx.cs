@@ -18,11 +18,11 @@ public partial class Reports_EmployeeWiseBasicMonthlyAttendance : System.Web.UI.
 
     protected void Calendar1_SelectionChanged(object sender, EventArgs e)
     {
-        txt_start_date.Text = Calendar1.SelectedDate.Date.ToString();
+        txt_start_date.Text = Calendar1.SelectedDate.Date.ToString("d");
     }
     protected void Calendar2_SelectionChanged(object sender, EventArgs e)
     {
-        txt_end_date.Text = Calendar2.SelectedDate.Date.ToString();
+        txt_end_date.Text = Calendar2.SelectedDate.Date.ToString("d");
     }
     protected void btn_report_Click(object sender, EventArgs e)
     {

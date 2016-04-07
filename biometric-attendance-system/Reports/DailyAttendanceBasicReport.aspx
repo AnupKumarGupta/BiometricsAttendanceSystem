@@ -1,8 +1,10 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/MasterPages/Admin.master" CodeFile="DailyAttendanceBasicReport.aspx.cs" Inherits="Reports_DailyAttendanceBasicReport" %>
 
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <asp:ScriptManager ID="scriptManagerDepartment" runat="server" />
     <div class="row">
         <div class="col s12 breadcrumb">
             <br />
@@ -25,8 +27,13 @@
             <div class="col s8 m4 l4 offset-l4 offset-m4">
                 <br />
                 <br />
-                <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged"></asp:Calendar>
-                <asp:TextBox runat="server" ID="txt_date" />
+                <asp:UpdatePanel ID="up" runat="server">
+                    <ContentTemplate>
+                        <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged"></asp:Calendar>
+                        <asp:TextBox runat="server" ID="txt_date" />
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+
             </div>
         </div>
         <div class="col s8 m4 l4 offset-s2 offset-m5 offset-l5">
