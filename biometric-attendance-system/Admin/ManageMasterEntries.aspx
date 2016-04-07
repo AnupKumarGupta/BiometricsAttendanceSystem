@@ -15,7 +15,7 @@
                 <asp:Button ID="btnDepartments" runat="server" Text="Departments" CssClass="waves-effect waves-ripple btn-large" OnClick="btnDepartments_Click" />
                 <asp:Button ID="btnLeaves" runat="server" Text="Leaves" CssClass="waves-effect waves-ripple btn-large" OnClick="btnLeaves_Click" />
                 <asp:Button ID="btnRoles" runat="server" Text="Roles" CssClass="waves-effect waves-ripple btn-large" OnClick="btnRoles_Click" />
-<%--                <asp:Button ID="btnDuration" runat="server" Text="Duration" CssClass="waves-effect waves-ripple btn-large" OnClick="btnDuration_Click" />--%>
+                <%--                <asp:Button ID="btnDuration" runat="server" Text="Duration" CssClass="waves-effect waves-ripple btn-large" OnClick="btnDuration_Click" />--%>
                 <asp:Button ID="btnShifts" runat="server" Text="Shifts" CssClass="waves-effect waves-ripple btn-large" OnClick="btnShifts_Click" />
                 <asp:Button ID="btnSession" runat="server" Text="Session" CssClass="waves-effect waves-ripple btn-large" OnClick="btnSession_Click" />
                 <asp:Button ID="btnReports" runat="server" Text="Reports" CssClass="waves-effect waves-ripple btn-large" OnClick="btnReports_Click" />
@@ -65,7 +65,7 @@
                                                     <asp:LinkButton ID="lkbEditDepartment" Text="Edit" OnClick="lkbEditDepartment_Click" CommandArgument='<%#Eval("Id")%>' runat="server" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                             <asp:TemplateField>
+                                            <asp:TemplateField>
                                                 <ItemTemplate>
                                                     <asp:LinkButton ID="lkbDeleteDepartment" Text="Delete" OnClick="lkbDeleteDepartment_Click" CommandArgument='<%#Eval("Id")%>' runat="server" />
                                                 </ItemTemplate>
@@ -227,7 +227,7 @@
                                             <asp:LinkButton ID="lkbEditRole" Text="Edit" OnClick="lkbEditRole_Click" CommandArgument='<%#Eval("Id")%>' runat="server" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                     <asp:TemplateField>
+                                    <asp:TemplateField>
                                         <ItemTemplate>
                                             <asp:LinkButton ID="lkbDeleteRole" Text="Delete" OnClick="lkbDeleteRole_Click" CommandArgument='<%#Eval("Id")%>' runat="server" />
                                         </ItemTemplate>
@@ -402,7 +402,7 @@
         </asp:UpdatePanel>
     </asp:Panel>
 
-   <%-- <asp:Panel ID="pnlDuration" runat="server" Visible="false">
+    <%-- <asp:Panel ID="pnlDuration" runat="server" Visible="false">
         <div>
             <asp:UpdatePanel ID="upnlDuration" runat="server">
                 <ContentTemplate>
@@ -467,7 +467,7 @@
         </div>
     </asp:Panel>--%>
 
-  <%--  <asp:Panel ID="pnlEditDuration" runat="server" DefaultButton="lkbClose6" CssClass="modalPopup" Style="display: none; width: 61% !important; height: auto;">
+    <%--  <asp:Panel ID="pnlEditDuration" runat="server" DefaultButton="lkbClose6" CssClass="modalPopup" Style="display: none; width: 61% !important; height: auto;">
         <asp:Button ID="btnforPopupRef6" runat="server" Style="display: none" />
         <cc1:ModalPopupExtender ID="popupEditDuration" runat="server" Enabled="True" TargetControlID="btnforPopupRef6"
             CancelControlID="lkbClose6" PopupControlID="pnlEditDuration" BackgroundCssClass="modalBackground">
@@ -575,7 +575,7 @@
                                             <asp:Label ID="lblSecondHalfEndTiming" runat="server" Text='<%#Eval("SecondHalfEnd")%>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                     <asp:TemplateField>
+                                    <asp:TemplateField>
                                         <HeaderTemplate>
                                             <asp:Label Text="SL Duration" runat="server" />
                                         </HeaderTemplate>
@@ -588,7 +588,7 @@
                                             <asp:LinkButton ID="lkbEditShift" Text="Edit" OnClick="lkbEditShift_Click" CommandArgument='<%#Eval("Id")%>' runat="server" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                     <%--<asp:TemplateField>
+                                    <%--<asp:TemplateField>
                                         <ItemTemplate>
                                             <asp:LinkButton ID="lkbDeleteShift" Text="Delete" OnClick="lkbDeleteShift_Click" CommandArgument='<%#Eval("Id")%>' runat="server" />
                                         </ItemTemplate>
@@ -626,10 +626,10 @@
                             <asp:RequiredFieldValidator ID="rfvEditSecondHalfStart" ErrorMessage="Required" ControlToValidate="txtEditSecondHalfStart" runat="server" ForeColor="Red" ValidationGroup="EditShifts" />
                             <asp:TextBox runat="server" ID="txtEditSecondHalfEnd" placeholder="Second Half End Timing"></asp:TextBox>
                             <asp:RequiredFieldValidator ID="rfvEditSecondHalfEnd" ErrorMessage="Required" ControlToValidate="txtEditSecondHalfEnd" runat="server" ForeColor="Red" ValidationGroup="EditShifts" />
-                           <asp:TextBox runat="server" ID="txtEditSLDuration" placeholder="SL Duration"></asp:TextBox>
+                            <asp:TextBox runat="server" ID="txtEditSLDuration" placeholder="SL Duration"></asp:TextBox>
                             <asp:RequiredFieldValidator ID="rfvTxtEditSLDuration" ErrorMessage="Required" ControlToValidate="txtEditSLDuration" runat="server" ForeColor="Red" ValidationGroup="EditShifts" />
-                           
-                             <asp:Button ID="btnEditShifts" Text="Update Shifts" OnClick="btnEditShifts_Click" runat="server" ValidationGroup="EditShifts" />
+
+                            <asp:Button ID="btnEditShifts" Text="Update Shifts" OnClick="btnEditShifts_Click" runat="server" ValidationGroup="EditShifts" />
                         </div>
                     </div>
                 </div>
@@ -648,15 +648,11 @@
                             <div class="row">
                                 <br />
                                 <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
-                                    <asp:TextBox runat="server" CssClass="input-field" ID="txtSessionStart" placeholder="Session Start Date" ValidationGroup="Session"></asp:TextBox>
+                                    <asp:TextBox runat="server" CssClass="input-field" ID="txtSessionStart" placeholder="Session Start Year" ValidationGroup="Session"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="rfvTxtSessionStart" runat="server" ErrorMessage="Required" ControlToValidate="txtSessionStart" ForeColor="Red" ValidationGroup="Session"></asp:RequiredFieldValidator>
                                 </div>
-                                 <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
-                                    <asp:TextBox runat="server" CssClass="input-field" ID="txtSessionEnd" placeholder="Session End Date" ValidationGroup="Session"></asp:TextBox>
-                                    <asp:RequiredFieldValidator ID="rfvTxtSessionEnd" runat="server" ErrorMessage="Required" ControlToValidate="txtSessionStart" ForeColor="Red" ValidationGroup="Session"></asp:RequiredFieldValidator>
-                                </div>
                                 <div class="col s2 l2 m2">
-                                    <asp:LinkButton ID="LinkButton1" CssClass="btn waves-effect waves-light" runat="server"  ValidationGroup="Session">
+                                    <asp:LinkButton ID="lnkAddSession" CssClass="btn waves-effect waves-light" runat="server" ValidationGroup="Session" OnClick="lnkAddSession_Click">
                                         <i class="material-icons">add </i> Add Session
                                     </asp:LinkButton>
                                 </div>
@@ -670,10 +666,18 @@
                                                     <asp:Label CssClass="center" Text="Session Start" runat="server" />
                                                 </HeaderTemplate>
                                                 <ItemTemplate>
-                                                    <asp:Label ID="lblSession" runat="server" Text='<%#Eval("Name")%>'></asp:Label>
+                                                    <asp:Label ID="lblSession" runat="server" Text='<%#Eval("SessionStartDate", "{0:d}")%>'></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                           <%-- <asp:TemplateField>
+                                            <asp:TemplateField>
+                                                <HeaderTemplate>
+                                                    <asp:Label CssClass="center" Text="Session End" runat="server" />
+                                                </HeaderTemplate>
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lblSession" runat="server" Text='<%#Eval("SessionEndDate", "{0:d}")%>'></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <%-- <asp:TemplateField>
                                                 <ItemTemplate>
                                                     <asp:LinkButton ID="lkbEditDepartment" Text="Edit" OnClick="lkbEditDepartment_Click" CommandArgument='<%#Eval("Id")%>' runat="server" />
                                                 </ItemTemplate>

@@ -1922,6 +1922,8 @@ public class ManageReports
 
             DateTime sessionEndDate = new DateTime(sessionStartDate.Year + 1, 7, 31);
             int SLCountTaken = 0, ELCountTaken = 0, SLCountAssigned = 0, ELCountAssigned = 0, SLCountOld = 0, ELCountOld = 0, SLCountBalance = 0, ELCountBalance = 0;
+            DateTime prevSessionStartDate = sessionStartDate.AddYears(-1);
+            DateTime prevSessionEndDate = sessionEndDate.AddYears(-1);
 
             #endregion
 
@@ -1937,8 +1939,8 @@ public class ManageReports
                 string queryELTaken = "Select Count(*) from tblLeave Where EmployeeId = @employeeId AND LeaveTypeId = 2 AND [Date] Between @sessionStartDate AND @sessionEndDate";
                 List<SqlParameter> list_params_el = new List<SqlParameter>()
                         {   new SqlParameter("@employeeId", employee.Id), 
-                            new SqlParameter("@sessionStartDate", sessionStartDate),
-                            new SqlParameter("@sessionEndDate", sessionEndDate)
+                            new SqlParameter("@sessionStartDate", prevSessionStartDate),
+                            new SqlParameter("@sessionEndDate", prevSessionEndDate)
                         };
                 DataTable dtEL;
                 using (DBDataHelper helper = new DBDataHelper())
@@ -1954,14 +1956,17 @@ public class ManageReports
                 string querySLTaken = "Select Count(*) from tblLeave Where EmployeeId = @employeeId AND LeaveTypeId = 5 AND [Date] Between @sessionStartDate AND @sessionEndDate";
                 List<SqlParameter> list_params = new List<SqlParameter>()
                         {   new SqlParameter("@employeeId", employee.Id), 
-                            new SqlParameter("@sessionStartDate", sessionStartDate),
-                            new SqlParameter("@sessionEndDate", sessionEndDate)
+                            new SqlParameter("@sessionStartDate", prevSessionStartDate),
+                            new SqlParameter("@sessionEndDate", prevSessionEndDate)
                         };
                 DataTable dtSL;
                 using (DBDataHelper helper = new DBDataHelper())
                 {
                     dtSL = helper.GetDataTable(querySLTaken, SQLTextType.Query, list_params);
-                    SLCountTaken = Convert.ToInt32(dtSL.Rows[0][0].ToString());
+                    if (dtSL.Rows.Count > 0)
+                        SLCountTaken = dtSL.Rows[0][0] != DBNull.Value ? Convert.ToInt32(dtSL.Rows[0][0].ToString()) : 0;
+                    else
+                        SLCountTaken = 0;
                 }
 
                 #endregion
@@ -1972,13 +1977,17 @@ public class ManageReports
 
                 List<SqlParameter> list_params_el2 = new List<SqlParameter>()
                         {   new SqlParameter("@employeeId", employee.Id), 
-                            new SqlParameter("@sessionStartDate", sessionStartDate)
+                            new SqlParameter("@sessionStartDate", prevSessionStartDate)
                         };
                 DataTable dtELAssigned;
                 using (DBDataHelper helper = new DBDataHelper())
                 {
                     dtELAssigned = helper.GetDataTable(queryELAssigned, SQLTextType.Query, list_params_el2);
-                    ELCountAssigned = Convert.ToInt32(dtELAssigned.Rows[0][0].ToString());
+
+                    if (dtELAssigned.Rows.Count > 0)
+                        ELCountAssigned = dtELAssigned.Rows[0][0] != DBNull.Value ? Convert.ToInt32(dtELAssigned.Rows[0][0].ToString()) : 0;
+                    else
+                        ELCountAssigned = 0;
                 }
                 #endregion
 
@@ -1988,13 +1997,19 @@ public class ManageReports
 
                 List<SqlParameter> list_params_sl2 = new List<SqlParameter>()
                         {   new SqlParameter("@employeeId", employee.Id), 
-                            new SqlParameter("@sessionStartDate", sessionStartDate)
+                            new SqlParameter("@sessionStartDate", prevSessionStartDate)
                         };
                 DataTable dtSLAssigned;
                 using (DBDataHelper helper = new DBDataHelper())
                 {
                     dtSLAssigned = helper.GetDataTable(querySLAssigned, SQLTextType.Query, list_params_sl2);
-                    SLCountAssigned = Convert.ToInt32(dtSLAssigned.Rows[0][0].ToString());
+
+                    if (dtSLAssigned.Rows.Count > 0)
+                        SLCountAssigned = dtSLAssigned.Rows[0][0] != DBNull.Value ? Convert.ToInt32(dtSLAssigned.Rows[0][0].ToString()) : 0;
+                    else
+                        SLCountAssigned = 0;
+
+                    //SLCountAssigned = Convert.ToInt32(dtSLAssigned.Rows[0][0].ToString());
                 }
                 #endregion
 
@@ -2008,7 +2023,7 @@ public class ManageReports
 
                 List<SqlParameter> list_params_old = new List<SqlParameter>()
                         {   new SqlParameter("@employeeId", employee.Id), 
-                            new SqlParameter("@sessionStartDate", sessionStartDate)
+                            new SqlParameter("@sessionStartDate", prevSessionStartDate)
                         };
                 DataTable dtOld;
 
@@ -2026,9 +2041,9 @@ public class ManageReports
                 #region Calculation Of Balance
 
                 ELCountBalance = ELCountOld + ELCountAssigned - ELCountTaken;
-                ELCountBalance = ELCountBalance > 30 ? 30 : ELCountBalance;
+                ELCountBalance = ELCountBalance > 60 ? 60 : ELCountBalance;
                 ELCountBalance = ELCountOld + ELCountAssigned - ELCountTaken;
-                ELCountBalance = ELCountBalance > 30 ? 30 : ELCountBalance;
+                ELCountBalance = ELCountBalance > 60 ? 60 : ELCountBalance;
 
                 SLCountBalance = SLCountOld + SLCountAssigned - SLCountTaken;
                 SLCountBalance = SLCountBalance > 30 ? 30 : SLCountBalance;

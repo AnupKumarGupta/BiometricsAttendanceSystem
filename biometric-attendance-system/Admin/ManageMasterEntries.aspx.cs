@@ -1,5 +1,9 @@
-﻿using System;
+﻿using DALHelper;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -18,9 +22,9 @@ public partial class ManageMasterEntries : System.Web.UI.Page
             pnlLeaveAssignedByRole.Visible = false;
             pnlDepartment.Visible = false;
             pnlLeave.Visible = false;
-           // pnlDuration.Visible = false;
+            // pnlDuration.Visible = false;
             pnlRole.Visible = false;
-        pnlSession.Visible = false;
+            pnlSession.Visible = false;
             pnlShifts.Visible = false;
         }
     }
@@ -167,7 +171,7 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         pnlLeave.Visible = false;
         pnlSession.Visible = false;
         pnlShifts.Visible = false;
-       // pnlDuration.Visible = false;
+        // pnlDuration.Visible = false;
         grdRoleBind();
     }
 
@@ -232,7 +236,7 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         pnlLeave.Visible = false;
         pnlSession.Visible = false;
         pnlLeaveAssignedByRole.Visible = false;
-      //  pnlDuration.Visible = false;
+        //  pnlDuration.Visible = false;
         pnlShifts.Visible = true;
         grdShiftsBind();
     }
@@ -395,22 +399,22 @@ public partial class ManageMasterEntries : System.Web.UI.Page
 
     #endregion
 
+    #region Others
     protected void btnEmployee_Click(object sender, EventArgs e)
     {
         Response.Redirect("~/Admin/ViewEmployee.aspx");
     }
-
     protected void btnLeaveForEmployee_Click(object sender, EventArgs e)
     {
         Response.Redirect("~/Admin/ViewEmployeeLeaves.aspx");
     }
-
     protected void btnReports_Click(object sender, EventArgs e)
     {
         Response.Redirect("~/Admin/ReportMaster.aspx");
     }
+    #endregion
 
-
+    #region Sessions
     protected void btnSession_Click(object sender, EventArgs e)
     {
         pnlLeaveAssignedByRole.Visible = false;
@@ -419,6 +423,64 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         pnlLeave.Visible = false;
         pnlSession.Visible = true;
         pnlShifts.Visible = false;
+        grdSessionsBind();
     }
+    protected void lnkAddSession_Click(object sender, EventArgs e)
+    {
+        DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
+
+        DateTime sessionStartDate = new DateTime(Int32.Parse(txtSessionStart.Text), 8, 1);
+        DateTime sessionEndDate = new DateTime(sessionStartDate.Year + 1, 7, 31);
+
+        string query = "Select Count(*) from tblSession Where SessionStartDate=@sessionStartDate";
+        List<SqlParameter> lstParams = new List<SqlParameter>();
+        lstParams.Add(new SqlParameter("@sessionStartDate", sessionStartDate));
+        DataTable ds = new DataTable();
+        using (DBDataHelper objDDBDataHelper = new DBDataHelper())
+        {
+            ds = objDDBDataHelper.GetDataTable(query, SQLTextType.Query, lstParams);
+        }
+
+        if (ds.Rows.Count != 0)
+            if (Int32.Parse(ds.Rows[0][0].ToString()) == 0)
+            {
+
+                string addSession = @"INSERT INTO [dbo].[tblSession]
+                                      ([SessionStartDate]
+                                       ,[SessionEndDate])
+                                       VALUES (@sessionStartDate,@sessionEndDate)";
+
+                List<SqlParameter> lstParams2 = new List<SqlParameter>();
+                lstParams2.Add(new SqlParameter("@sessionStartDate", sessionStartDate));
+                lstParams2.Add(new SqlParameter("@sessionEndDate", sessionEndDate));
+
+                using (DBDataHelper objDDBDataHelper = new DBDataHelper())
+                {
+                    objDDBDataHelper.ExecSQL(addSession, SQLTextType.Query, lstParams2);
+                }
+                ManageReports objManageReprts = new ManageReports();
+                objManageReprts.AssignSessionWiseLeave(sessionStartDate);
+                objManageReprts.UpdateLeaveBalanceTable(sessionStartDate);
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Session Added')", true);
+            }
+            else
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Session Exists')", true);
+            }
+
+    }
+    protected void grdSessionsBind()
+    {
+        DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
+        string query = "Select * from tblSession";
+        DataTable ds = new DataTable();
+        using (DBDataHelper objDDBDataHelper = new DBDataHelper())
+        {
+            ds = objDDBDataHelper.GetDataTable(query, SQLTextType.Query);
+        }
+        gvSession.DataSource = ds;
+        gvSession.DataBind();
+    }
+    #endregion
 }
 
