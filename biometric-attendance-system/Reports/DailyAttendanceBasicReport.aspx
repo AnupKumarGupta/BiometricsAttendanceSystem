@@ -31,6 +31,14 @@
                     <ContentTemplate>
                         <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged"></asp:Calendar>
                         <asp:TextBox runat="server" ID="txt_date" />
+                        <input type="date" class="datepicker">
+                        <script>   
+                            $('.datepicker').pickadate({
+                                selectMonths: true, // Creates a dropdown to control month
+                                selectYears: 15 // Creates a dropdown of 15 years to control year
+                            });
+
+                        </script>
                     </ContentTemplate>
                 </asp:UpdatePanel>
 
