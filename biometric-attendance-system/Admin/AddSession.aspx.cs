@@ -36,7 +36,7 @@ public partial class Admin_AddSession : System.Web.UI.Page
 
         #region Get Last Session
         string query = @"SELECT TOP 1 [SessionStartDate],[SessionEndDate]
-                         FROM [BiometricsAttendanceSystem].[dbo].[tblSession]
+                         FROM  [tblSession]
                          ORDER BY [SessionStartDate] DESC";
         DataTable dt = new DataTable();
         DateTime startDate = new DateTime();
@@ -52,7 +52,7 @@ public partial class Admin_AddSession : System.Web.UI.Page
         #region Adding New Session
         startDate = startDate.AddYears(1);
         endDate = endDate.AddYears(1);
-        string query1 = @"INSERT INTO [BiometricsAttendanceSystem].[dbo].[tblSession] 
+        string query1 = @"INSERT INTO  [tblSession] 
                           VALUES (@startDate,@endDate)";
         List<SqlParameter> paramsLst = new List<SqlParameter>();
         paramsLst.Add(new SqlParameter("@startDate", startDate));
