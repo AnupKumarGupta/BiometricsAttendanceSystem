@@ -17,18 +17,15 @@ public partial class Reports_DailyAttendanceBasicReport : System.Web.UI.Page
             BindDropDowns();
     }
 
-    protected void Calendar1_SelectionChanged(object sender, EventArgs e)
-    {
-        txt_date.Text = Calendar1.SelectedDate.Date.ToString("d");
-    }
-
     protected void btn_report_Click(object sender, EventArgs e)
     {
         btnExport.Visible = true;
         ManageReports objManageReports = new ManageReports();
         TimeSpan relaxationTime = new TimeSpan();
+        var xy = txtDate.Text;
+        DateTime date = DateTime.Parse(txtDate.Text);
         relaxationTime = TimeSpan.Parse(ddlRelaxation.SelectedValue.ToString());
-        var data = objManageReports.GetDailyAttendanceDetailedReport(Calendar1.SelectedDate.Date, relaxationTime);
+        var data = objManageReports.GetDailyAttendanceDetailedReport(date, relaxationTime);
         grid_dailyAttendance.DataSource = data;
         grid_dailyAttendance.DataBind();
     }

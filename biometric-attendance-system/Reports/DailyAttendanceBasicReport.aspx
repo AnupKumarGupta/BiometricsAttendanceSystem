@@ -2,6 +2,12 @@
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <asp:ScriptManager ID="scriptManagerDepartment" runat="server" />
@@ -29,16 +35,18 @@
                 <br />
                 <asp:UpdatePanel ID="up" runat="server">
                     <ContentTemplate>
-                        <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged"></asp:Calendar>
-                        <asp:TextBox runat="server" ID="txt_date" />
-                        <input type="date" class="datepicker">
-                        <script>   
+                        <%--                        <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged" Visible="false" SelectedDate="09/09/2015"></asp:Calendar>--%>
+                        <asp:TextBox runat="server" ID="txtDate" class="datepicker" />
+
+                        <%--<input type="date" class="datepicker">--%>
+                        <script>
                             $('.datepicker').pickadate({
                                 selectMonths: true, // Creates a dropdown to control month
                                 selectYears: 15 // Creates a dropdown of 15 years to control year
                             });
 
                         </script>
+
                     </ContentTemplate>
                 </asp:UpdatePanel>
 

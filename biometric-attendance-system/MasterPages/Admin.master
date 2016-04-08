@@ -5,12 +5,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-    <script src="../Scripts/jquery-2.2.2.min.js"></script>
+        <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+    
+    
+    
+    <%--<script src="../Scripts/jquery-2.2.2.min.js"></script>--%>
     <link href="../materialize/css/materialize.min.css" rel="stylesheet" />
-
-<%--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">--%>
-    <%--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>--%>
     <script src="../materialize/js/materialize.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link runat="server" rel="shortcut icon" href="../Images/logo.png" type="image/x-icon" />
     <link runat="server" rel="icon" href="../Images/logo.png" type="image/ico" />
     <asp:ContentPlaceHolder ID="head" runat="server">
