@@ -4,10 +4,10 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <%--<title></title>--%>
     <asp:ContentPlaceHolder ID="head" runat="server">
-        <link runat="server" rel="shortcut icon" href="../Images/logo.png" type="image/x-icon" />
-        <link runat="server" rel="icon" href="../Images/logo.png" type="image/ico" />
+        <link runat="server" rel="shortcut icon" href="~/Images/logo.png" type="image/x-icon" />
+        <link runat="server" rel="icon" href="~/Images/logo.png" type="image/ico" />
     </asp:ContentPlaceHolder>
 </head>
 <body>

@@ -16,18 +16,19 @@ public partial class Reports_DailyAbsentReport : System.Web.UI.Page
         //if (!IsPostBack)
         //    BindDropDowns();
     }
-    protected void Calendar1_SelectionChanged(object sender, EventArgs e)
-    {
-        txt_date.Text = Calendar1.SelectedDate.Date.ToString("d");
-    }
+    //protected void Calendar1_SelectionChanged(object sender, EventArgs e)
+    //{
+    //    txt_date.Text = Calendar1.SelectedDate.Date.ToString("d");
+    //}
     protected void btn_report_Click(object sender, EventArgs e)
     {
         btnExport.Visible = true;
         ManageReports objManageReports = new ManageReports();
         TimeSpan relaxationTime = new TimeSpan();
+        var xy = txtDate.Text;
+        DateTime date = DateTime.Parse(txtDate.Text);
         relaxationTime = TimeSpan.Parse(ddlRelaxation.SelectedValue.ToString());
-
-        var data = objManageReports.GetDailyAbsent(Calendar1.SelectedDate.Date, relaxationTime);
+        var data = objManageReports.GetDailyAbsent(date, relaxationTime);
         grid_dailyAbsent.DataSource = data;
         grid_dailyAbsent.DataBind();
     }
