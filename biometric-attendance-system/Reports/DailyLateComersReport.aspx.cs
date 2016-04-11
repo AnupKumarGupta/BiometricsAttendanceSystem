@@ -9,12 +9,12 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class Reports_DailyAbsentReport : System.Web.UI.Page
+public partial class Reports_DailyLateComersReport : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        //if (!IsPostBack)
-        //    BindDropDowns();
+        if (!IsPostBack)
+            BindDropDowns();
     }
     protected void Calendar1_SelectionChanged(object sender, EventArgs e)
     {
@@ -26,10 +26,17 @@ public partial class Reports_DailyAbsentReport : System.Web.UI.Page
         ManageReports objManageReports = new ManageReports();
         TimeSpan relaxationTime = new TimeSpan();
         relaxationTime = TimeSpan.Parse(ddlRelaxation.SelectedValue.ToString());
-
-        var data = objManageReports.GetDailyAbsent(Calendar1.SelectedDate.Date, relaxationTime);
-        grid_dailyAbsent.DataSource = data;
-        grid_dailyAbsent.DataBind();
+        var data = objManageReports.GetDailyLateComers(Calendar1.SelectedDate.Date, relaxationTime);
+        grid_lateComers.DataSource = data;
+        grid_lateComers.DataBind();
+    }
+    protected void BindDropDowns()
+    {
+        MasterEntries objMasterEntries = new MasterEntries();
+        ddlDepartments.DataSource = objMasterEntries.GetAllDepartments();
+        ddlDepartments.DataTextField = "Name";
+        ddlDepartments.DataValueField = "Id";
+        ddlDepartments.DataBind();
     }
     protected void btnExport_Click(object sender, EventArgs e)
     {
@@ -38,17 +45,17 @@ public partial class Reports_DailyAbsentReport : System.Web.UI.Page
             using (HtmlTextWriter hw = new HtmlTextWriter(sw))
             {
                 //To Export all pages
-                grid_dailyAbsent.AllowPaging = false;
-                //this.BindGrid();
+                grid_lateComers.AllowPaging = false;
+                // this.BindGrid();
 
-                grid_dailyAbsent.RenderBeginTag(hw);
-                grid_dailyAbsent.HeaderRow.RenderControl(hw);
-                foreach (GridViewRow row in grid_dailyAbsent.Rows)
+                grid_lateComers.RenderBeginTag(hw);
+                grid_lateComers.HeaderRow.RenderControl(hw);
+                foreach (GridViewRow row in grid_lateComers.Rows)
                 {
                     row.RenderControl(hw);
                 }
-                grid_dailyAbsent.FooterRow.RenderControl(hw);
-                grid_dailyAbsent.RenderEndTag(hw);
+                grid_lateComers.FooterRow.RenderControl(hw);
+                grid_lateComers.RenderEndTag(hw);
                 StringReader sr = new StringReader(sw.ToString());
                 Document pdfDoc = new Document(PageSize.A2, 10f, 10f, 10f, 0f);
                 HTMLWorker htmlparser = new HTMLWorker(pdfDoc);

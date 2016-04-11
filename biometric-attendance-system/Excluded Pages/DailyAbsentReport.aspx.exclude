@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Daily Absent Report" Language="C#" MasterPageFile="~/MasterPages/Admin.master" AutoEventWireup="true" CodeFile="DailyAbsentReport.aspx.cs" Inherits="Reports_DailyAbsentReport" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPages/Admin.master" AutoEventWireup="true" CodeFile="DailyAbsentReport.aspx.cs" Inherits="Reports_DailyAbsentReport" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
@@ -11,7 +11,7 @@
             <a href="#!" class="teal-text">&nbsp;&nbsp;Daily Absent Report &nbsp;&nbsp;</a>
         </div>
         <div class="col s8 m3 l2 offset-s2 offset-m4 offset-l4">
-            <asp:DropDownList ID="ddlDepartments" Visible="true" CssClass="input-field btn grey lighten-4 teal-text" runat="server"></asp:DropDownList>
+            <asp:Label ID="lblRelaxationTime" Visible="true" CssClass="input-field btn grey lighten-4 teal-text" runat="server">Relaxation Time</asp:Label>
         </div>
         <div class="col s8 m3 l2 offset-s2">
             <asp:DropDownList ID="ddlRelaxation" Visible="true" CssClass="input-field btn grey lighten-4 teal-text" runat="server">
@@ -50,6 +50,14 @@
                     </HeaderTemplate>
                     <ItemTemplate>
                         <asp:Label ID="lblEmployeeName" runat="server" Text='<%#Eval("Name")%>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField>
+                    <HeaderTemplate>
+                        <asp:Label Text="Department" runat="server" />
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblDepartmentName" runat="server" Text='<%#Eval("DepartmentName")%>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
