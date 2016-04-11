@@ -25,7 +25,6 @@ public partial class Reports_DailyAbsentReport : System.Web.UI.Page
         btnExport.Visible = true;
         ManageReports objManageReports = new ManageReports();
         TimeSpan relaxationTime = new TimeSpan();
-        var xy = txtDate.Text;
         DateTime date = DateTime.Parse(txtDate.Text);
         relaxationTime = TimeSpan.Parse(ddlRelaxation.SelectedValue.ToString());
         var data = objManageReports.GetDailyAbsent(date, relaxationTime);

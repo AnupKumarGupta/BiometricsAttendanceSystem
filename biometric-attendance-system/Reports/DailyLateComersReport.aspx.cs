@@ -16,17 +16,18 @@ public partial class Reports_DailyLateComersReport : System.Web.UI.Page
         if (!IsPostBack)
             BindDropDowns();
     }
-    protected void Calendar1_SelectionChanged(object sender, EventArgs e)
-    {
-        txt_date.Text = Calendar1.SelectedDate.Date.ToString("d");
-    }
+    //protected void Calendar1_SelectionChanged(object sender, EventArgs e)
+    //{
+    //    txt_date.Text = Calendar1.SelectedDate.Date.ToString("d");
+    //}
     protected void btn_report_Click(object sender, EventArgs e)
     {
         btnExport.Visible = true;
         ManageReports objManageReports = new ManageReports();
         TimeSpan relaxationTime = new TimeSpan();
         relaxationTime = TimeSpan.Parse(ddlRelaxation.SelectedValue.ToString());
-        var data = objManageReports.GetDailyLateComers(Calendar1.SelectedDate.Date, relaxationTime);
+        DateTime date = DateTime.Parse(txtDate.Text);
+        var data = objManageReports.GetDailyLateComers(date, relaxationTime);
         grid_lateComers.DataSource = data;
         grid_lateComers.DataBind();
     }

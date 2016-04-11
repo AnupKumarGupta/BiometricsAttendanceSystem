@@ -32,11 +32,22 @@
                     </asp:DropDownList>
                 </div>
                 <div class="row">
-                    <div class="col s8 m4 l4 offset-l4 offset-m4">
+                    <%--<div class="col s8 m4 l4 offset-l4 offset-m4">
                         <br />
                         <br />
                         <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged"></asp:Calendar>
                         <asp:TextBox runat="server" ID="txt_date" />
+                    </div>--%>
+                    <div class="col s8 m4 l4 offset-l4 offset-m4">
+                        <br />
+                        <br />
+                        <asp:TextBox runat="server" ID="txtDate" class="datepicker" />
+                        <script>
+                            $('.datepicker').pickadate({
+                                selectMonths: true, // Creates a dropdown to control month
+                                selectYears: 15 // Creates a dropdown of 15 years to control year
+                            });
+                        </script>
                     </div>
                 </div>
                 <div class="col s8 m4 l4 offset-s2 offset-m5 offset-l5">
