@@ -16,17 +16,19 @@ public partial class Reports_DailyPresentReport : System.Web.UI.Page
         if (!IsPostBack)
             BindDropDowns();
     }
-    protected void Calendar1_SelectionChanged(object sender, EventArgs e)
-    {
-        txt_date.Text = Calendar1.SelectedDate.Date.ToString("d");
-    }
+
+    //protected void Calendar1_SelectionChanged(object sender, EventArgs e)
+    //{
+    //    txt_date.Text = Calendar1.SelectedDate.Date.ToString("d");
+    //}
     protected void btn_report_Click(object sender, EventArgs e)
     {
         btnExport.Visible = true;
         ManageReports objManageReports = new ManageReports();
         TimeSpan relaxationTime = new TimeSpan();
         relaxationTime = TimeSpan.Parse(ddlRelaxation.SelectedValue.ToString());
-        var data = objManageReports.GetDailyPresent(Calendar1.SelectedDate.Date, relaxationTime);
+        DateTime date = DateTime.Parse(txtDate.Text);
+        var data = objManageReports.GetDailyPresent(date, relaxationTime);
         grid_dailyPresent.DataSource = data;
         grid_dailyPresent.DataBind();
     }
@@ -38,7 +40,6 @@ public partial class Reports_DailyPresentReport : System.Web.UI.Page
         ddlDepartments.DataValueField = "Id";
         ddlDepartments.DataBind();
     }
-
     protected void btnExport_Click(object sender, EventArgs e)
     {
         using (StringWriter sw = new StringWriter())

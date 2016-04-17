@@ -50,7 +50,7 @@
                         </script>
                     </div>
                 </div>
-                <div class="col s8 m4 l4 offset-s2 offset-m5 offset-l5">
+                <div class="col s8 m4 l4 offset-s5 offset-m5 offset-l5">
                     <asp:Button Text="Get Data" ID="btn_report" CssClass="btn waves-button-input" OnClick="btn_report_Click" runat="server" />
                 </div>
             </div>
