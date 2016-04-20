@@ -1,43 +1,15 @@
 ﻿<%@ Page Title="MonthlyAttendanceEmployeeWiseBasic" Language="C#" MasterPageFile="~/MasterPages/Admin.master" AutoEventWireup="true" CodeFile="EmployeeWiseBasicMonthlyAttendance.aspx.cs" Inherits="Reports_EmployeeWiseBasicMonthlyAttendance" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
+   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
   <link rel="stylesheet" href="/resources/demos/style.css"/>
-    <script>
-  $(function() {
-    var availableTags = [
-      "ActionScript",
-      "AppleScript",
-      "Asp",
-      "BASIC",
-      "C",
-      "C++",
-      "Clojure",
-      "COBOL",
-      "ColdFusion",
-      "Erlang",
-      "Fortran",
-      "Groovy",
-      "Haskell",
-      "Java",
-      "JavaScript",
-      "Lisp",
-      "Perl",
-      "PHP",
-      "Python",
-      "Ruby",
-      "Scala",
-      "Scheme"
-    ];
-    $( "#<%=ddlRelaxation.ClientID%>" ).autocomplete({
-      source: availableTags
-    });
-  });
-  </script>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    
+    <asp:Literal id="lit_autocomplete" runat="server" />
     <div class="row">
         <div class="col s10 m10 l10 offset-s1 offset-m1 offset-l1 card">
             <div class="row">
@@ -45,7 +17,7 @@
                     <br />
                     <a href="../Admin/ManageMasterEntries.aspx" class="grey-text">Home &nbsp;&nbsp;></a>
                     <a href="../Admin/ReportMaster.aspx" class="grey-text">Reports &nbsp;&nbsp;></a>
-                    <a href="#!" class="teal-text">&nbsp;&nbsp;EmployeeWise Basic Monthly Attendance &nbsp;&nbsp;</a>
+                    <a href="#!" class="teal-text">&nbsp;&nbsp;Monthly Leave Balance &nbsp;&nbsp;</a>
                 </div>
                 <input id="tags"/>
                 <asp:TextBox ID="txtEmployeeId" placeholder="Employee Id" CssClass="col input-field offset-l1 offset-m1 offset-s1 l4 m4 s4" runat="server"></asp:TextBox>
@@ -87,7 +59,6 @@
             <div class="row">
                 <div class="col l10 m10 s10 offset-l1 offset-s1 offset-m1 card-content">
                     <asp:Label ID="lblName" CssClass="input-field" runat="server" />
-                    <asp:Label ID="lblDepartment" CssClass="input-field" runat="server" />
                 </div>
             </div>
             <asp:GridView runat="server" ID="grid_monthly_attendanceBasic" AutoGenerateColumns="false" CssClass="responsive-table striped card z-depth-2 col m10 l10 offset-l1 offset-m1" EmptyDataText="No Data">

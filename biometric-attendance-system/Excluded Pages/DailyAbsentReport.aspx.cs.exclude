@@ -9,36 +9,27 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class Reports_DailyPresentReport : System.Web.UI.Page
+public partial class Reports_DailyAbsentReport : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
-            BindDropDowns();
+        //if (!IsPostBack)
+        //    BindDropDowns();
     }
-
-    //protected void Calendar1_SelectionChanged(object sender, EventArgs e)
-    //{
-    //    txt_date.Text = Calendar1.SelectedDate.Date.ToString("d");
-    //}
+    protected void Calendar1_SelectionChanged(object sender, EventArgs e)
+    {
+        txt_date.Text = Calendar1.SelectedDate.Date.ToString("d");
+    }
     protected void btn_report_Click(object sender, EventArgs e)
     {
         btnExport.Visible = true;
         ManageReports objManageReports = new ManageReports();
         TimeSpan relaxationTime = new TimeSpan();
         relaxationTime = TimeSpan.Parse(ddlRelaxation.SelectedValue.ToString());
-        DateTime date = DateTime.Parse(txtDate.Text);
-        var data = objManageReports.GetDailyPresent(date, relaxationTime);
-        grid_dailyPresent.DataSource = data;
-        grid_dailyPresent.DataBind();
-    }
-    protected void BindDropDowns()
-    {
-        MasterEntries objMasterEntries = new MasterEntries();
-        ddlDepartments.DataSource = objMasterEntries.GetAllDepartments();
-        ddlDepartments.DataTextField = "Name";
-        ddlDepartments.DataValueField = "Id";
-        ddlDepartments.DataBind();
+
+        var data = objManageReports.GetDailyAbsent(Calendar1.SelectedDate.Date, relaxationTime);
+        grid_dailyAbsent.DataSource = data;
+        grid_dailyAbsent.DataBind();
     }
     protected void btnExport_Click(object sender, EventArgs e)
     {
@@ -47,17 +38,17 @@ public partial class Reports_DailyPresentReport : System.Web.UI.Page
             using (HtmlTextWriter hw = new HtmlTextWriter(sw))
             {
                 //To Export all pages
-                grid_dailyPresent.AllowPaging = false;
+                grid_dailyAbsent.AllowPaging = false;
                 //this.BindGrid();
 
-                grid_dailyPresent.RenderBeginTag(hw);
-                grid_dailyPresent.HeaderRow.RenderControl(hw);
-                foreach (GridViewRow row in grid_dailyPresent.Rows)
+                grid_dailyAbsent.RenderBeginTag(hw);
+                grid_dailyAbsent.HeaderRow.RenderControl(hw);
+                foreach (GridViewRow row in grid_dailyAbsent.Rows)
                 {
                     row.RenderControl(hw);
                 }
-                grid_dailyPresent.FooterRow.RenderControl(hw);
-                grid_dailyPresent.RenderEndTag(hw);
+                grid_dailyAbsent.FooterRow.RenderControl(hw);
+                grid_dailyAbsent.RenderEndTag(hw);
                 StringReader sr = new StringReader(sw.ToString());
                 Document pdfDoc = new Document(PageSize.A2, 10f, 10f, 10f, 0f);
                 HTMLWorker htmlparser = new HTMLWorker(pdfDoc);

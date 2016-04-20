@@ -320,7 +320,7 @@ public class ManageLeaves
         lst_params.Add(new SqlParameter("@date", date));
         lst_params.Add(new SqlParameter("@employeeId", employeeId));
 
-        string query = "SELECT Count([EmployeeId]) FROM [BiometricsAttendanceSystem].[dbo].[tblLeave] Where [Date] = @date AND [EmployeeId] =@employeeId AND [isDeleted]=0";
+        string query = "SELECT Count([EmployeeId]) FROM  [tblLeave] Where [Date] = @date AND [EmployeeId] =@employeeId AND [isDeleted]=0";
         DataTable dt = new DataTable();
 
         using (DBDataHelper objDDBDataHelper = new DBDataHelper())
@@ -361,7 +361,7 @@ public class ManageLeaves
         List<SqlParameter> lst_params = new List<SqlParameter>();
         lst_params.Add(new SqlParameter("@employeeId", employeeId));
         lst_params.Add(new SqlParameter("@date", date));
-        string query = "SELECT Count([EmployeeId]) FROM [BiometricsAttendanceSystem].[dbo].[tblLeave] Where [Date] = @date AND [EmployeeId] =@employeeId AND isDeleted=0";
+        string query = "SELECT Count([EmployeeId]) FROM  [tblLeave] Where [Date] = @date AND [EmployeeId] =@employeeId AND isDeleted=0";
         DataTable dt = new DataTable();
 
         using (DBDataHelper objDDBDataHelper = new DBDataHelper())

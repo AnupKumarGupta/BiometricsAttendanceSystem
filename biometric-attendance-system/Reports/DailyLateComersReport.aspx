@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPages/Reports.master" AutoEventWireup="true" CodeFile="DailyPresentReport.aspx.cs" Inherits="Reports_DailyPresentReport" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPages/Reports.master" AutoEventWireup="true" CodeFile="DailyLateComersReport.aspx.cs" Inherits="Reports_DailyLateComersReport" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
@@ -18,7 +18,7 @@
                     <br />
                     <a href="../Admin/ManageMasterEntries.aspx" class="grey-text">Home &nbsp;&nbsp;></a>
                     <a href="../Admin/ReportMaster.aspx" class="grey-text">Reports &nbsp;&nbsp;></a>
-                    <a href="#!" class="teal-text">&nbsp;&nbsp;Daily Present Report &nbsp;&nbsp;</a>
+                    <a href="#!" class="teal-text">&nbsp;&nbsp;Daily Late Comers &nbsp;&nbsp;</a>
                 </div>
                 <div class="col s8 m3 l2 offset-s2 offset-m4 offset-l4">
                     <asp:DropDownList ID="ddlDepartments" Visible="true" CssClass="input-field btn grey lighten-4 teal-text" runat="server"></asp:DropDownList>
@@ -32,6 +32,12 @@
                     </asp:DropDownList>
                 </div>
                 <div class="row">
+                    <%--<div class="col s8 m4 l4 offset-l4 offset-m4">
+                        <br />
+                        <br />
+                        <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged"></asp:Calendar>
+                        <asp:TextBox runat="server" ID="txt_date" />
+                    </div>--%>
                     <div class="col s8 m4 l4 offset-l4 offset-m4">
                         <br />
                         <br />
@@ -44,12 +50,12 @@
                         </script>
                     </div>
                 </div>
-                <div class="col s8 m4 l4 offset-s2 offset-m5 offset-l5">
+                <div class="col s8 m4 l4 offset-s5 offset-m5 offset-l5">
                     <asp:Button Text="Get Data" ID="btn_report" CssClass="btn waves-button-input" OnClick="btn_report_Click" runat="server" />
                 </div>
             </div>
             <div class="row">
-                <asp:GridView runat="server" ID="grid_dailyPresent" AutoGenerateColumns="false" CssClass="responsive-table striped card z-depth-2 col m10 l10 offset-l1 offset-m1" EmptyDataText="No Data">
+                <asp:GridView runat="server" ID="grid_lateComers" AutoGenerateColumns="false" CssClass="responsive-table striped card z-depth-2 col m10 l10 offset-l1 offset-m1" EmptyDataText="No Data">
                     <Columns>
                         <asp:TemplateField>
                             <HeaderTemplate>

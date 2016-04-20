@@ -9,14 +9,13 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class Reports_DailyPresentReport : System.Web.UI.Page
+public partial class Reports_DailyLateComersReport : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
             BindDropDowns();
     }
-
     //protected void Calendar1_SelectionChanged(object sender, EventArgs e)
     //{
     //    txt_date.Text = Calendar1.SelectedDate.Date.ToString("d");
@@ -28,9 +27,9 @@ public partial class Reports_DailyPresentReport : System.Web.UI.Page
         TimeSpan relaxationTime = new TimeSpan();
         relaxationTime = TimeSpan.Parse(ddlRelaxation.SelectedValue.ToString());
         DateTime date = DateTime.Parse(txtDate.Text);
-        var data = objManageReports.GetDailyPresent(date, relaxationTime);
-        grid_dailyPresent.DataSource = data;
-        grid_dailyPresent.DataBind();
+        var data = objManageReports.GetDailyLateComers(date, relaxationTime);
+        grid_lateComers.DataSource = data;
+        grid_lateComers.DataBind();
     }
     protected void BindDropDowns()
     {
@@ -47,17 +46,17 @@ public partial class Reports_DailyPresentReport : System.Web.UI.Page
             using (HtmlTextWriter hw = new HtmlTextWriter(sw))
             {
                 //To Export all pages
-                grid_dailyPresent.AllowPaging = false;
-                //this.BindGrid();
+                grid_lateComers.AllowPaging = false;
+                // this.BindGrid();
 
-                grid_dailyPresent.RenderBeginTag(hw);
-                grid_dailyPresent.HeaderRow.RenderControl(hw);
-                foreach (GridViewRow row in grid_dailyPresent.Rows)
+                grid_lateComers.RenderBeginTag(hw);
+                grid_lateComers.HeaderRow.RenderControl(hw);
+                foreach (GridViewRow row in grid_lateComers.Rows)
                 {
                     row.RenderControl(hw);
                 }
-                grid_dailyPresent.FooterRow.RenderControl(hw);
-                grid_dailyPresent.RenderEndTag(hw);
+                grid_lateComers.FooterRow.RenderControl(hw);
+                grid_lateComers.RenderEndTag(hw);
                 StringReader sr = new StringReader(sw.ToString());
                 Document pdfDoc = new Document(PageSize.A2, 10f, 10f, 10f, 0f);
                 HTMLWorker htmlparser = new HTMLWorker(pdfDoc);

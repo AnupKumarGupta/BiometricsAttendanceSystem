@@ -896,7 +896,7 @@ public class ManageReports
             status = DayStatus.WeeklyOff;
 
         List<SqlParameter> list_params = new List<SqlParameter>() { new SqlParameter("@date", date) };
-        string query = "SELECT Count(Date) As Count FROM [BiometricsAttendanceSystem].[dbo].[tblHolidays] WHERE [Status] =1 AND Date =@date";
+        string query = "SELECT Count(Date) As Count FROM  [tblHolidays] WHERE [Status] =1 AND Date =@date";
         try
         {
             using (DBDataHelper helper = new DBDataHelper())
@@ -1329,7 +1329,7 @@ public class ManageReports
         else
         {
             List<SqlParameter> list_params = new List<SqlParameter>() { new SqlParameter("@date", date) };
-            string query = "SELECT Count(Date) As Count FROM [BiometricsAttendanceSystem].[dbo].[tblHolidays] WHERE [Status] =1 AND Date =@date";
+            string query = "SELECT Count(Date) As Count FROM  [tblHolidays] WHERE [Status] =1 AND Date =@date";
             try
             {
                 using (DBDataHelper helper = new DBDataHelper())
