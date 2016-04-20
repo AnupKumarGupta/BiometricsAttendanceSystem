@@ -31,7 +31,7 @@
       "Scala",
       "Scheme"
     ];
-    $( "#tags" ).autocomplete({
+    $( "#<%=ddlRelaxation.ClientID%>" ).autocomplete({
       source: availableTags
     });
   });
@@ -45,7 +45,7 @@
                     <br />
                     <a href="../Admin/ManageMasterEntries.aspx" class="grey-text">Home &nbsp;&nbsp;></a>
                     <a href="../Admin/ReportMaster.aspx" class="grey-text">Reports &nbsp;&nbsp;></a>
-                    <a href="#!" class="teal-text">&nbsp;&nbsp;Monthly Leave Balance &nbsp;&nbsp;</a>
+                    <a href="#!" class="teal-text">&nbsp;&nbsp;EmployeeWise Basic Monthly Attendance &nbsp;&nbsp;</a>
                 </div>
                 <input id="tags"/>
                 <asp:TextBox ID="txtEmployeeId" placeholder="Employee Id" CssClass="col input-field offset-l1 offset-m1 offset-s1 l4 m4 s4" runat="server"></asp:TextBox>
@@ -87,6 +87,7 @@
             <div class="row">
                 <div class="col l10 m10 s10 offset-l1 offset-s1 offset-m1 card-content">
                     <asp:Label ID="lblName" CssClass="input-field" runat="server" />
+                    <asp:Label ID="lblDepartment" CssClass="input-field" runat="server" />
                 </div>
             </div>
             <asp:GridView runat="server" ID="grid_monthly_attendanceBasic" AutoGenerateColumns="false" CssClass="responsive-table striped card z-depth-2 col m10 l10 offset-l1 offset-m1" EmptyDataText="No Data">

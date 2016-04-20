@@ -1573,6 +1573,7 @@ public class ManageReports
             objDailyAttendanceReportViewModel.DepartmentId = employee.DepartmentId;
             objDailyAttendanceReportViewModel.DepartmentName = employee.DepartmentName;
             objDailyAttendanceReportViewModel.Date = date;
+            objDailyAttendanceReportViewModel.DepartmentName = employee.DepartmentName;
             lstDailyAttendanceReportViewModel.Add(objDailyAttendanceReportViewModel);
         }
         return lstDailyAttendanceReportViewModel;

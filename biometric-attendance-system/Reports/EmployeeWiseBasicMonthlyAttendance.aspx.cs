@@ -52,6 +52,7 @@ public partial class Reports_EmployeeWiseBasicMonthlyAttendance : System.Web.UI.
         if (data.Count != 0)
         {
             lblName.Text = "Name : " + data[0].Name;
+            lblDepartment.Text = "Department : " + data[0].DepartmentName;
         }
         else
         {
