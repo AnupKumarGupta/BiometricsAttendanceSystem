@@ -5,6 +5,13 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <br />
     <div class="row" style="overflow-y:scroll">
+        <div class="col s12">
+            <div class="col s12 breadcrumb">
+                <br />
+                <a href="./ManageMasterEntries.aspx" class="grey-text">Home &nbsp;&nbsp;></a>
+                <a href="#!" class="teal-text">&nbsp;&nbsp;Employees Details &nbsp;&nbsp;</a>
+            </div>
+        </div>
         <asp:GridView ID="grdEmployee" runat="server" AutoGenerateColumns="false" EmptyDataText="No Employees" CssClass="responsive-table striped card z-depth-2 col m8 l8 offset-m2 offset-l2">
             <Columns>
                 <asp:TemplateField>

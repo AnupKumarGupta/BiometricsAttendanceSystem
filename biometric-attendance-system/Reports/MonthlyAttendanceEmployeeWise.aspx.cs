@@ -15,14 +15,7 @@ public partial class Reports_MonthlyAttendanceEmployeeWise : System.Web.UI.Page
     {
 
     }
-    protected void Calendar1_SelectionChanged(object sender, EventArgs e)
-    {
-        txt_start_date.Text = Calendar1.SelectedDate.Date.ToString("d");
-    }
-    protected void Calendar2_SelectionChanged(object sender, EventArgs e)
-    {
-        txt_end_date.Text = Calendar2.SelectedDate.Date.ToString("d");
-    }
+    
     protected void btn_report_Click(object sender, EventArgs e)
     {
         btnExport.Visible = true;
@@ -31,8 +24,12 @@ public partial class Reports_MonthlyAttendanceEmployeeWise : System.Web.UI.Page
         relaxationTime = TimeSpan.Parse(ddlRelaxation.SelectedValue.ToString());
         int EmployeeId = 0;
         Int32.TryParse(txtEmployeeId.Text, out EmployeeId);
+        var xy = txtStartDate.Text;
+        DateTime StartDate = DateTime.Parse(txtStartDate.Text);
+        var xyz = txtEndDate.Text;
+        DateTime EndDate = DateTime.Parse(txtEndDate.Text);
         MonthlyReportOfEmployee objMonthlyReportOfEmployee = new MonthlyReportOfEmployee();
-        var data = objManageReports.GetMonthlyAttendanceDetailedReport(EmployeeId, Calendar1.SelectedDate.Date, Calendar2.SelectedDate.Date, relaxationTime, out objMonthlyReportOfEmployee);
+        var data = objManageReports.GetMonthlyAttendanceDetailedReport(EmployeeId,StartDate,EndDate, relaxationTime, out objMonthlyReportOfEmployee);
         grid_monthly_attendanceDetailed.DataSource = data;
         grid_monthly_attendanceDetailed.DataBind();
         if (data.Count != 0)

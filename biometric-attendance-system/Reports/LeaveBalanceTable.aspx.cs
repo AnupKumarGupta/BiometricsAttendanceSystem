@@ -19,14 +19,7 @@ public partial class Reports_LeaveBalanceTable : System.Web.UI.Page
     }
 
     protected List<LeavesBalanceRecord> lstLeavesBalanceRecord = new List<LeavesBalanceRecord>();
-    protected void Calendar1_SelectionChanged(object sender, EventArgs e)
-    {
-        txt_start_date.Text = Calendar1.SelectedDate.Date.ToString("d");
-    }
-    protected void Calendar2_SelectionChanged(object sender, EventArgs e)
-    {
-        txt_end_date.Text = Calendar2.SelectedDate.Date.ToString("d");
-    }
+    
     protected void BindDropDowns()
     {
         MasterEntries objMasterEntries = new MasterEntries();
@@ -38,8 +31,12 @@ public partial class Reports_LeaveBalanceTable : System.Web.UI.Page
 
     protected void btnGetData_Click(object sender, EventArgs e)
     {
+        var xy = txtStartDate.Text;
+        DateTime StartDate = DateTime.Parse(txtStartDate.Text);
+        var xyz = txtEndDate.Text;
+        DateTime EndDate = DateTime.Parse(txtEndDate.Text);
         ManageReports objManageReports = new ManageReports();
-        lstLeavesBalanceRecord = objManageReports.GetDataForMonthlyLeaveBalanceTable(Convert.ToInt32(ddlDepartments.SelectedValue.ToString()), Calendar1.SelectedDate.Date, Calendar2.SelectedDate.Date);
+        lstLeavesBalanceRecord = objManageReports.GetDataForMonthlyLeaveBalanceTable(Convert.ToInt32(ddlDepartments.SelectedValue.ToString()), StartDate, EndDate);
         grid1.DataSource = lstLeavesBalanceRecord;
         grid1.DataBind();
     }

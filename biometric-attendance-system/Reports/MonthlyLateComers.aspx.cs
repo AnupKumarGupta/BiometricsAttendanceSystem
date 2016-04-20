@@ -16,14 +16,6 @@ public partial class Reports_MonthlyLateComers : System.Web.UI.Page
         if (!IsPostBack)
             BindDropDowns();
     }
-    protected void Calendar1_SelectionChanged(object sender, EventArgs e)
-    {
-        txt_startDate.Text = Calendar1.SelectedDate.Date.ToString("d");
-    }
-    protected void Calendar2_SelectionChanged(object sender, EventArgs e)
-    {
-        txt_endDate.Text = Calendar2.SelectedDate.Date.ToString("d");
-    }
 
     protected void btn_report_Click(object sender, EventArgs e)
     {
@@ -36,7 +28,11 @@ public partial class Reports_MonthlyLateComers : System.Web.UI.Page
         TimeSpan relaxationTime = new TimeSpan();
         relaxationTime = TimeSpan.Parse(ddlRelaxation.SelectedValue.ToString());
         ManageReports objManageReports = new ManageReports();
-        var data = objManageReports.GetMonthlyLateComers(Calendar1.SelectedDate.Date, Calendar2.SelectedDate.Date, relaxationTime);
+        var xy = txtStartDate.Text;
+        DateTime StartDate = DateTime.Parse(txtStartDate.Text);
+        var xyz = txtEndDate.Text;
+        DateTime EndDate = DateTime.Parse(txtEndDate.Text);
+        var data = objManageReports.GetMonthlyLateComers(StartDate,EndDate, relaxationTime);
         grid_lateComers.DataSource = data;
         grid_lateComers.DataBind();
     }

@@ -11,6 +11,13 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="scriptManagerDepartment" runat="server" />
     <div class="row">
+        <div class="col s12">
+            <div class="col s12 breadcrumb">
+                <br />
+                <a href="./ManageMasterEntries.aspx" class="grey-text">Home &nbsp;&nbsp;></a>
+                <a href="#!" class="teal-text">&nbsp;&nbsp;View Employee Leaves &nbsp;&nbsp;</a>
+            </div>
+        </div>
         <br />
         <br />
         <asp:DropDownList ID="ddlShowDepartment" runat="server" AppendDataBoundItems="true" AutoPostBack="true" CssClass="dropdown-button col btn 12 m2 s2 offset-l5 offset-m5 offset-s5" OnSelectedIndexChanged="ddlShowDepartment_SelectedIndexChanged">

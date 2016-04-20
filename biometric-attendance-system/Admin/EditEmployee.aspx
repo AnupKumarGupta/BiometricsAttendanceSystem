@@ -7,7 +7,8 @@
         <div class="col s12">
             <div class="col s12 breadcrumb">
                 <br />
-                <a href="./Admin/ManageMasterEntries.aspx" class="grey-text">Home &nbsp;&nbsp;></a>
+                <a href="./ManageMasterEntries.aspx" class="grey-text">Home &nbsp;&nbsp;></a>
+                <a href="./ViewEmployee.aspx" class="grey-text">Employees Details &nbsp;&nbsp;></a>
                 <a href="#!" class="teal-text">&nbsp;&nbsp;Edit Employees &nbsp;&nbsp;</a>
             </div>
         </div>

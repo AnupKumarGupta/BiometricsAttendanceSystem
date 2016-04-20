@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="col card l8 m8 s8 offset-l2 offset-m2 center">
-            <asp:LinkButton Text="Daily Attendance Basic Report" ID="DailyAttendanceBasicReport" href="../Reports/DailyAttendanceBasicReport.aspx" target="_blank" CssClass="btn" runat="server" />
+            <asp:LinkButton Text="Daily Attendance Basic Report" ID="DailyAttendanceBasicReport" href="../Reports/DailyBasicAttendanceReport.aspx" target="_blank" CssClass="btn" runat="server" />
             <br />
             <br />
             <asp:LinkButton Text="Daily Attendance Detailed Report" ID="DailyAttendanceDetailedReport" href="../Reports/DetailedDailyAttendanceReport.aspx" target="_blank" CssClass="btn" runat="server" />
@@ -24,7 +24,7 @@
             <asp:LinkButton Text="Monthly Attendance EmployeeWise Detailed" ID="MonthlyAttendanceEmployeeWise" href="../Reports/MonthlyAttendanceEmployeeWise.aspx" target="_blank" CssClass="btn" runat="server" />
             <br />
             <br />
-            <asp:LinkButton Text="Daily Late Comers" ID="DailyLateComers" CssClass="btn" href="../Reports/DailyLateComers.aspx" target="_blank" runat="server" />
+            <asp:LinkButton Text="Daily Late Comers" ID="DailyLateComers" CssClass="btn" href="../Reports/DailyLateComersReport.aspx" target="_blank" runat="server" />
             <br />
             <br />
             <asp:LinkButton Text="Monthly Late Comers" ID="MonthlyLateComers" CssClass="btn" href="../Reports/MonthlyLateComers.aspx" target="_blank" runat="server" />
