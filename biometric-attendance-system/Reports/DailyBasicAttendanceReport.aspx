@@ -20,11 +20,13 @@
                     <a href="../Admin/ReportMaster.aspx" class="grey-text">Reports &nbsp;&nbsp;></a>
                     <a href="#!" class="teal-text">&nbsp;&nbsp;Daily Attendance Basic &nbsp;&nbsp;</a>
                 </div>
-                <div class="col s8 m3 l2 offset-s2 offset-m4 offset-l4">
+              <%--  <div class="col s8 m3 l2 offset-s2 offset-m4 offset-l4">
                     <asp:DropDownList ID="ddlDepartments" Visible="true" CssClass="input-field btn grey lighten-4 teal-text" runat="server"></asp:DropDownList>
-                </div>
-                <div class="col s8 m3 l2 offset-s2">
-                    <asp:DropDownList ID="ddlRelaxation" Visible="true" CssClass="input-field btn grey lighten-4 teal-text" runat="server">
+                    Relaxtion Time
+                </div>--%>
+                <div class="col s8 m3 l2 offset-s2 offset-m5 offset-l5">
+                    <asp:DropDownList ID="ddlRelaxation" Visible="true" CssClass="input-field col s12 btn grey lighten-5 teal-text" runat="server">
+                        <asp:ListItem Text="Relaxation Time" Value="00:00:00" />
                         <asp:ListItem Value="00:05:00">5 minutes</asp:ListItem>
                         <asp:ListItem Value="00:10:00">10 minutes</asp:ListItem>
                         <asp:ListItem Value="00:15:00">15 minutes</asp:ListItem>
@@ -35,12 +37,9 @@
                     <div class="col s8 m4 l4 offset-l4 offset-m4">
                         <br />
                         <br />
-
-                        <%--                        <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged" Visible="false" SelectedDate="09/09/2015"></asp:Calendar>--%>
+                        Date
                         <asp:TextBox runat="server" ID="txtDate" class="datepicker" />
-
-                        <%--<input type="date" class="datepicker">--%>
-                        <script>
+                        <asp:RequiredFieldValidator SetFocusOnError="true" ErrorMessage="&nbsp;Required" ControlToValidate="txtDate" CssClass="col s12" ForeColor ="Red" runat="server" /><script>
                             $('.datepicker').pickadate({
                                 selectMonths: true, // Creates a dropdown to control month
                                 selectYears: 15 // Creates a dropdown of 15 years to control year

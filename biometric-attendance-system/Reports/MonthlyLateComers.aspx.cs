@@ -13,8 +13,7 @@ public partial class Reports_MonthlyLateComers : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
-            BindDropDowns();
+        
     }
 
     protected void btn_report_Click(object sender, EventArgs e)
@@ -36,14 +35,14 @@ public partial class Reports_MonthlyLateComers : System.Web.UI.Page
         grid_lateComers.DataSource = data;
         grid_lateComers.DataBind();
     }
-    protected void BindDropDowns()
-    {
-        MasterEntries objMasterEntries = new MasterEntries();
-        ddlDepartments.DataSource = objMasterEntries.GetAllDepartments();
-        ddlDepartments.DataTextField = "Name";
-        ddlDepartments.DataValueField = "Id";
-        ddlDepartments.DataBind();
-    }
+    //protected void BindDropDowns()
+    //{
+    //    MasterEntries objMasterEntries = new MasterEntries();
+    //    ddlDepartments.DataSource = objMasterEntries.GetAllDepartments();
+    //    ddlDepartments.DataTextField = "Name";
+    //    ddlDepartments.DataValueField = "Id";
+    //    ddlDepartments.DataBind();
+    //}
 
     protected void btnExport_Click(object sender, EventArgs e)
     {

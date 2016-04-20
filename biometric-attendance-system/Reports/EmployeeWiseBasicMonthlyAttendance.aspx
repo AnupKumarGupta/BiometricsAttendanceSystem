@@ -32,6 +32,7 @@
                         <input id="tags" />
                         <asp:TextBox ID="txtEmployeeId" placeholder="Employee Id" CssClass="col input-field offset-l1 offset-m1 offset-s1 l4 m4 s4" runat="server"></asp:TextBox>
                         <asp:DropDownList ID="ddlRelaxation" runat="server" CssClass=" col input-field btn grey lighten-4 teal-text l4 m4 s4 offset-l1 offset-m1 offset-s1">
+                            <asp:ListItem Value="00:00:00">Relaxation Time</asp:ListItem>
                             <asp:ListItem Value="00:05:00">5 minutes</asp:ListItem>
                             <asp:ListItem Value="00:10:00">10 minutes</asp:ListItem>
                             <asp:ListItem Value="00:15:00">15 minutes</asp:ListItem>
@@ -44,7 +45,7 @@
                         <div class="col s8 m5 l5" style="height: 100px;">
                             Start Date<br />
                             <asp:TextBox runat="server" ID="txtStartDate" class="datepicker" />
-
+                            <asp:RequiredFieldValidator SetFocusOnError="true" ErrorMessage="&nbsp;Required" ControlToValidate="txtStartDate" CssClass="col s12" ForeColor ="Red" runat="server" />
                         <%--<input type="date" class="datepicker">--%>
                         <script>
                             $('.datepicker').pickadate({
@@ -57,7 +58,7 @@
                         <div class="col s8 m5 l5 offset-s2 offset-m2 offset-l2">
                             End Date<br />
                            <asp:TextBox runat="server" ID="txtEndDate" class="datepicker" />
-
+                            <asp:RequiredFieldValidator SetFocusOnError="true" ErrorMessage="&nbsp;Required" ControlToValidate="txtEndDate" CssClass="col s12" ForeColor ="Red" runat="server" />
                         <%--<input type="date" class="datepicker">--%>
                         <script>
                             $('.datepicker').pickadate({

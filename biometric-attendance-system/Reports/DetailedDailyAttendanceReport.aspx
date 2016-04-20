@@ -20,11 +20,12 @@
                     <a href="../Admin/ReportMaster.aspx" class="grey-text">Reports &nbsp;&nbsp;></a>
                     <a href="#!" class="teal-text">&nbsp;&nbsp;Daily Attendance Detailed &nbsp;&nbsp;</a>
                 </div>
-                <div class="col s8 m3 l2 offset-s2 offset-m4 offset-l4">
+                <%--<div class="col s8 m3 l2 offset-s2 offset-m4 offset-l4">
                     <asp:DropDownList ID="ddlDepartments" Visible="true" CssClass="input-field btn grey lighten-4 teal-text" runat="server"></asp:DropDownList>
-                </div>
-                <div class="col s8 m3 l2 offset-s2">
-                    <asp:DropDownList ID="ddlRelaxation" Visible="true" CssClass="input-field btn grey lighten-4 teal-text" runat="server">
+                </div>--%>
+                <div class="col s12 m2 l0 offset-l5 offset-m4">
+                    <asp:DropDownList ID="ddlRelaxation" Visible="true" CssClass="input-field btn grey col s12 lighten-5 teal-text" runat="server">
+                        <asp:ListItem Value="00:00:00">Relaxation Time</asp:ListItem>
                         <asp:ListItem Value="00:05:00">5 minutes</asp:ListItem>
                         <asp:ListItem Value="00:10:00">10 minutes</asp:ListItem>
                         <asp:ListItem Value="00:15:00">15 minutes</asp:ListItem>
@@ -36,7 +37,7 @@
                         <br />
                         <br />
                         <asp:TextBox runat="server" ID="txtDate" class="datepicker" />
-
+                        <asp:RequiredFieldValidator SetFocusOnError="true" ErrorMessage="&nbsp;Required" ControlToValidate="txtDate" CssClass="col s12" ForeColor ="Red" runat="server" />
                         <%--<input type="date" class="datepicker">--%>
                         <script>
                             $('.datepicker').pickadate({

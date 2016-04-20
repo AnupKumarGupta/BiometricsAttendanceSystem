@@ -39,7 +39,7 @@ public partial class Reports_EmployeeWiseBasicMonthlyAttendance : System.Web.UI.
 
         string data = @"<script>$(function () { var availableTags = [ " + empNames +
               @"];
-            $(""#ContentPlaceHolder1_txtEmployeeId"").autocomplete({
+            $(""#ContentPlaceHolder1_lit_autocomplete"").autocomplete({
                 source: availableTags
             });
         });
