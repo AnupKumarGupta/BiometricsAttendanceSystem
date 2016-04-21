@@ -104,7 +104,7 @@ public partial class Admin_ViewEmployeeLeaves : System.Web.UI.Page
         int departmentId = Convert.ToInt32(ddlShowDepartment.SelectedValue);
         ManageReports objManageReports1 = new ManageReports();
         lstLeaveAssignedRecord = objManageReports1.GetLeavesAssignedPerSession(departmentId, DateTime.Now);
-        grid1.DataSource = lstLeaveAssignedRecord;
-        grid1.DataBind();
+        //grid1.DataSource = lstLeaveAssignedRecord;
+        //grid1.DataBind();
     }
 }

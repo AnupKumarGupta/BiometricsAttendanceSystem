@@ -274,7 +274,7 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         objShift.FirstHalfEnd = TimeSpan.Parse(txtEditFirstHalfEnd.Text);
         objShift.SecondHalfStart = TimeSpan.Parse(txtEditSecondHalfStart.Text);
         objShift.SecondHalfEnd = TimeSpan.Parse(txtEditSecondHalfEnd.Text);
-        objShift.SHLDuration = TimeSpan.Parse(txtEditSecondHalfEnd.Text);
+        objShift.SHLDuration = TimeSpan.Parse(txtEditSLDuration.Text);
         objMasterEntry.UpdateShifts(Id, objShift);
         grdShiftsBind();
         popupEditShifts.Hide();

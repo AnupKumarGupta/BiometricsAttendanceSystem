@@ -49,7 +49,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col s4 l4 m4 offset-l4 offset-m4 offset-s4" style="height: 300px">
+                                <div class="col s4 l4 m4 offset-l4 offset-m4 offset-s4" style="height: 300px; overflow: scroll">
                                     <asp:GridView ID="grdDepartment" AutoGenerateColumns="false" CssClass="responsive-table striped" runat="server">
                                         <Columns>
                                             <asp:TemplateField>
@@ -132,7 +132,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col s4 l4 m4 offset-l4 offset-m4 offset-s4" style="height: 300px">
+                                <div class="col s4 l4 m4 offset-l4 offset-m4 offset-s4" style="height: 300px; overflow: scroll">
                                     <asp:GridView ID="grdLeave" AutoGenerateColumns="false" CssClass="responsive-table striped" runat="server">
                                         <Columns>
                                             <asp:TemplateField>
@@ -211,7 +211,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col s4 l4 m4 offset-l4 offset-m4 offset-s4">
+                        <div class="col s4 l4 m4 offset-l4 offset-m4 offset-s4" style="height: 300px; overflow: scroll">
                             <asp:GridView ID="grdRole" AutoGenerateColumns="false" CssClass="responsive-table striped" runat="server">
                                 <Columns>
                                     <asp:TemplateField>
@@ -248,15 +248,24 @@
         </cc1:ModalPopupExtender>
         <asp:UpdatePanel runat="server">
             <ContentTemplate>
-                <div class="modal-header">
-                    <h3 id="H3" class="modal-title">Edit Role
-                <asp:LinkButton ID="lkbClose2" runat="server" CssClass="left0 btn-close"><b class="glyphicon glyphicon-remove-sign"></b>&nbsp;x</asp:LinkButton></h3>
-                </div>
-                <div style="min-height: 120px; width: 100%">
-                    <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
-                        <asp:TextBox runat="server" ID="txtEditRole" placeholder="EditRole" ValidationGroup="EditRole"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="rfvEditRole" ErrorMessage="Required" ControlToValidate="txtEditRole" runat="server" ForeColor="Red" ValidationGroup="EditRole" />
-                        <asp:Button ID="btnUpdateRole" Text="Update Role" OnClick="btnUpdateRole_Click" runat="server" ValidationGroup="EditRole" />
+                <div class="card z-depth-3 blue-grey lighten-5">
+                    <br />
+                    <div class="row">
+                        <div class="center">
+                            <div class="modal-header">
+                                <asp:Label CssClass="grey-text text-darken-2 modal-header" Style="font: 20px" runat="server">Edit Department</asp:Label>
+                                <asp:LinkButton ID="lkbClose2" runat="server" CssClass="modal-close right-aligned">
+                            <b class="glyphicon glyphicon-remove-sign">&nbsp;&nbsp;&nbsp; X</b>
+                                </asp:LinkButton></>
+                            </div>
+                        </div>
+                        <div class="center">
+                            <div class="row">
+                                <asp:TextBox runat="server" CssClass="input-field col l8 m8 offset-l2 offset-m2" ID="txtEditRole" placeholder="EditRole" ValidationGroup="EditLeave"></asp:TextBox>
+                                <asp:RequiredFieldValidator ID="rfvEditRole" ErrorMessage="Required" ControlToValidate="txtEditRole" runat="server" ForeColor="Red" ValidationGroup="EditRole" />
+                                <asp:Button ID="btnUpdateRole" Text="Update Role" OnClick="btnUpdateRole_Click" runat="server" CssClass="btn" ValidationGroup="EditRole" />
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer"></div>
@@ -312,7 +321,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col s8 l8 m8 offset-l2 offset-m2 offset-s2">
+                                <div class="col s8 l8 m8 offset-l2 offset-m2 offset-s2" style="height: 300px; overflow: scroll">
                                     <asp:GridView ID="gvViewLeaveAssignedByRole" AutoGenerateColumns="false" CssClass="responsive-table striped" runat="server">
                                         <Columns>
                                             <asp:TemplateField>
@@ -499,28 +508,30 @@
                             <asp:TextBox runat="server" ID="txtName" placeholder="Shift Name" ValidationGroup="Shifts"></asp:TextBox>
                             <asp:RequiredFieldValidator ID="rfvTxtName" ErrorMessage="Required" ControlToValidate="txtName" runat="server" ForeColor="Red" ValidationGroup="Shifts" />
                         </div>
-                        <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
+                        <div class="col s2 l2 m2">
                             <asp:TextBox runat="server" ID="txtFirstHalfStart" placeholder="First Half Start Timing" ValidationGroup="Shifts"></asp:TextBox>
                             <asp:RequiredFieldValidator ID="rfvFirstHalfStart" ErrorMessage="Required" ControlToValidate="txtFirstHalfStart" runat="server" ForeColor="Red" ValidationGroup="Shifts" />
                         </div>
-                        <div class="col s2 l2 m2">
+
+                    </div>
+                    <div class="row">
+                        <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
                             <asp:TextBox runat="server" ID="txtFirstHalfEnd" placeholder="First Half End Timing" ValidationGroup="Shifts"></asp:TextBox>
                             <asp:RequiredFieldValidator ID="rfvFirstHalfEnd" ErrorMessage="Required" ControlToValidate="txtFirstHalfEnd" runat="server" ForeColor="Red" ValidationGroup="Shifts" />
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
+                        <div class="col s2 l2 m2">
                             <asp:TextBox runat="server" ID="txtSecondHalfStart" placeholder="Second Half Start Timing" ValidationGroup="Shifts"></asp:TextBox>
                             <asp:RequiredFieldValidator ID="rfvSecondHalfStart" ErrorMessage="Required" ControlToValidate="txtSecondHalfStart" runat="server" ForeColor="Red" ValidationGroup="Shifts" />
                         </div>
-                        <div class="col s2 l2 m2">
-                            <asp:TextBox runat="server" ID="txtSecondHalfEnd" placeholder="Second Half End Timing" ValidationGroup="Shifts"></asp:TextBox>
-                            <asp:RequiredFieldValidator ID="rfvSecondHalfEnd" ErrorMessage="Required" ControlToValidate="txtSecondHalfEnd" runat="server" ForeColor="Red" ValidationGroup="Shifts" />
-                        </div>
+
                     </div>
                     <div class="row">
                         <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
-                            <asp:TextBox runat="server" ID="txtSLDuration" placeholder="SL Duration" ValidationGroup="Shifts"></asp:TextBox>
+                            <asp:TextBox runat="server" ID="txtSecondHalfEnd" placeholder="Second Half End Timing" ValidationGroup="Shifts"></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="rfvSecondHalfEnd" ErrorMessage="Required" ControlToValidate="txtSecondHalfEnd" runat="server" ForeColor="Red" ValidationGroup="Shifts" />
+                        </div>
+                        <div class="col s2 l2 m2">
+                            <asp:TextBox runat="server" ID="txtSLDuration" placeholder="SHL Duration" ValidationGroup="Shifts"></asp:TextBox>
                             <asp:RequiredFieldValidator ID="rfvTxtSLDuration" ErrorMessage="Required" ControlToValidate="txtSLDuration" runat="server" ForeColor="Red" ValidationGroup="Shifts" />
                         </div>
                     </div>
@@ -532,7 +543,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col s4 l4 m4 offset-l4 offset-m4 offset-s4">
+                        <div class="col s4 l4 m4 offset-l4 offset-m4 offset-s4" style="height: 300px; overflow: scroll">
                             <asp:GridView ID="gvShifts" AutoGenerateColumns="false" CssClass="responsive-table striped" runat="server">
                                 <Columns>
                                     <asp:TemplateField>
@@ -577,7 +588,7 @@
                                     </asp:TemplateField>
                                     <asp:TemplateField>
                                         <HeaderTemplate>
-                                            <asp:Label Text="SL Duration" runat="server" />
+                                            <asp:Label Text="SHL Duration" runat="server" />
                                         </HeaderTemplate>
                                         <ItemTemplate>
                                             <asp:Label ID="lblSLDuration" runat="server" Text='<%#Eval("SHLDuration")%>'></asp:Label>
@@ -602,7 +613,7 @@
         </div>
     </asp:Panel>
 
-    <asp:Panel ID="pnlEditShifts" runat="server" DefaultButton="lkbClose7" CssClass="modalPopup" Style="display: none; height: auto;">
+    <asp:Panel ID="pnlEditShifts" runat="server" DefaultButton="lkbClose7" CssClass="modalPopup" Style="display: none; width: 55% !important; height: auto;">
         <asp:Button ID="btnforPopupRef7" runat="server" Style="display: none" />
         <cc1:ModalPopupExtender ID="popupEditShifts" runat="server" Enabled="True" TargetControlID="btnforPopupRef7"
             CancelControlID="lkbClose7" PopupControlID="pnlEditShifts" BackgroundCssClass="modalBackground">
@@ -610,28 +621,67 @@
         <asp:UpdatePanel runat="server">
             <ContentTemplate>
                 <div class="card z-depth-3 blue-grey lighten-5">
-                    <div class="modal-header">
-                        <h3 id="H6" class="modal-title">Edit Shifts
-                <asp:LinkButton ID="lkbClose7" runat="server" CssClass="left0 btn-close"><b class="glyphicon glyphicon-remove-sign"></b>&nbsp;x</asp:LinkButton></h3>
-                    </div>
-                    <div style="min-height: 120px; width: 100%">
-                        <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
-                            <asp:TextBox runat="server" ID="txtEditName" placeholder="Edit Name"></asp:TextBox>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" ErrorMessage="Required" ControlToValidate="txtEditName" runat="server" ForeColor="Red" ValidationGroup="EditShifts" />
-                            <asp:TextBox runat="server" ID="txtEditFirstHalfStart" placeholder="First Half Start Timing"></asp:TextBox>
-                            <asp:RequiredFieldValidator ID="rfvEditFirstHalfStart" ErrorMessage="Required" ControlToValidate="txtEditFirstHalfStart" runat="server" ForeColor="Red" ValidationGroup="EditShifts" />
-                            <asp:TextBox runat="server" ID="txtEditFirstHalfEnd" placeholder="First Half End Timing"></asp:TextBox>
-                            <asp:RequiredFieldValidator ID="rfvEditFirstHalfEnd" ErrorMessage="Required" ControlToValidate="txtEditFirstHalfEnd" runat="server" ForeColor="Red" ValidationGroup="EditShifts" />
-                            <asp:TextBox runat="server" ID="txtEditSecondHalfStart" placeholder="Second Half Start Timing"></asp:TextBox>
-                            <asp:RequiredFieldValidator ID="rfvEditSecondHalfStart" ErrorMessage="Required" ControlToValidate="txtEditSecondHalfStart" runat="server" ForeColor="Red" ValidationGroup="EditShifts" />
-                            <asp:TextBox runat="server" ID="txtEditSecondHalfEnd" placeholder="Second Half End Timing"></asp:TextBox>
-                            <asp:RequiredFieldValidator ID="rfvEditSecondHalfEnd" ErrorMessage="Required" ControlToValidate="txtEditSecondHalfEnd" runat="server" ForeColor="Red" ValidationGroup="EditShifts" />
-                            <asp:TextBox runat="server" ID="txtEditSLDuration" placeholder="SL Duration"></asp:TextBox>
-                            <asp:RequiredFieldValidator ID="rfvTxtEditSLDuration" ErrorMessage="Required" ControlToValidate="txtEditSLDuration" runat="server" ForeColor="Red" ValidationGroup="EditShifts" />
-
-                            <asp:Button ID="btnEditShifts" Text="Update Shifts" OnClick="btnEditShifts_Click" runat="server" ValidationGroup="EditShifts" />
+                    <br />
+                    <div class="row">
+                        <div class="center">
+                            <div class="modal-header">
+                                <asp:Label CssClass="grey-text text-darken-2 modal-header" Style="font: 20px" runat="server">Edit Department</asp:Label>
+                                <asp:LinkButton ID="lkbClose7" runat="server" CssClass="modal-close right-aligned">
+                            <b class="glyphicon glyphicon-remove-sign">&nbsp;&nbsp;&nbsp; X</b>
+                                </asp:LinkButton></>
+                            </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="center">
+                            <asp:TextBox runat="server" ID="txtEditName" placeholder="Edit Name" CssClass="input-field col l8 m8 offset-l2 offset-m2"></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" ErrorMessage="Required" ControlToValidate="txtEditName" runat="server" ForeColor="Red" ValidationGroup="EditShifts" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="center">
+                            <asp:TextBox runat="server" ID="txtEditFirstHalfStart" placeholder="First Half Start Timing" CssClass="input-field col l8 m8 offset-l2 offset-m2">></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="rfvEditFirstHalfStart" ErrorMessage="Required" ControlToValidate="txtEditFirstHalfStart" runat="server" ForeColor="Red" ValidationGroup="EditShifts" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="center">
+                            <asp:TextBox runat="server" ID="txtEditFirstHalfEnd" placeholder="First Half End Timing" CssClass="input-field col l8 m8 offset-l2 offset-m2"></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="rfvEditFirstHalfEnd" ErrorMessage="Required" ControlToValidate="txtEditFirstHalfEnd" runat="server" ForeColor="Red" ValidationGroup="EditShifts" />
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="center">
+                            <asp:TextBox runat="server" ID="txtEditSecondHalfStart" placeholder="Second Half Start Timing" CssClass="input-field col l8 m8 offset-l2 offset-m2"></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="rfvEditSecondHalfStart" ErrorMessage="Required" ControlToValidate="txtEditSecondHalfStart" runat="server" ForeColor="Red" ValidationGroup="EditShifts" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="center">
+                            <asp:TextBox runat="server" ID="txtEditSecondHalfEnd" placeholder="Second Half End Timing" CssClass="input-field col l8 m8 offset-l2 offset-m2"></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="rfvEditSecondHalfEnd" ErrorMessage="Required" ControlToValidate="txtEditSecondHalfEnd" runat="server" ForeColor="Red" ValidationGroup="EditShifts" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="center">
+                            <asp:TextBox runat="server" ID="txtEditSLDuration" placeholder="SHL Duration" CssClass="input-field col l8 m8 offset-l2 offset-m2"></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="rfvTxtEditSLDuration" ErrorMessage="Required" ControlToValidate="txtEditSLDuration" runat="server" ForeColor="Red" ValidationGroup="EditShifts" />
+                        </div>
+                    </div>
+
+                    <div class="center">
+                        <div class="row">
+                            <asp:Button ID="btnEditShifts" Text="Update Shifts" OnClick="btnEditShifts_Click" runat="server" CssClass="btn" ValidationGroup="EditShifts" />
+                        </div>
+                    </div>
+
                 </div>
                 <div class="modal-footer"></div>
             </ContentTemplate>
@@ -658,7 +708,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col s4 l4 m4 offset-l4 offset-m4 offset-s4" style="height: 300px">
+                                <div class="col s4 l4 m4 offset-l4 offset-m4 offset-s4" style="height: 300px; overflow: scroll">
                                     <asp:GridView ID="gvSession" AutoGenerateColumns="false" CssClass="responsive-table striped" runat="server">
                                         <Columns>
                                             <asp:TemplateField>

@@ -23,7 +23,7 @@ public partial class Admin_AddDateWiseShiftToEmployee : System.Web.UI.Page
     public void BindDropDown()
     {
         ddlShift.Items.Clear();
-        ddlShift.Items.Add("--Select--");
+        ddlShift.Items.Add("Select Shift");
         MasterEntries objMasterEntries = new MasterEntries();
         ddlShift.DataSource = objMasterEntries.GetAllShifts();
         ddlShift.DataTextField = "Name";
@@ -34,7 +34,7 @@ public partial class Admin_AddDateWiseShiftToEmployee : System.Web.UI.Page
     protected void btnAddSession_Click(object sender, EventArgs e)
     {
         int shiftId = Convert.ToInt32(ddlShift.SelectedValue);
-        DateTime date = Calendar1.SelectedDate;
+        DateTime date = DateTime.Parse(txtDate.Text);
         int employeeId = Convert.ToInt32(txtEmployeeId.Text);
         DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
         List<SqlParameter> lstparameter = new List<SqlParameter>();
