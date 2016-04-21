@@ -15,21 +15,20 @@ public partial class Reports_EmployeeWiseBasicMonthlyAttendance : System.Web.UI.
     {
         if (!IsPostBack)
             BindDropDown();
-
-
     }
-
-
     protected void BindDropDown()
     {
         ddlName.Items.Clear();
         ddlName.Items.Add("select");
         ManageEmployees objEmployee = new ManageEmployees();
+       
         var x = objEmployee.GetAllEmployees();
         ddlName.DataSource = x;
+        
         ddlName.DataTextField = "Name";
         ddlName.DataValueField = "Id";
         ddlName.DataBind();
+        
         string empNames = "";
         foreach (var item in x)
         {
@@ -38,15 +37,15 @@ public partial class Reports_EmployeeWiseBasicMonthlyAttendance : System.Web.UI.
         empNames = empNames.Remove(empNames.Length - 1);
 
         string data = @"<script>$(function () { var availableTags = [ " + empNames +
-              @"];
-            $(""#ContentPlaceHolder1_lit_autocomplete"").autocomplete({
-                source: availableTags
-            });
-        });
-   </script>";
+                  @"];
+                 $(""#tags"").autocomplete({
+                    source: availableTags
+                    });
+                    });
+              </script>";
+
         lit_autocomplete.Text = data;
     }
-
     protected void btn_report_Click(object sender, EventArgs e)
     {
         btnExport.Visible = true;
@@ -80,7 +79,6 @@ public partial class Reports_EmployeeWiseBasicMonthlyAttendance : System.Web.UI.
         lblAbsentDays.Text = "AbsentDays : " + objMonthlyReportOfEmployee.AbsentDays.ToString();
         lblWeeklyOff.Text = "WeeklyOff : " + objMonthlyReportOfEmployee.WeeklyOff.ToString();
     }
-
     protected void btnExport_Click(object sender, EventArgs e)
     {
         using (StringWriter sw = new StringWriter())

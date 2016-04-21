@@ -4,10 +4,45 @@
     <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css" />
-
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
     <title>MonthlyLateComersReport</title>
+
+    <%--    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+   <link rel="stylesheet" href="/resources/demos/style.css"/>
+     <script>
+           $(function() {
+                   var availableTags = [
+                     "ActionScript",
+                     "AppleScript",
+                     "Asp",
+                     "BASIC",
+                     "C",
+                     "C++",
+                     "Clojure",
+                     "COBOL",
+                     "ColdFusion",
+                     "Erlang",
+                     "Fortran",
+                     "Groovy",
+                     "Haskell",
+                     "Java",
+                     "JavaScript",
+                     "Lisp",
+                     "Perl",
+                     "PHP",
+                     "Python",
+                     "Ruby",
+                     "Scala",
+                     "Scheme"
+                   ];
+                   $( "#tags" ).autocomplete({
+                         source: availableTags
+                       });
+             });
+           6  </script>--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <asp:ScriptManager ID="scriptManagerDepartment" runat="server" />
@@ -25,29 +60,29 @@
                     <div class="row">
                         <div class="col s8 m5 l5" style="height: 100px;">
                             Start Date<br />
-                           <asp:TextBox runat="server" ID="txtStartDate" class="datepicker" />
+                            <asp:TextBox runat="server" ID="txtStartDate" class="datepicker" />
 
-                        <%--<input type="date" class="datepicker">--%>
-                        <script>
-                            $('.datepicker').pickadate({
-                                selectMonths: true, // Creates a dropdown to control month
-                                selectYears: 15 // Creates a dropdown of 15 years to control year
-                            });
+                            <%--<input type="date" class="datepicker">--%>
+                            <script>
+                                $('.datepicker').pickadate({
+                                    selectMonths: true, // Creates a dropdown to control month
+                                    selectYears: 15 // Creates a dropdown of 15 years to control year
+                                });
 
-                        </script>
+                            </script>
                         </div>
                         <div class="col s8 m5 l5 offset-s2 offset-m2 offset-l2">
                             End Date<br />
                             <asp:TextBox runat="server" ID="txtEndDate" class="datepicker" />
 
-                        <%--<input type="date" class="datepicker">--%>
-                        <script>
-                            $('.datepicker').pickadate({
-                                selectMonths: true, // Creates a dropdown to control month
-                                selectYears: 15 // Creates a dropdown of 15 years to control year
-                            });
+                            <%--<input type="date" class="datepicker">--%>
+                            <script>
+                                $('.datepicker').pickadate({
+                                    selectMonths: true, // Creates a dropdown to control month
+                                    selectYears: 15 // Creates a dropdown of 15 years to control year
+                                });
 
-                        </script>
+                            </script>
                         </div>
                     </div>
                     <div class="row">
