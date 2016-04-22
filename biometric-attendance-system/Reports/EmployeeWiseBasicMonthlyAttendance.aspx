@@ -14,11 +14,10 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-
-    <asp:Literal ID="lit_autocomplete" runat="server" />
     <asp:ScriptManager ID="scriptManagerDepartment" runat="server" />
     <asp:UpdatePanel ID="up" runat="server">
         <ContentTemplate>
+            <asp:Literal ID="lit_autocomplete" runat="server" />
             <div class="row">
                 <div class="col s10 m10 l10 offset-s1 offset-m1 offset-l1 card">
                     <div class="row">
@@ -28,7 +27,8 @@
                             <a href="../Admin/ReportMaster.aspx" class="grey-text">Reports &nbsp;&nbsp;></a>
                             <a href="#!" class="teal-text">&nbsp;&nbsp;Monthly Leave Balance &nbsp;&nbsp;</a>
                         </div>
-                        <asp:TextBox ID="txtEmployeeId" placeholder="Employee Id" CssClass="col input-field offset-l1 offset-m1 offset-s1 l4 m4 s4" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:TextBox ID="txtEmployeeId" placeholder="Employee Name" CssClass="col input-field offset-l1 offset-m1 offset-s1 l4 m4 s4" runat="server"></asp:TextBox>
                         <asp:DropDownList ID="ddlRelaxation" runat="server" CssClass=" col input-field btn grey lighten-4 teal-text l4 m4 s4 offset-l1 offset-m1 offset-s1">
                             <asp:ListItem Value="00:00:00">Relaxation Time</asp:ListItem>
                             <asp:ListItem Value="00:05:00">5 minutes</asp:ListItem>

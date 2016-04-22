@@ -11,11 +11,31 @@ using System.IO;
 
 public partial class Reports_MonthlyAttendanceEmployeeWise : System.Web.UI.Page
 {
+    List<Employees> lstEmployees = new List<Employees>();
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (!IsPostBack)
+            BindDropDown();
     }
-    
+    protected void BindDropDown()
+    {
+        ManageEmployees objEmployee = new ManageEmployees();
+        lstEmployees = objEmployee.GetAllEmployees();
+        string empNames = "";
+        foreach (var item in lstEmployees)
+        {
+            empNames = empNames + "\"" + item.Name + "\",";
+        }
+        empNames = empNames.Remove(empNames.Length - 1);
+        string data = @"<script>$(function () { var availableTags = [ " + empNames +
+                  @"];
+                 $(""#ContentPlaceHolder1_txtEmployeeId"").autocomplete({
+                    source: availableTags
+                    });
+                    });
+              </script>";
+        lit_autocomplete.Text = data;
+    }
     protected void btn_report_Click(object sender, EventArgs e)
     {
         btnExport.Visible = true;
@@ -23,13 +43,16 @@ public partial class Reports_MonthlyAttendanceEmployeeWise : System.Web.UI.Page
         TimeSpan relaxationTime = new TimeSpan();
         relaxationTime = TimeSpan.Parse(ddlRelaxation.SelectedValue.ToString());
         int EmployeeId = 0;
-        Int32.TryParse(txtEmployeeId.Text, out EmployeeId);
-        var xy = txtStartDate.Text;
+        ManageEmployees objEmployee = new ManageEmployees();
+        lstEmployees = objEmployee.GetAllEmployees();
+        EmployeeId = lstEmployees.Where(y => y.Name == txtEmployeeId.Text).Select(x => x.Id).FirstOrDefault();
+
         DateTime StartDate = DateTime.Parse(txtStartDate.Text);
-        var xyz = txtEndDate.Text;
         DateTime EndDate = DateTime.Parse(txtEndDate.Text);
+       
         MonthlyReportOfEmployee objMonthlyReportOfEmployee = new MonthlyReportOfEmployee();
         var data = objManageReports.GetMonthlyAttendanceDetailedReport(EmployeeId,StartDate,EndDate, relaxationTime, out objMonthlyReportOfEmployee);
+        
         grid_monthly_attendanceDetailed.DataSource = data;
         grid_monthly_attendanceDetailed.DataBind();
         if (data.Count != 0)
@@ -48,7 +71,6 @@ public partial class Reports_MonthlyAttendanceEmployeeWise : System.Web.UI.Page
         lblAbsentDays.Text = "AbsentDays : " + objMonthlyReportOfEmployee.AbsentDays.ToString();
         lblWeeklyOff.Text = "WeeklyOff : " + objMonthlyReportOfEmployee.WeeklyOff.ToString();
     }
-
     protected void btnExport_Click(object sender, EventArgs e)
     {
         using (StringWriter sw = new StringWriter())
