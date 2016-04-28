@@ -482,5 +482,10 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         gvSession.DataBind();
     }
     #endregion
+
+    protected void btnLeave_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("~/Admin/AssignLeave.aspx");
+    }
 }
 

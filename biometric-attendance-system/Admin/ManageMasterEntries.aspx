@@ -24,6 +24,7 @@
                 <asp:Button ID="btnLeaveAssignedByRole" runat="server" Text="Leave Assigned By Role" CssClass="waves-effect waves-ripple btn-large" OnClick="btnLeaveAssignedByRole_Click" />
                 <asp:Button ID="btnEmployee" runat="server" Text="Employee" CssClass="waves-effect waves-ripple btn-large" OnClick="btnEmployee_Click" />
                 <asp:Button ID="btnLeaveForEmployee" runat="server" Text="Leave Assigned To Employees" CssClass="waves-effect waves-ripple btn-large" OnClick="btnLeaveForEmployee_Click" />
+                 <asp:Button ID="btnLeave" runat="server" Text="Assign Leave" CssClass="waves-effect waves-ripple btn-large" OnClick="btnLeave_Click" />
             </div>
         </div>
     </div>

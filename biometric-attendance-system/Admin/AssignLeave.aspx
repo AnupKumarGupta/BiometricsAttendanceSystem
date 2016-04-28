@@ -4,6 +4,13 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div class="row">
+        <div class="col s12 breadcrumb">
+            <br />
+            <a href="ManageMasterEntries.aspx" class="grey-text">Home &nbsp;&nbsp;></a>
+            <a href="#!" class="teal-text">&nbsp;&nbsp;Assign Leave &nbsp;&nbsp;</a>
+        </div>
+    </div>
+    <div class="row">
         <div class="col s6 m6 l6 offset-s3 offset-m3 offset-l3">
             <div class="row">
                 <asp:DropDownList ID="ddlDepartment" runat="server" Visible="true" CssClass="input-field btn grey lighten-4 teal-text col m4 l4 s4 offset-s4 offset-m4 offset-l4">
