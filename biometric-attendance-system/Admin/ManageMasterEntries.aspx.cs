@@ -487,5 +487,10 @@ public partial class ManageMasterEntries : System.Web.UI.Page
     {
         Response.Redirect("~/Admin/AssignLeave.aspx");
     }
+
+    protected void btnAddDateWiseShift_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("~/Admin/AddDateWiseShiftToEmployee.aspx");
+    }
 }
 

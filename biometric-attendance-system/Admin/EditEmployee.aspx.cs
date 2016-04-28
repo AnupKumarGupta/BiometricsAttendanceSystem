@@ -48,7 +48,7 @@ public partial class Admin_EditEmployee : System.Web.UI.Page
         ddlRoles.DataValueField = "Id";
         ddlRoles.DataBind();
         ddlShifts.DataSource = objMasterEntries.GetAllShifts();
-        ddlShifts.DataTextField = "Id";
+        ddlShifts.DataTextField = "Name";
         ddlShifts.DataValueField = "Id";
         ddlShifts.DataBind();
     }

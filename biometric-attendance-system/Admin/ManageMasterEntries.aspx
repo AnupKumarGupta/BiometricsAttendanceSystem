@@ -25,6 +25,7 @@
                 <asp:Button ID="btnEmployee" runat="server" Text="Employee" CssClass="waves-effect waves-ripple btn-large" OnClick="btnEmployee_Click" />
                 <asp:Button ID="btnLeaveForEmployee" runat="server" Text="Leave Assigned To Employees" CssClass="waves-effect waves-ripple btn-large" OnClick="btnLeaveForEmployee_Click" />
                  <asp:Button ID="btnLeave" runat="server" Text="Assign Leave" CssClass="waves-effect waves-ripple btn-large" OnClick="btnLeave_Click" />
+                <asp:Button ID="btnAddDateWiseShift" runat="server" Text="Add Date Wise Shift" CssClass="waves-effect waves-ripple btn-large" OnClick="btnAddDateWiseShift_Click" />
             </div>
         </div>
     </div>

@@ -61,7 +61,7 @@
                 <%--                <asp:RegularExpressionValidator SetFocusOnError="true" runat="server" ControlToValidate="txtContactNumber" ErrorMessage=" Invalid Mobile Number" CssClass="input-field btn grey lighten-4 teal-text" ValidationExpression="^([0-9]*){10}$"></asp:RegularExpressionValidator>--%>
             </div>
             <div class="col s8 m3 l2 offset-s2">
-                 <label for="ddlShifts">General Shift</label>
+                 <label for="ddlShifts">Shift</label>
                 <asp:DropDownList ID="ddlShifts" runat="server" Visible="true" CssClass="input-field btn grey lighten-4 teal-text">
                 </asp:DropDownList>
             </div>
