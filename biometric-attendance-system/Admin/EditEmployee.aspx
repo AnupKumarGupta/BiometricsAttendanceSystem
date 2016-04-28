@@ -24,7 +24,7 @@
                 <asp:TextBox runat="server" ID="txtDateOfJoining" placeholder="Date of Joining"></asp:TextBox>
             </div>
             <div class="col s8 m3 l2 offset-s2">
-                <label for="ddlDays">Weekly Off Day</label>
+                <label class="text-darken-4">Weekly Off Day</label>
                 <asp:DropDownList ID="ddlDays" runat="server" Visible="true" CssClass="input-field btn grey lighten-4 teal-text">
                     <asp:ListItem Text="Monday" Value="1"></asp:ListItem>
                     <asp:ListItem Text="Tuesday" Value="2"></asp:ListItem>
