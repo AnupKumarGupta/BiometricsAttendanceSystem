@@ -20,7 +20,7 @@
         </div>
         <div class="row">
             <div class="col s8 m3 l2 offset-s2 offset-m4 offset-l4">
-                 <label for="txtDateOfJoining" class="text-darken-4">Date Of Joining</label>
+                 <label for="txtDateOfJoining" class="text-black text-darken-4">Date Of Joining</label>
                 <asp:TextBox runat="server" ID="txtDateOfJoining" placeholder="Date of Joining"></asp:TextBox>
             </div>
             <div class="col s8 m3 l2 offset-s2">
@@ -40,10 +40,12 @@
         </div>
         <div class="row">
             <div class="col s8 m3 l2 offset-s2 offset-m4 offset-l4">
+                 <label for="ddlDepartments">Department</label>
                 <asp:DropDownList ID="ddlDepartments" runat="server" Visible="true" CssClass="input-field btn grey lighten-4 teal-text">
                 </asp:DropDownList>
             </div>
             <div class="col s8 m3 l2 offset-s2">
+                <label for="ddlRoles">Role</label>
                 <asp:DropDownList ID="ddlRoles" runat="server" Visible="true" CssClass="input-field btn grey lighten-4 teal-text">
                 </asp:DropDownList>
             </div>
@@ -52,12 +54,14 @@
         <br />
         <div class="row">
             <div class="col s8 m3 l2 offset-s2 offset-m4 offset-l4">
+                 <label for="txtContactNumber">Contact Number</label>
                 <asp:TextBox runat="server" ID="txtContactNumber" placeholder="Contact Number">
                 </asp:TextBox>
                 <%--                <asp:RequiredFieldValidator SetFocusOnError="true" ErrorMessage=" Required" ControlToValidate="txtContactNumber" CssClass="input-field btn grey lighten-4 teal-text" runat="server" />--%>
                 <%--                <asp:RegularExpressionValidator SetFocusOnError="true" runat="server" ControlToValidate="txtContactNumber" ErrorMessage=" Invalid Mobile Number" CssClass="input-field btn grey lighten-4 teal-text" ValidationExpression="^([0-9]*){10}$"></asp:RegularExpressionValidator>--%>
             </div>
             <div class="col s8 m3 l2 offset-s2">
+                 <label for="ddlShifts">General Shift</label>
                 <asp:DropDownList ID="ddlShifts" runat="server" Visible="true" CssClass="input-field btn grey lighten-4 teal-text">
                 </asp:DropDownList>
             </div>
