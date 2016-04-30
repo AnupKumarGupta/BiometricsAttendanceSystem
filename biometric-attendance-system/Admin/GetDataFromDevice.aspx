@@ -5,8 +5,12 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div>
-        <asp:Button Text="GetData" runat="server" ID="btn_getData" OnClick="btn_getData_Click" />
-        <asp:GridView runat="server" CssClass="responsive-table striped" ID="grid_Data"></asp:GridView>
+        <br />
+        <br />
+        <center>
+             <asp:Button Text="Get Data From Device" runat="server" CssClass="btn" ID="btn_getData" OnClick="btn_getData_Click" />
+             <asp:GridView runat="server" CssClass="responsive-table striped" ID="grid_Data"></asp:GridView>
+        </center>
     </div>
 </asp:Content>
 

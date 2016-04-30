@@ -502,5 +502,9 @@ public partial class ManageMasterEntries : System.Web.UI.Page
     {
         Response.Redirect("~/Admin/AddDateWiseShiftToEmployee.aspx");
     }
+    protected void btnGetData_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("~/Admin/GetDataFromDevice.aspx");
+    }
 }
 

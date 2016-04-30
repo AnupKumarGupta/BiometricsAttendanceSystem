@@ -160,7 +160,10 @@ public partial class Admin_AssignLeaveToEmployee : System.Web.UI.Page
     {
         if (e.Day.IsSelected == true)
         {
-            list.Add(e.Day.Date);
+            if (list.Contains(e.Day.Date))
+               list.Remove(e.Day.Date);
+            else
+                list.Add(e.Day.Date);
         }
         Session["SelectedDates"] = list;
     }

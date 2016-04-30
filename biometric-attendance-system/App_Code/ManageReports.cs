@@ -2044,7 +2044,6 @@ public class ManageReports
                 ELCountBalance = ELCountOld + ELCountAssigned - ELCountTaken;
                 ELCountBalance = ELCountBalance > 60 ? 60 : ELCountBalance;
 
-
                 SLCountBalance = SLCountOld + SLCountAssigned - SLCountTaken;
                 SLCountBalance = SLCountBalance > 30 ? 30 : SLCountBalance;
 
