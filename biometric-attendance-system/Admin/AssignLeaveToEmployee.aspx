@@ -4,7 +4,6 @@
      <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css" />
-
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
     <title>DailyAttendanceBasicReport</title>
@@ -29,7 +28,6 @@
                                 selectMonths: true, // Creates a dropdown to control month
                                 selectYears: 15 // Creates a dropdown of 15 years to control year
                             });
-
                         </script>
                     <%--<asp:TextBox runat="server" CssClass="input-field" ID="txtEndDate" />--%>
                       <asp:Button ID="btnAssignLeave" Text="Assign Leave" CssClass="btn" runat="server" OnClick="btnAssignLeave_Click" />

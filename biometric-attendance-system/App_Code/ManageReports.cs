@@ -2043,18 +2043,16 @@ public class ManageReports
 
                 ELCountBalance = ELCountOld + ELCountAssigned - ELCountTaken;
                 ELCountBalance = ELCountBalance > 60 ? 60 : ELCountBalance;
-                ELCountBalance = ELCountOld + ELCountAssigned - ELCountTaken;
-                ELCountBalance = ELCountBalance > 60 ? 60 : ELCountBalance;
+
 
                 SLCountBalance = SLCountOld + SLCountAssigned - SLCountTaken;
                 SLCountBalance = SLCountBalance > 30 ? 30 : SLCountBalance;
-                SLCountBalance = SLCountOld + SLCountAssigned - SLCountTaken;
-                SLCountBalance = SLCountBalance > 30 ? 30 : SLCountBalance;
+
                 #endregion
 
                 #region Insert New Data
 
-                string queryInset = @"INSERT INTO [tblLeavesOldStock] VALUES (@employeeId, @slCount,@elCount, @sessionStartDate,@sesssionEndDate)";
+                string queryInset = @"INSERT INTO [tblLeavesOldStock] VALUES (@employeeId, @slCount,@elCount, @sessionStartDate,@sessionEndDate)";
 
                 List<SqlParameter> list_params_insert = new List<SqlParameter>()
                         {   new SqlParameter("@employeeId", employee.Id), 
