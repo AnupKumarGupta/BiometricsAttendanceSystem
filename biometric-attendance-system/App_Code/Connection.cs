@@ -19,7 +19,7 @@ public class Connection
         ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ToString();
     }
 
-    public void GetData(string ip = "192.168.0.192", int port = 4370)
+    public void GetData(string ip = "10.10.152.237", int port = 4370)
     {
         var bIsConnected = axCZKEM1.Connect_Net(ip, port);
         axCZKEM1.EnableDevice(1, false);//disable the device

@@ -326,9 +326,9 @@
                                 <br />
                                 <div class="col s4 l4 m4 offset-l2 offset-m2">
                                     <asp:DropDownList ID="ddlIsPromoted" runat="server" Visible="true" CssClass="dropdown-button btn l2 m2 s2">
-                                        <asp:ListItem Value="0">Carry Forward</asp:ListItem>
+                                        <asp:ListItem Value="1">Carry Forward</asp:ListItem>
                                         <asp:ListItem Value="1">Yes</asp:ListItem>
-                                        <asp:ListItem Value="2">No</asp:ListItem>
+                                        <asp:ListItem Value="0">No</asp:ListItem>
                                     </asp:DropDownList>
                                     <asp:RequiredFieldValidator ID="rfvIsPromoted" ErrorMessage="Required" ControlToValidate="ddlIsPromoted" runat="server" ValidationGroup="LeaveAssignedByRole" InitialValue="Carry Forward" ForeColor="Red" />
                                 </div>
@@ -416,9 +416,9 @@
                             </asp:DropDownList>
                             <asp:TextBox runat="server" ID="txtNoOfLeave" placeholder="No. of Leaves"></asp:TextBox>
                             <asp:DropDownList ID="ddlIsPromotedEdit" runat="server" Visible="true" CssClass="dropdown-button btn l2 m2 s2">
-                                <asp:ListItem Value="0">--- Carry Forward ----</asp:ListItem>
+                                <asp:ListItem Value="1">--- Carry Forward ----</asp:ListItem>
                                 <asp:ListItem Value="1">Yes</asp:ListItem>
-                                <asp:ListItem Value="2">No</asp:ListItem>
+                                <asp:ListItem Value="0">No</asp:ListItem>
                             </asp:DropDownList>
                             <asp:Button ID="btnUpdate" Text="Update Leave" OnClick="btnUpdate_Click" runat="server" />
                         </div>

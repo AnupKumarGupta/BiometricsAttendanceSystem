@@ -17,34 +17,20 @@ public partial class Home : System.Web.UI.Page
     }
     protected void btnSubmit_Click(object sender, EventArgs e)
     {
-        DataTable dt = new DataTable();
-        DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
-
-        List<SqlParameter> list_params = new List<SqlParameter>()
-            {
-            new SqlParameter("@employeeId", Convert.ToInt32(txtEmployeeId.Text)),
-            new SqlParameter("@password",txtPassword.Text)
-            };
         try
         {
-            using (DBDataHelper helper = new DBDataHelper())
+
+
+            string username = txtEmployeeId.Text;
+            string pass = txtPassword.Text;
+            if (username == "Admin" && pass == "12345")
             {
-                string query = "select * from tblEmployees where EmployeeId=@employeeId and Password=@password";
-                dt = helper.GetDataTable(query, SQLTextType.Query, list_params);
-                if (dt.Rows.Count == 1)
-                {
-                    int RoleId = Convert.ToInt32(dt.Rows[0]["RoleId"]);
-                    Session["employeeId"] = txtEmployeeId.Text;
-                    Session["roleId"] = RoleId;
-                    if (RoleId == 1)
-                        Response.Redirect("~/Admin/ManageMasterEntries.aspx", false);
-                    else
-                        Response.Redirect("~/Admin/ManageMasterEntries.aspx", false);
-                }
-                else
-                {
-                    lblMessage.Text = "Invalid User Id or Password";
-                }
+                Session["employeeId"] = username;
+                Response.Redirect("~/Admin/ManageMasterEntries.aspx", false);
+            }
+            else
+            {
+                lblMessage.Text = "Invalid User Id or Password";
             }
         }
 
