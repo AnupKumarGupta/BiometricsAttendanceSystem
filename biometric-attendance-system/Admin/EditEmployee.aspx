@@ -32,7 +32,7 @@
                     <asp:ListItem Text="Thursday" Value="4"></asp:ListItem>
                     <asp:ListItem Text="Friday" Value="5"></asp:ListItem>
                     <asp:ListItem Text="Saturday" Value="6"></asp:ListItem>
-                    <asp:ListItem Text="Sunday" Value="7"></asp:ListItem>
+                    <asp:ListItem Text="Sunday" Value="0"></asp:ListItem>
                 </asp:DropDownList>
             </div>
             <asp:RequiredFieldValidator SetFocusOnError="true" ErrorMessage="Required" ControlToValidate="txtDateOfJoining" CssClass="input-field btn grey lighten-4 teal-text" runat="server" />

@@ -20,7 +20,7 @@ public class ManageEmployees
         lstMasterEmployeeDetail.Add(new SqlParameter("@name", objEmployee.Name));
         lstMasterEmployeeDetail.Add(new SqlParameter("@joiningDate", objEmployee.JoiningDate));
         lstMasterEmployeeDetail.Add(new SqlParameter("@gender", objEmployee.Gender));
-        lstMasterEmployeeDetail.Add(new SqlParameter("@createdAt", objEmployee.CreatedOn));
+        lstMasterEmployeeDetail.Add(new SqlParameter("@createdOn", objEmployee.CreatedOn));
         lstMasterEmployeeDetail.Add(new SqlParameter("@isDeleted", false));
         DataTable dt = new DataTable();
         DataSet ds;
@@ -32,8 +32,6 @@ public class ManageEmployees
         }
         List<SqlParameter> lstEmployeeDetail = new List<SqlParameter>();
         lstEmployeeDetail.Add(new SqlParameter("@employeeId", EmployeeId));
-        lstEmployeeDetail.Add(new SqlParameter("@imagePath", objEmployee.ImagePath));
-        lstEmployeeDetail.Add(new SqlParameter("@password", objEmployee.Password));
         lstEmployeeDetail.Add(new SqlParameter("@roleId", objEmployee.RoleId));
         lstEmployeeDetail.Add(new SqlParameter("@departmentId", objEmployee.DepartmentId));
         lstEmployeeDetail.Add(new SqlParameter("@contactNumber", objEmployee.ContactNumber));
@@ -72,7 +70,7 @@ public class ManageEmployees
             }
             return true;
         }
-        catch(Exception)
+        catch(Exception ex)
         {
             return false;
         }

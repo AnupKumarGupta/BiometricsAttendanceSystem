@@ -15,35 +15,22 @@ public partial class Admin_AddEmployee : System.Web.UI.Page
         //this.UnobtrusiveValidationMode = 0;
 
     }
-    protected string imagePath(string employeeName)
-    {
-        string fileName;
-        if (fileUploadProfilePic.HasFile)
-        {
-            fileName = Path.GetFileName(fileUploadProfilePic.PostedFile.FileName);
-            fileUploadProfilePic.PostedFile.SaveAs(Server.MapPath("~/Images/") + fileName);
-            return fileName;
-        }
-        else
-            return String.Empty;
-    }
+    
     protected void btnSUbmit_Click(object sender, EventArgs e)
     {
         Employees objEmployee = new Employees();
-        objEmployee.Id = 0; //Mapped From Device
+        objEmployee.Id = Convert.ToInt32(txtEmployeeId.Text);
         objEmployee.Name = txtName.Text;
-        objEmployee.DateOfBirth = Convert.ToDateTime(txtDateOfBirth.Text);
-        objEmployee.DepartmentId = Convert.ToInt32(ddlDepartment.SelectedValue.ToString());
-        objEmployee.RoleId = Convert.ToInt32(ddlRole.SelectedValue.ToString());
+        objEmployee.DepartmentId = Convert.ToInt32(ddlDepartments.SelectedValue.ToString());
+        objEmployee.RoleId = Convert.ToInt32(ddlRoles.SelectedValue.ToString());
         objEmployee.CreatedOn = DateTime.Now;
         objEmployee.UpdatedOn = DateTime.Now;
         objEmployee.JoiningDate = Convert.ToDateTime(txtDateOfJoining.Text);
-        objEmployee.ImagePath = imagePath(objEmployee.FirstName + objEmployee.LastName);
-        objEmployee.Password = txtPassword.Text;
         long contact = new long();
         long.TryParse(txtContactNumber.Text, out contact);
         objEmployee.ContactNumber = contact;
         objEmployee.Gender = rdrbtnFemale.Checked ? "Female" : "Male";
+        objEmployee.ShiftId = Convert.ToInt32(ddlRoles.SelectedValue.ToString());
         ManageEmployees objManageEmployee = new ManageEmployees();
         objManageEmployee.CreateEmployee(objEmployee);
         Response.Redirect(Request.Url.AbsoluteUri);
@@ -52,13 +39,17 @@ public partial class Admin_AddEmployee : System.Web.UI.Page
     protected void BindDropDowns()
     {
         MasterEntries objMasterEntries = new MasterEntries();
-        ddlDepartment.DataSource = objMasterEntries.GetAllDepartments();
-        ddlDepartment.DataTextField = "Name";
-        ddlDepartment.DataValueField = "Id";
-        ddlDepartment.DataBind();
-        ddlRole.DataSource = objMasterEntries.GetAllRoles();
-        ddlRole.DataTextField = "Name";
-        ddlRole.DataValueField = "Id";
-        ddlRole.DataBind();
+        ddlDepartments.DataSource = objMasterEntries.GetAllDepartments();
+        ddlDepartments.DataTextField = "Name";
+        ddlDepartments.DataValueField = "Id";
+        ddlDepartments.DataBind();
+        ddlRoles.DataSource = objMasterEntries.GetAllRoles();
+        ddlRoles.DataTextField = "Name";
+        ddlRoles.DataValueField = "Id";
+        ddlRoles.DataBind();
+        ddlShifts.DataSource = objMasterEntries.GetAllShifts();
+        ddlShifts.DataTextField = "Name";
+        ddlShifts.DataValueField = "Id";
+        ddlShifts.DataBind();
     }
 }
