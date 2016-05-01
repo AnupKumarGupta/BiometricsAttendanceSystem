@@ -21,7 +21,14 @@
         <div class="row">
             <div class="col s8 m3 l2 offset-s2 offset-m4 offset-l4">
                 <label for="txtDateOfJoining" class="text-black text-darken-4">Date Of Joining</label>
-                <asp:TextBox runat="server" ID="txtDateOfJoining" placeholder="Date of Joining"></asp:TextBox>
+                <asp:TextBox runat="server" ID="txtDateOfJoining" placeholder="Date of Joining" class="datepicker"></asp:TextBox>
+                <script>
+                    $('.datepicker').pickadate({
+                        selectMonths: true, // Creates a dropdown to control month
+                        selectYears: 15 // Creates a dropdown of 15 years to control year
+                    });
+
+                </script>
             </div>
             <div class="col s8 m3 l2 offset-s2">
                 <label class="text-darken-4">Weekly Off Day</label>

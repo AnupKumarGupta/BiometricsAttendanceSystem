@@ -39,6 +39,7 @@
                 <asp:Button ID="btnGetData" runat="server" Text="Get Data From Device" CssClass="btn-large" OnClick="btnGetData_Click" />
             </div>
             <div class="row center">
+                <asp:Button ID="btnAddEmployee" runat="server" Text="Add Employee" CssClass="btn-large" OnClick="btnAddEmployee_Click" />
                 <asp:Button ID="btnEmployee" runat="server" Text="Employee" CssClass="btn-large" OnClick="btnEmployee_Click" />
                 <asp:Button ID="btnAddDateWiseShift" runat="server" Text="Assign DateWise Shift" CssClass="btn-large" OnClick="btnAddDateWiseShift_Click" />
                 <asp:Button ID="btnLeave" runat="server" Text="Assign Leave" CssClass="btn-large" OnClick="btnLeave_Click" />

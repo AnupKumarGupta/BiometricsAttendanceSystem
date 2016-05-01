@@ -25,7 +25,7 @@ public partial class Admin_AddEmployee : System.Web.UI.Page
         objEmployee.RoleId = Convert.ToInt32(ddlRoles.SelectedValue.ToString());
         objEmployee.CreatedOn = DateTime.Now;
         objEmployee.UpdatedOn = DateTime.Now;
-        objEmployee.JoiningDate = Convert.ToDateTime(txtDateOfJoining.Text);
+        objEmployee.JoiningDate = DateTime.Parse(txtDateOfJoining.Text);
         long contact = new long();
         long.TryParse(txtContactNumber.Text, out contact);
         objEmployee.ContactNumber = contact;
