@@ -506,5 +506,10 @@ public partial class ManageMasterEntries : System.Web.UI.Page
     {
         Response.Redirect("~/Admin/GetDataFromDevice.aspx");
     }
+
+    protected void btnAddEmployee_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("~/Admin/AddEmployee.aspx");
+    }
 }
 
