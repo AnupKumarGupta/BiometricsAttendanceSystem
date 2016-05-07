@@ -1471,7 +1471,7 @@ public class ManageReports
                     if (row[2] != DBNull.Value) //Entry Time is Not  Null ---- Employee is Present
                     {
                         TimeSpan empEntryTime = TimeSpan.Parse("00:" + row[2].ToString());
-                        TimeSpan empExitTime = TimeSpan.Parse("00:" + row[3].ToString());
+                        TimeSpan empExitTime =  row[3] == DBNull.Value ? new TimeSpan() : TimeSpan.Parse("00:" + row[3].ToString());
 
                         var bnm = (DateTime.Parse(objDailyAttendanceReportViewModel.FirstHalfStartTime)).TimeOfDay;
 

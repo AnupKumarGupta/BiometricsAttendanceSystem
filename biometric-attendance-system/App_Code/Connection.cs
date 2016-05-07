@@ -71,7 +71,7 @@ public class Connection
     public int CheckEntry(int empId, DateTime date)
     {
         SqlConnection con = new SqlConnection(this.ConnectionString);
-        string q = "Select SNo from tblAttendance where EmployeeId = @empId and [Date] = CAST ( @date AS datetime ) and [ExitTime] IS null";
+        string q = "Select SNo from tblAttendance where EmployeeId = @empId and CAST([Date] as date) = CAST ( @date AS date) and [ExitTime] IS null";
         SqlCommand cmd = new SqlCommand(q, con);
         cmd.Parameters.Add(new SqlParameter("@empId", empId));
         cmd.Parameters.Add(new SqlParameter("@date",date));
@@ -89,7 +89,7 @@ public class Connection
     public void InsertEntry(int empId, DateTime dateTime)
     {
         SqlConnection con = new SqlConnection(this.ConnectionString);
-        string q = "Insert into tblAttendance(EmployeeId,[Date],[EntryTime]) values (@empId,CONVERT(datetime,@date,111),@time)";
+        string q = "Insert into tblAttendance(EmployeeId,[Date],[EntryTime]) values (@empId,CAST(@date As date),@time)";
         SqlCommand cmd = new SqlCommand(q, con);
         cmd.Parameters.Add(new SqlParameter("@empId", empId));
         cmd.Parameters.Add(new SqlParameter("@date", dateTime));
@@ -114,7 +114,7 @@ public class Connection
     public void InsertIntoTemp(int empId, DateTime dateTime)
     {
         SqlConnection con = new SqlConnection(this.ConnectionString);
-        string q = "Insert into tblAttendanceTemporary(EmployeeId,[Date],[EntryTime]) values (@empId,CONVERT(datetime,@date,111),@time)";
+        string q = "Insert into tblAttendanceTemporary(EmployeeId,[Date],[EntryTime]) values (@empId,CAST(@date As date),@time)";
         SqlCommand cmd = new SqlCommand(q, con);
         cmd.Parameters.Add(new SqlParameter("@empId", empId));
         cmd.Parameters.Add(new SqlParameter("@date", dateTime));
