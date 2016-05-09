@@ -6,24 +6,43 @@
     <%--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>--%>
     <script src="../materialize/js/materialize.min.js"></script>
     <link href="../materialize/css/materialize.css" rel="stylesheet" />
+    <script type="text/javascript">
+        function Confirm() {
+            var confirm_value = document.createElement("INPUT");
+            confirm_value.type = "hidden";
+            confirm_value.name = "confirm_value";
+            if (confirm("Add Session will lead to loss of Old Data. Want to continue adding Session?")) {
+                confirm_value.value = "Yes";
+            }
+            else {
+                confirm_value.value = "No";
+            }
+            document.forms[0].appendChild(confirm_value);
+        }
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div class="row ">
         <div class="col card l8 offset-l2">
             <br />
             <div class="row center">
-                <asp:Button ID="btnDepartments" runat="server" Text="Departments" CssClass="waves-effect waves-ripple btn-large" OnClick="btnDepartments_Click" />
-                <asp:Button ID="btnLeaves" runat="server" Text="Leaves" CssClass="waves-effect waves-ripple btn-large" OnClick="btnLeaves_Click" />
-                <asp:Button ID="btnRoles" runat="server" Text="Roles" CssClass="waves-effect waves-ripple btn-large" OnClick="btnRoles_Click" />
-                <%--                <asp:Button ID="btnDuration" runat="server" Text="Duration" CssClass="waves-effect waves-ripple btn-large" OnClick="btnDuration_Click" />--%>
-                <asp:Button ID="btnShifts" runat="server" Text="Shifts" CssClass="waves-effect waves-ripple btn-large" OnClick="btnShifts_Click" />
-                <asp:Button ID="btnSession" runat="server" Text="Session" CssClass="waves-effect waves-ripple btn-large" OnClick="btnSession_Click" />
-                <asp:Button ID="btnReports" runat="server" Text="Reports" CssClass="waves-effect waves-ripple btn-large" OnClick="btnReports_Click" />
+                <asp:Button ID="btnDepartments" runat="server" Text="Departments" CssClass="btn-large" OnClick="btnDepartments_Click" />
+                <asp:Button ID="btnLeaves" runat="server" Text="Leaves" CssClass="btn-large" OnClick="btnLeaves_Click" />
+                <asp:Button ID="btnRoles" runat="server" Text="Roles" CssClass="btn-large" OnClick="btnRoles_Click" />
+                <asp:Button ID="btnShifts" runat="server" Text="Shifts" CssClass="btn-large" OnClick="btnShifts_Click" />
+                <asp:Button ID="btnSession" runat="server" Text="Session" CssClass="btn-large" OnClick="btnSession_Click" />
+                <asp:Button ID="btnReports" runat="server" Text="Reports" CssClass="btn-large" OnClick="btnReports_Click" />
             </div>
             <div class="row center">
-                <asp:Button ID="btnLeaveAssignedByRole" runat="server" Text="Leave Assigned By Role" CssClass="waves-effect waves-ripple btn-large" OnClick="btnLeaveAssignedByRole_Click" />
-                <asp:Button ID="btnEmployee" runat="server" Text="Employee" CssClass="waves-effect waves-ripple btn-large" OnClick="btnEmployee_Click" />
-                <asp:Button ID="btnLeaveForEmployee" runat="server" Text="Leave Assigned To Employees" CssClass="waves-effect waves-ripple btn-large" OnClick="btnLeaveForEmployee_Click" />
+                <asp:Button ID="btnLeaveAssignedByRole" runat="server" Text="Leave Assigned By Role" CssClass="btn-large" OnClick="btnLeaveAssignedByRole_Click" />
+                <asp:Button ID="btnLeaveForEmployee" runat="server" Text="Leave Assigned To Employees" CssClass="btn-large" OnClick="btnLeaveForEmployee_Click" />
+                <asp:Button ID="btnGetData" runat="server" Text="Get Data From Device" CssClass="btn-large" OnClick="btnGetData_Click" />
+            </div>
+            <div class="row center">
+                <asp:Button ID="btnAddEmployee" runat="server" Text="Add Employee" CssClass="btn-large" OnClick="btnAddEmployee_Click" />
+                <asp:Button ID="btnEmployee" runat="server" Text="Employee" CssClass="btn-large" OnClick="btnEmployee_Click" />
+                <asp:Button ID="btnAddDateWiseShift" runat="server" Text="Assign DateWise Shift" CssClass="btn-large" OnClick="btnAddDateWiseShift_Click" />
+                <asp:Button ID="btnLeave" runat="server" Text="Assign Leave" CssClass="btn-large" OnClick="btnLeave_Click" />
             </div>
         </div>
     </div>
@@ -308,9 +327,9 @@
                                 <br />
                                 <div class="col s4 l4 m4 offset-l2 offset-m2">
                                     <asp:DropDownList ID="ddlIsPromoted" runat="server" Visible="true" CssClass="dropdown-button btn l2 m2 s2">
-                                        <asp:ListItem Value="0">Carry Forward</asp:ListItem>
+                                        <asp:ListItem Value="1">Carry Forward</asp:ListItem>
                                         <asp:ListItem Value="1">Yes</asp:ListItem>
-                                        <asp:ListItem Value="2">No</asp:ListItem>
+                                        <asp:ListItem Value="0">No</asp:ListItem>
                                     </asp:DropDownList>
                                     <asp:RequiredFieldValidator ID="rfvIsPromoted" ErrorMessage="Required" ControlToValidate="ddlIsPromoted" runat="server" ValidationGroup="LeaveAssignedByRole" InitialValue="Carry Forward" ForeColor="Red" />
                                 </div>
@@ -398,9 +417,9 @@
                             </asp:DropDownList>
                             <asp:TextBox runat="server" ID="txtNoOfLeave" placeholder="No. of Leaves"></asp:TextBox>
                             <asp:DropDownList ID="ddlIsPromotedEdit" runat="server" Visible="true" CssClass="dropdown-button btn l2 m2 s2">
-                                <asp:ListItem Value="0">--- Carry Forward ----</asp:ListItem>
+                                <asp:ListItem Value="1">--- Carry Forward ----</asp:ListItem>
                                 <asp:ListItem Value="1">Yes</asp:ListItem>
-                                <asp:ListItem Value="2">No</asp:ListItem>
+                                <asp:ListItem Value="0">No</asp:ListItem>
                             </asp:DropDownList>
                             <asp:Button ID="btnUpdate" Text="Update Leave" OnClick="btnUpdate_Click" runat="server" />
                         </div>
@@ -512,7 +531,6 @@
                             <asp:TextBox runat="server" ID="txtFirstHalfStart" placeholder="First Half Start Timing" ValidationGroup="Shifts"></asp:TextBox>
                             <asp:RequiredFieldValidator ID="rfvFirstHalfStart" ErrorMessage="Required" ControlToValidate="txtFirstHalfStart" runat="server" ForeColor="Red" ValidationGroup="Shifts" />
                         </div>
-
                     </div>
                     <div class="row">
                         <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
@@ -523,7 +541,6 @@
                             <asp:TextBox runat="server" ID="txtSecondHalfStart" placeholder="Second Half Start Timing" ValidationGroup="Shifts"></asp:TextBox>
                             <asp:RequiredFieldValidator ID="rfvSecondHalfStart" ErrorMessage="Required" ControlToValidate="txtSecondHalfStart" runat="server" ForeColor="Red" ValidationGroup="Shifts" />
                         </div>
-
                     </div>
                     <div class="row">
                         <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
@@ -702,7 +719,7 @@
                                     <asp:RequiredFieldValidator ID="rfvTxtSessionStart" runat="server" ErrorMessage="Required" ControlToValidate="txtSessionStart" ForeColor="Red" ValidationGroup="Session"></asp:RequiredFieldValidator>
                                 </div>
                                 <div class="col s2 l2 m2">
-                                    <asp:LinkButton ID="lnkAddSession" CssClass="btn waves-effect waves-light" runat="server" ValidationGroup="Session" OnClick="lnkAddSession_Click">
+                                    <asp:LinkButton ID="lnkAddSession" CssClass="btn waves-effect waves-light" runat="server" ValidationGroup="Session" OnClick="lnkAddSession_Click" OnClientClick="Confirm()">
                                         <i class="material-icons">add </i> Add Session
                                     </asp:LinkButton>
                                 </div>

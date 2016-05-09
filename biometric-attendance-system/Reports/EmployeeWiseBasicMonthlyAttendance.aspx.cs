@@ -11,6 +11,7 @@ using System.IO;
 
 public partial class Reports_EmployeeWiseBasicMonthlyAttendance : System.Web.UI.Page
 {
+    List<Employees> lstEmployees = new List<Employees>();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -18,32 +19,21 @@ public partial class Reports_EmployeeWiseBasicMonthlyAttendance : System.Web.UI.
     }
     protected void BindDropDown()
     {
-        ddlName.Items.Clear();
-        ddlName.Items.Add("select");
         ManageEmployees objEmployee = new ManageEmployees();
-       
-        var x = objEmployee.GetAllEmployees();
-        ddlName.DataSource = x;
-        
-        ddlName.DataTextField = "Name";
-        ddlName.DataValueField = "Id";
-        ddlName.DataBind();
-        
+        lstEmployees = objEmployee.GetAllEmployees();
         string empNames = "";
-        foreach (var item in x)
+        foreach (var item in lstEmployees)
         {
             empNames = empNames + "\"" + item.Name + "\",";
         }
         empNames = empNames.Remove(empNames.Length - 1);
-
         string data = @"<script>$(function () { var availableTags = [ " + empNames +
                   @"];
-                 $(""#tags"").autocomplete({
+                 $(""#ContentPlaceHolder1_txtEmployeeId"").autocomplete({
                     source: availableTags
                     });
                     });
               </script>";
-
         lit_autocomplete.Text = data;
     }
     protected void btn_report_Click(object sender, EventArgs e)
@@ -53,10 +43,11 @@ public partial class Reports_EmployeeWiseBasicMonthlyAttendance : System.Web.UI.
         TimeSpan relaxationTime = new TimeSpan();
         relaxationTime = TimeSpan.Parse(ddlRelaxation.SelectedValue.ToString());
         int EmployeeId = 0;
-        Int32.TryParse(txtEmployeeId.Text, out EmployeeId);
-        var xy = txtStartDate.Text;
+        //Int32.TryParse(txtEmployeeId.Text, out EmployeeId);
+        ManageEmployees objEmployee = new ManageEmployees();
+        lstEmployees = objEmployee.GetAllEmployees();
+        EmployeeId = lstEmployees.Where(y => y.Name == txtEmployeeId.Text).Select(x => x.Id).FirstOrDefault();
         DateTime StartDate = DateTime.Parse(txtStartDate.Text);
-        var xyz = txtEndDate.Text;
         DateTime EndDate = DateTime.Parse(txtEndDate.Text);
         MonthlyReportOfEmployee objMonthlyReportOfEmployee = new MonthlyReportOfEmployee();
         var data = objManageReports.GetMonthlyAttendanceDetailedReport(EmployeeId, StartDate,EndDate, relaxationTime, out objMonthlyReportOfEmployee);

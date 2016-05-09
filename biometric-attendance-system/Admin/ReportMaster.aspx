@@ -12,6 +12,7 @@
             </div>
         </div>
         <div class="col card l8 m8 s8 offset-l2 offset-m2 center">
+            <br />
             <asp:LinkButton Text="Daily Attendance Basic Report" ID="DailyAttendanceBasicReport" href="../Reports/DailyBasicAttendanceReport.aspx" target="_blank" CssClass="btn" runat="server" />
             <br />
             <br />
@@ -37,6 +38,7 @@
             <br />
             <br />
             <asp:LinkButton Text="Monthly Status Report" ID="LeaveBalanceTable" CssClass="btn" href="../Reports/LeaveBalanceTable.aspx" target="_blank" runat="server" />
+            <br />
         </div>
 </asp:Content>
 

@@ -886,31 +886,32 @@ public class ManageReports
         }
         return lstDailyAttendanceReportViewModel;
     }
-    private DayStatus GetStatusOfDay(DateTime date)
+    private DayStatus GetStatusOfDay(DateTime date,int empId)
     {
         DataTable dt;
         DayStatus status = new DayStatus();
         DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
-
-        if (date.DayOfWeek == DayOfWeek.Sunday)
+        int day = GetWeeklyOffForEmployee(empId);
+        if (date.DayOfWeek == (DayOfWeek)day)
             status = DayStatus.WeeklyOff;
-
-        List<SqlParameter> list_params = new List<SqlParameter>() { new SqlParameter("@date", date) };
-        string query = "SELECT Count(Date) As Count FROM  [tblHolidays] WHERE [Status] =1 AND Date =@date";
-        try
-        {
-            using (DBDataHelper helper = new DBDataHelper())
+        else {
+            List<SqlParameter> list_params = new List<SqlParameter>() { new SqlParameter("@date", date) };
+            string query = "SELECT Count(Date) As Count FROM  [tblHolidays] WHERE [Status] =1 AND Date =@date";
+            try
             {
-                dt = helper.GetDataTable(query, SQLTextType.Query, list_params);
+                using (DBDataHelper helper = new DBDataHelper())
+                {
+                    dt = helper.GetDataTable(query, SQLTextType.Query, list_params);
+                }
+                if (int.Parse(dt.Rows[0][0].ToString()) > 0)
+                    status = DayStatus.Holiday;
+                else
+                    status = DayStatus.Active;
             }
-            if (int.Parse(dt.Rows[0][0].ToString()) > 0)
-                status = DayStatus.Holiday;
-            else
-                status = DayStatus.Active;
-        }
-        catch (Exception)
-        {
+            catch (Exception)
+            {
 
+            }
         }
         return status;
     }
@@ -927,7 +928,7 @@ public class ManageReports
         foreach (DailyAttendanceReportViewModel item in lstDailyAttendanceReportViewModel)
         {
             objMonthlyReportOfEmployee.TotalDuration += item.Duration;
-            DayStatus daystatus = GetStatusOfDay(item.Date);
+            DayStatus daystatus = GetStatusOfDay(item.Date, EmployeeId);
             if (daystatus == DayStatus.Active)
             {
                 if (item.Status == Status.Present || item.Status == Status.PresentWithNoOutPunch)
@@ -1470,7 +1471,7 @@ public class ManageReports
                     if (row[2] != DBNull.Value) //Entry Time is Not  Null ---- Employee is Present
                     {
                         TimeSpan empEntryTime = TimeSpan.Parse("00:" + row[2].ToString());
-                        TimeSpan empExitTime = TimeSpan.Parse("00:" + row[3].ToString());
+                        TimeSpan empExitTime =  row[3] == DBNull.Value ? new TimeSpan() : TimeSpan.Parse("00:" + row[3].ToString());
 
                         var bnm = (DateTime.Parse(objDailyAttendanceReportViewModel.FirstHalfStartTime)).TimeOfDay;
 
@@ -1593,7 +1594,7 @@ public class ManageReports
         foreach (var item in lstMonthlyAttendanceReportViewModel)
         {
             objMonthlyReportOfEmployee.TotalDuration += item.Duration;
-            DayStatus daystatus = GetStatusOfDay(item.Date);
+            DayStatus daystatus = GetStatusOfDay(item.Date,employeeId);
             if (daystatus == DayStatus.Active)
             {
                 if (item.Status == Status.Present || item.Status == Status.PresentWithNoOutPunch)
@@ -1620,6 +1621,7 @@ public class ManageReports
                 else
                 {
                     item.Status = Status.WeeklyOff;
+                    objMonthlyReportOfEmployee.WeeklyOff++;
                 }
             }
             else //Holiday
@@ -2043,18 +2045,15 @@ public class ManageReports
 
                 ELCountBalance = ELCountOld + ELCountAssigned - ELCountTaken;
                 ELCountBalance = ELCountBalance > 60 ? 60 : ELCountBalance;
-                ELCountBalance = ELCountOld + ELCountAssigned - ELCountTaken;
-                ELCountBalance = ELCountBalance > 60 ? 60 : ELCountBalance;
 
                 SLCountBalance = SLCountOld + SLCountAssigned - SLCountTaken;
                 SLCountBalance = SLCountBalance > 30 ? 30 : SLCountBalance;
-                SLCountBalance = SLCountOld + SLCountAssigned - SLCountTaken;
-                SLCountBalance = SLCountBalance > 30 ? 30 : SLCountBalance;
+
                 #endregion
 
                 #region Insert New Data
 
-                string queryInset = @"INSERT INTO [tblLeavesOldStock] VALUES (@employeeId, @slCount,@elCount, @sessionStartDate,@sesssionEndDate)";
+                string queryInset = @"INSERT INTO [tblLeavesOldStock] VALUES (@employeeId, @slCount,@elCount, @sessionStartDate,@sessionEndDate)";
 
                 List<SqlParameter> list_params_insert = new List<SqlParameter>()
                         {   new SqlParameter("@employeeId", employee.Id), 

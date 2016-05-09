@@ -28,10 +28,11 @@ public partial class Admin_EditEmployee : System.Web.UI.Page
         objEmployee.JoiningDate = Convert.ToDateTime(txtDateOfJoining.Text);
         objEmployee.ContactNumber = Convert.ToInt64(txtContactNumber.Text);
         objEmployee.RoleId = Convert.ToInt32(ddlRoles.SelectedValue);
-        objEmployee.DepartmentId = Convert.ToInt32(ddlRoles.SelectedValue);
+        objEmployee.DepartmentId = Convert.ToInt32(ddlDepartments.SelectedValue);
         objEmployee.Password = "";
         objEmployee.Gender = rdrbtnMale.Checked == true ? "Male" : "Female";
         objEmployee.WeeklyOffDay = Convert.ToInt32(ddlDays.SelectedValue);
+        objEmployee.ShiftId = Convert.ToInt32(ddlShifts.SelectedValue);
         ManageEmployees objManageEmployees = new ManageEmployees();
         objManageEmployees.UpdateEmployee(objEmployee);
         Response.Redirect("ViewEmployee.aspx");
@@ -48,7 +49,7 @@ public partial class Admin_EditEmployee : System.Web.UI.Page
         ddlRoles.DataValueField = "Id";
         ddlRoles.DataBind();
         ddlShifts.DataSource = objMasterEntries.GetAllShifts();
-        ddlShifts.DataTextField = "Id";
+        ddlShifts.DataTextField = "Name";
         ddlShifts.DataValueField = "Id";
         ddlShifts.DataBind();
     }

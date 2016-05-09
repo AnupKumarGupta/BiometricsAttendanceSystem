@@ -427,47 +427,57 @@ public partial class ManageMasterEntries : System.Web.UI.Page
     }
     protected void lnkAddSession_Click(object sender, EventArgs e)
     {
-        DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
 
-        DateTime sessionStartDate = new DateTime(Int32.Parse(txtSessionStart.Text), 8, 1);
-        DateTime sessionEndDate = new DateTime(sessionStartDate.Year + 1, 7, 31);
-
-        string query = "Select Count(*) from tblSession Where SessionStartDate=@sessionStartDate";
-        List<SqlParameter> lstParams = new List<SqlParameter>();
-        lstParams.Add(new SqlParameter("@sessionStartDate", sessionStartDate));
-        DataTable ds = new DataTable();
-        using (DBDataHelper objDDBDataHelper = new DBDataHelper())
+        string confirmValue = Request.Form["confirm_value"];
+        if (confirmValue == "Yes")
         {
-            ds = objDDBDataHelper.GetDataTable(query, SQLTextType.Query, lstParams);
-        }
+            #region Add_Session
+            DBDataHelper.ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ConnectionString;
 
-        if (ds.Rows.Count != 0)
-            if (Int32.Parse(ds.Rows[0][0].ToString()) == 0)
+            DateTime sessionStartDate = new DateTime(Int32.Parse(txtSessionStart.Text), 8, 1);
+            DateTime sessionEndDate = new DateTime(sessionStartDate.Year + 1, 7, 31);
+
+            string query = "Select Count(*) from tblSession Where SessionStartDate=@sessionStartDate";
+            List<SqlParameter> lstParams = new List<SqlParameter>();
+            lstParams.Add(new SqlParameter("@sessionStartDate", sessionStartDate));
+            DataTable ds = new DataTable();
+            using (DBDataHelper objDDBDataHelper = new DBDataHelper())
             {
+                ds = objDDBDataHelper.GetDataTable(query, SQLTextType.Query, lstParams);
+            }
 
-                string addSession = @"INSERT INTO [dbo].[tblSession]
+            if (ds.Rows.Count != 0)
+                if (Int32.Parse(ds.Rows[0][0].ToString()) == 0)
+                {
+
+                    string addSession = @"INSERT INTO [dbo].[tblSession]
                                       ([SessionStartDate]
                                        ,[SessionEndDate])
                                        VALUES (@sessionStartDate,@sessionEndDate)";
 
-                List<SqlParameter> lstParams2 = new List<SqlParameter>();
-                lstParams2.Add(new SqlParameter("@sessionStartDate", sessionStartDate));
-                lstParams2.Add(new SqlParameter("@sessionEndDate", sessionEndDate));
+                    List<SqlParameter> lstParams2 = new List<SqlParameter>();
+                    lstParams2.Add(new SqlParameter("@sessionStartDate", sessionStartDate));
+                    lstParams2.Add(new SqlParameter("@sessionEndDate", sessionEndDate));
 
-                using (DBDataHelper objDDBDataHelper = new DBDataHelper())
-                {
-                    objDDBDataHelper.ExecSQL(addSession, SQLTextType.Query, lstParams2);
+                    using (DBDataHelper objDDBDataHelper = new DBDataHelper())
+                    {
+                        objDDBDataHelper.ExecSQL(addSession, SQLTextType.Query, lstParams2);
+                    }
+                    ManageReports objManageReprts = new ManageReports();
+                    objManageReprts.AssignSessionWiseLeave(sessionStartDate);
+                    objManageReprts.UpdateLeaveBalanceTable(sessionStartDate);
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Session Added')", true);
                 }
-                ManageReports objManageReprts = new ManageReports();
-                objManageReprts.AssignSessionWiseLeave(sessionStartDate);
-                objManageReprts.UpdateLeaveBalanceTable(sessionStartDate);
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Session Added')", true);
-            }
-            else
-            {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Session Exists')", true);
-            }
-
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Session Exists')", true);
+                }
+            #endregion
+        }
+        else
+        {
+            this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('You Cancelled')", true);
+        }
     }
     protected void grdSessionsBind()
     {
@@ -482,5 +492,24 @@ public partial class ManageMasterEntries : System.Web.UI.Page
         gvSession.DataBind();
     }
     #endregion
+
+    protected void btnLeave_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("~/Admin/AssignLeave.aspx");
+    }
+
+    protected void btnAddDateWiseShift_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("~/Admin/AddDateWiseShiftToEmployee.aspx");
+    }
+    protected void btnGetData_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("~/Admin/GetDataFromDevice.aspx");
+    }
+
+    protected void btnAddEmployee_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("~/Admin/AddEmployee.aspx");
+    }
 }
 

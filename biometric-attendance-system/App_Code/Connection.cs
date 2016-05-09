@@ -16,10 +16,10 @@ public class Connection
 
     public Connection()
     {
-        ConnectionString = ConfigurationManager.ConnectionStrings["Default"].ToString();
+        ConnectionString = ConfigurationManager.ConnectionStrings["CSBiometricAttendance"].ToString();
     }
 
-    public void GetData(string ip = "192.168.0.173", int port = 4370)
+    public void GetData(string ip = "10.10.152.237", int port = 4370)
     {
         var bIsConnected = axCZKEM1.Connect_Net(ip, port);
         axCZKEM1.EnableDevice(1, false);//disable the device
@@ -46,7 +46,7 @@ public class Connection
                 {
                     DateTime dateTime = Convert.ToDateTime(idwYear.ToString() + "-" + idwMonth.ToString() + "-" + idwDay.ToString() + " " + idwHour.ToString() + ":" + idwMinute.ToString() + ":" + idwSecond.ToString());
 
-                    int id = CheckEntry(Int32.Parse(sdwEnrollNumber), DateTime.Parse(dateTime.ToShortDateString()));
+                    int id = CheckEntry(Int32.Parse(sdwEnrollNumber), dateTime);
                     if (id == 0)
                     {
 
@@ -56,39 +56,27 @@ public class Connection
                     {
                         UpdateEntry(id, dateTime);
                     }
-
-                   
-                        InsertIntoTemp(Int32.Parse(sdwEnrollNumber), dateTime);
-                   
-
-
+                    InsertIntoTemp(Int32.Parse(sdwEnrollNumber), dateTime);
                 }
             }
 
             // axCZKEM1.RefreshData(iMachineNumber);//the data in the device should be refreshed
         }
 
-            catch(Exception)
-            {
-                return;
-            }
-
-
+        catch (Exception ex)
+        {
+            return;
         }
-
-       
-    
-
+    }
     public int CheckEntry(int empId, DateTime date)
     {
         SqlConnection con = new SqlConnection(this.ConnectionString);
-        string q = "Select SNo from tblAttendance where EmployeeId = @empId and [Date] = CONVERT(datetime,@date,111) and [ExitTime] IS null";
-
+        string q = "Select SNo from tblAttendance where EmployeeId = @empId and CAST([Date] as date) = CAST ( @date AS date) and [ExitTime] IS null";
         SqlCommand cmd = new SqlCommand(q, con);
         cmd.Parameters.Add(new SqlParameter("@empId", empId));
-        cmd.Parameters.Add(new SqlParameter("@date", date));
+        cmd.Parameters.Add(new SqlParameter("@date",date));
         SqlDataAdapter dap = new SqlDataAdapter(cmd);
-        string a  = cmd.CommandText;
+        string a = cmd.CommandText;
         DataSet ds = new DataSet();
         dap.Fill(ds);
         if (ds.Tables[0].Rows.Count > 0)
@@ -96,16 +84,12 @@ public class Connection
             return Convert.ToInt32(ds.Tables[0].Rows[0][0]);
         }
         else return 0;
-
-
-
     }
 
     public void InsertEntry(int empId, DateTime dateTime)
     {
         SqlConnection con = new SqlConnection(this.ConnectionString);
-        string q = "Insert into tblAttendance(EmployeeId,[Date],[EntryTime]) values (@empId,CONVERT(datetime,@date,111),@time)";
-
+        string q = "Insert into tblAttendance(EmployeeId,[Date],[EntryTime]) values (@empId,CAST(@date As date),@time)";
         SqlCommand cmd = new SqlCommand(q, con);
         cmd.Parameters.Add(new SqlParameter("@empId", empId));
         cmd.Parameters.Add(new SqlParameter("@date", dateTime));
@@ -119,7 +103,6 @@ public class Connection
     {
         SqlConnection con = new SqlConnection(this.ConnectionString);
         string q = "Update tblAttendance Set [ExitTime]=@time where SNo = @rowId";
-
         SqlCommand cmd = new SqlCommand(q, con);
         cmd.Parameters.Add(new SqlParameter("@rowId", rowId));
         cmd.Parameters.Add(new SqlParameter("@time", dateTime.ToShortTimeString()));
@@ -131,8 +114,7 @@ public class Connection
     public void InsertIntoTemp(int empId, DateTime dateTime)
     {
         SqlConnection con = new SqlConnection(this.ConnectionString);
-        string q = "Insert into tblAttendanceTemp(EmployeeId,[Date],[EntryTime]) values (@empId,CONVERT(datetime,@date,111),@time)";
-
+        string q = "Insert into tblAttendanceTemporary(EmployeeId,[Date],[EntryTime]) values (@empId,CAST(@date As date),@time)";
         SqlCommand cmd = new SqlCommand(q, con);
         cmd.Parameters.Add(new SqlParameter("@empId", empId));
         cmd.Parameters.Add(new SqlParameter("@date", dateTime));
