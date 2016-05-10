@@ -511,5 +511,10 @@ public partial class ManageMasterEntries : System.Web.UI.Page
     {
         Response.Redirect("~/Admin/AddEmployee.aspx");
     }
+
+    protected void btnManageOldData_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("~/Admin/ManageOldData.aspx");
+    }
 }
 
