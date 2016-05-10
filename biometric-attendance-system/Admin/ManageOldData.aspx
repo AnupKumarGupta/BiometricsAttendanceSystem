@@ -90,12 +90,14 @@
         </div>
         <div style="min-height: 120px; width: 100%">
             <div class="col s2 l2 m2 offset-l4 offset-m4 offset-s4">
-                Employee Name
-               
+               <label for="lblName">Employee Name</label>
                 <asp:Label ID="lblName" runat="server" />
+                <br />
+               <label for="txtEditSL">SL</label>
                 <asp:TextBox runat="server" ID="txtEditSL" placeholder="SL"></asp:TextBox>
+                <label for="txtEditEL">EL</label>
                 <asp:TextBox runat="server" ID="txtEditEL" placeholder="EL"></asp:TextBox>
-                <asp:Button ID="btnUpdate" Text="Update Data" OnClick="btnUpdate_Click" runat="server" />
+                <asp:Button ID="btnUpdate" Text="Update Data" OnClick="btnUpdate_Click" CssClass="btn" runat="server" />
             </div>
         </div>
         <div class="modal-footer"></div>

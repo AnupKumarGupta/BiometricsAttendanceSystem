@@ -10,6 +10,13 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <asp:ScriptManager runat="server" />
+
+    <div class="col s12 breadcrumb">
+        <br />
+        <a href="../Admin/ManageMasterEntries.aspx" class="grey-text">Home &nbsp;&nbsp;></a>
+        <a href="../Admin/AssignLeave.aspx" class="grey-text">Assign Leave &nbsp;&nbsp;></a>
+        <a href="#!" class="teal-text">&nbsp;&nbsp;Assign Leave To Employee &nbsp;&nbsp;</a>
+    </div>
     <asp:UpdatePanel runat="server">
         <ContentTemplate>
             <div class="row">
