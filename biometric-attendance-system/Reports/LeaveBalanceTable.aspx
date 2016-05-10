@@ -10,8 +10,6 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <asp:ScriptManager ID="scriptManagerDepartment" runat="server" />
-    <asp:UpdatePanel ID="up" runat="server">
-        <ContentTemplate>
             <div class="row">
                 <div class="col s12 breadcrumb">
                     <br />
@@ -83,14 +81,16 @@
                             <ItemTemplate>
                                 <asp:GridView ID="grid3" runat="server" AutoGenerateColumns="False" Width="100%">
                                     <Columns>
-                                        <asp:BoundField DataField="Casual Leave" HeaderText="CL" />
+                                       <asp:BoundField DataField="Casual Leave" HeaderText="CL" />
                                         <asp:BoundField DataField="Earned Leave" HeaderText="EL" />
                                         <asp:BoundField DataField="Short Leave" HeaderText="SHL" />
-                                        <asp:BoundField DataField="Half Day Leave" HeaderText="HDL" />
+                                        <asp:BoundField DataField="Long Leave" HeaderText="LL" />
                                         <asp:BoundField DataField="Sick Leave" HeaderText="SL" />
                                         <asp:BoundField DataField="Restricted Holiday" HeaderText="RH" />
-                                        <asp:BoundField DataField="D Leave" HeaderText="DL" />
+                                        <asp:BoundField DataField="Duty Leave" HeaderText="DL" />
                                         <asp:BoundField DataField="Compensatory Off" HeaderText="CO" />
+                                        <asp:BoundField DataField="Maternity Leave" HeaderText="ML" />
+                                        <asp:BoundField DataField="Summer Break Leave" HeaderText="SBL" />
                                     </Columns>
                                 </asp:GridView>
                             </ItemTemplate>
@@ -102,11 +102,13 @@
                                         <asp:BoundField DataField="Casual Leave" HeaderText="CL" />
                                         <asp:BoundField DataField="Earned Leave" HeaderText="EL" />
                                         <asp:BoundField DataField="Short Leave" HeaderText="SHL" />
-                                        <asp:BoundField DataField="Half Day Leave" HeaderText="HDL" />
+                                        <asp:BoundField DataField="Long Leave" HeaderText="LL" />
                                         <asp:BoundField DataField="Sick Leave" HeaderText="SL" />
                                         <asp:BoundField DataField="Restricted Holiday" HeaderText="RH" />
-                                        <asp:BoundField DataField="D Leave" HeaderText="DL" />
+                                        <asp:BoundField DataField="Duty Leave" HeaderText="DL" />
                                         <asp:BoundField DataField="Compensatory Off" HeaderText="CO" />
+                                        <asp:BoundField DataField="Maternity Leave" HeaderText="ML" />
+                                        <asp:BoundField DataField="Summer Break Leave" HeaderText="SBL" />
                                     </Columns>
                                 </asp:GridView>
                             </ItemTemplate>
@@ -118,11 +120,13 @@
                                         <asp:BoundField DataField="Casual Leave" HeaderText="CL" />
                                         <asp:BoundField DataField="Earned Leave" HeaderText="EL" />
                                         <asp:BoundField DataField="Short Leave" HeaderText="SHL" />
-                                        <asp:BoundField DataField="Half Day Leave" HeaderText="HDL" />
+                                        <asp:BoundField DataField="Long Leave" HeaderText="LL" />
                                         <asp:BoundField DataField="Sick Leave" HeaderText="SL" />
                                         <asp:BoundField DataField="Restricted Holiday" HeaderText="RH" />
-                                        <asp:BoundField DataField="D Leave" HeaderText="DL" />
+                                        <asp:BoundField DataField="Duty Leave" HeaderText="DL" />
                                         <asp:BoundField DataField="Compensatory Off" HeaderText="CO" />
+                                        <asp:BoundField DataField="Maternity Leave" HeaderText="ML" />
+                                        <asp:BoundField DataField="Summer Break Leave" HeaderText="SBL" />
                                     </Columns>
                                 </asp:GridView>
                             </ItemTemplate>
@@ -133,7 +137,5 @@
             <%-- <div class="col s8 m4 l4 offset-s2 offset-m5 offset-l5">
     <asp:Button Text="Export to PDF" ID="btnExport" CssClass="btn waves-button-input" OnClick="btnExport_Click" runat="server" />
                 </div>--%>
-        </ContentTemplate>
-    </asp:UpdatePanel>
 </asp:Content>
 

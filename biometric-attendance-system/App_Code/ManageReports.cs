@@ -458,7 +458,7 @@ public class ManageReports
 
         }
 
-       // }
+        // }
         catch (Exception)
         {
             //
@@ -886,7 +886,7 @@ public class ManageReports
         }
         return lstDailyAttendanceReportViewModel;
     }
-    private DayStatus GetStatusOfDay(DateTime date,int empId)
+    private DayStatus GetStatusOfDay(DateTime date, int empId)
     {
         DataTable dt;
         DayStatus status = new DayStatus();
@@ -1156,7 +1156,7 @@ public class ManageReports
         using (DBDataHelper helper = new DBDataHelper())
         {
             List<SqlParameter> list_params_Assigned = new List<SqlParameter>()
-            {   new SqlParameter("@employeeId", employeeId), 
+            {   new SqlParameter("@employeeId", employeeId),
                 new SqlParameter("@sessionStartDate", sessionStartDate),
                 new SqlParameter("@sessionEndDate", sessionEndDate)
             };
@@ -1238,19 +1238,44 @@ public class ManageReports
     #region Basic Working
     public TimeSpan GetDurationOfEmployeeDateWise(int employeeId, DateTime date)
     {
-        List<SqlParameter> list_paramsForTotalDuration = new List<SqlParameter>() { new SqlParameter("@date", date), new SqlParameter("@employeeId", employeeId) };
+        List<SqlParameter> list_paramsForEntryAndExitTime = new List<SqlParameter>() { new SqlParameter("@date", date), new SqlParameter("@employeeId", employeeId) };
+        TimeSpan entryTime = new TimeSpan();
+        TimeSpan exitTime = new TimeSpan();
         TimeSpan totalDuration = new TimeSpan();
-
-        DataTable dtTotalDuration;
+        DataTable dt;
+        string query = "SELECT EntryTime, ExitTime FROM tblAttendance WHERE cast([Date] as date) = @date AND EmployeeId = @employeeId";
         using (DBDataHelper helper = new DBDataHelper())
         {
-            dtTotalDuration = helper.GetDataTable("spGetTotalDurationOfEmployeesDatewise", SQLTextType.Stored_Proc, list_paramsForTotalDuration);
-            foreach (DataRow row in dtTotalDuration.Rows)
+            dt = helper.GetDataTable(query, SQLTextType.Query, list_paramsForEntryAndExitTime);
+            foreach (DataRow row in dt.Rows)
             {
-                totalDuration = row[0] == DBNull.Value ? new TimeSpan(0, 0, 0) : new TimeSpan(0, Int32.Parse(row[0].ToString()), 0);
+                entryTime = TimeSpan.Parse(row[0].ToString());
+                exitTime = row[1] == DBNull.Value ? new TimeSpan() : TimeSpan.Parse("00:" + row[1].ToString());
+                if (row[1] == DBNull.Value)
+                {
+                    var obj = GetShiftForEmployee(employeeId);
+                    exitTime = obj.SecondHalfEnd;
+                    totalDuration = exitTime - entryTime;
+                }
+                else
+                {
+                    List<SqlParameter> list_paramsForTotalDuration = new List<SqlParameter>() { new SqlParameter("@date", date), new SqlParameter("@employeeId", employeeId) };
+                    DataTable dtTotalDuration;
+                    using (DBDataHelper helper1 = new DBDataHelper())
+                    {
+                        dtTotalDuration = helper1.GetDataTable("spGetTotalDurationOfEmployeesDatewise", SQLTextType.Stored_Proc, list_paramsForTotalDuration);
+                        foreach (DataRow rows in dtTotalDuration.Rows)
+                        {
+                            totalDuration = rows[0] == DBNull.Value ? new TimeSpan(0, 0, 0) : new TimeSpan(0, Int32.Parse(rows[0].ToString()), 0);
+                        }
+                    }
+                }
+
             }
+            return totalDuration;
         }
-        return totalDuration;
+
+
     }
     public string GetPunchRecordsEmployeeDateWise(int employeeId, DateTime date)
     {
@@ -1435,7 +1460,7 @@ public class ManageReports
         TimeSpan duration = GetDurationOfEmployeeDateWise(employeeId, date);
 
         List<SqlParameter> list_params = new List<SqlParameter>()
-                                        { new SqlParameter("@date", date), 
+                                        { new SqlParameter("@date", date),
                                           new SqlParameter("@employeeId", employeeId) };
 
         MasterShifts objShift = GetShiftForEmployeeDateWise(employeeId, date); //Getting Shift Active as per Employee
@@ -1471,7 +1496,7 @@ public class ManageReports
                     if (row[2] != DBNull.Value) //Entry Time is Not  Null ---- Employee is Present
                     {
                         TimeSpan empEntryTime = TimeSpan.Parse("00:" + row[2].ToString());
-                        TimeSpan empExitTime =  row[3] == DBNull.Value ? new TimeSpan() : TimeSpan.Parse("00:" + row[3].ToString());
+                        TimeSpan empExitTime = row[3] == DBNull.Value ? new TimeSpan() : TimeSpan.Parse("00:" + row[3].ToString());
 
                         var bnm = (DateTime.Parse(objDailyAttendanceReportViewModel.FirstHalfStartTime)).TimeOfDay;
 
@@ -1594,7 +1619,7 @@ public class ManageReports
         foreach (var item in lstMonthlyAttendanceReportViewModel)
         {
             objMonthlyReportOfEmployee.TotalDuration += item.Duration;
-            DayStatus daystatus = GetStatusOfDay(item.Date,employeeId);
+            DayStatus daystatus = GetStatusOfDay(item.Date, employeeId);
             if (daystatus == DayStatus.Active)
             {
                 if (item.Status == Status.Present || item.Status == Status.PresentWithNoOutPunch)
@@ -1685,7 +1710,7 @@ public class ManageReports
         using (DBDataHelper helper = new DBDataHelper())
         {
             List<SqlParameter> list_params_Assigned = new List<SqlParameter>()
-            {   new SqlParameter("@employeeId", employeeId), 
+            {   new SqlParameter("@employeeId", employeeId),
                 new SqlParameter("@sessionStartDate", sessionStartDate),
                 new SqlParameter("@sessionEndDate", sessionEndDate)
             };
@@ -1718,10 +1743,10 @@ public class ManageReports
             }
 
             List<SqlParameter> list_params = new List<SqlParameter>()
-            { 
-                new SqlParameter("@employeeId", employeeId), 
-                new SqlParameter("@sessionStart", SessionStartDate), 
-                new SqlParameter("@sessionEnd", SessionEndDate), 
+            {
+                new SqlParameter("@employeeId", employeeId),
+                new SqlParameter("@sessionStart", SessionStartDate),
+                new SqlParameter("@sessionEnd", SessionEndDate),
                 new SqlParameter("@monthStartDate", Date)
             };
 
@@ -1763,9 +1788,9 @@ public class ManageReports
         {
 
             List<SqlParameter> list_params = new List<SqlParameter>()
-            { 
-                new SqlParameter("@employeeId", employeeId), 
-                new SqlParameter("@monthStartDate", monthStart), 
+            {
+                new SqlParameter("@employeeId", employeeId),
+                new SqlParameter("@monthStartDate", monthStart),
                 new SqlParameter("@monthEndDate", monthEnd)
             };
 
@@ -1819,11 +1844,11 @@ public class ManageReports
                     {
                         new LeavesCount {
                             LeaveId = (int)BAS.Enums.LeaveTypes.SL,
-                            LeaveName=BAS.Enums.LeaveTypes.SL.ToString(), 
+                            LeaveName=BAS.Enums.LeaveTypes.SL.ToString(),
                             LeaveCount = row[2] == DBNull.Value ? 0: Int32.Parse(row[2].ToString())
                         },
                         new LeavesCount {
-                            LeaveId = (int)BAS.Enums.LeaveTypes.EL, 
+                            LeaveId = (int)BAS.Enums.LeaveTypes.EL,
                             LeaveName=BAS.Enums.LeaveTypes.EL.ToString(),
                             LeaveCount = row[3] == DBNull.Value ? 0: Int32.Parse(row[3].ToString())
                         }
@@ -1888,8 +1913,8 @@ public class ManageReports
                                  @sessionStartDate,
                                  @sessionEndDate)";
 
-                        List<SqlParameter> list_params = new List<SqlParameter>() 
-                        { 
+                        List<SqlParameter> list_params = new List<SqlParameter>()
+                        {
                             new SqlParameter("@employeeId", objEmployees.Id),
                             new SqlParameter("@leaveTypeId", LeaveDetails.LeaveId),
                             new SqlParameter("@noOfLeaves", LeaveDetails.LeaveCount),
@@ -1941,7 +1966,7 @@ public class ManageReports
 
                 string queryELTaken = "Select Count(*) from tblLeave Where EmployeeId = @employeeId AND LeaveTypeId = 2 AND [Date] Between @sessionStartDate AND @sessionEndDate";
                 List<SqlParameter> list_params_el = new List<SqlParameter>()
-                        {   new SqlParameter("@employeeId", employee.Id), 
+                        {   new SqlParameter("@employeeId", employee.Id),
                             new SqlParameter("@sessionStartDate", prevSessionStartDate),
                             new SqlParameter("@sessionEndDate", prevSessionEndDate)
                         };
@@ -1958,7 +1983,7 @@ public class ManageReports
 
                 string querySLTaken = "Select Count(*) from tblLeave Where EmployeeId = @employeeId AND LeaveTypeId = 5 AND [Date] Between @sessionStartDate AND @sessionEndDate";
                 List<SqlParameter> list_params = new List<SqlParameter>()
-                        {   new SqlParameter("@employeeId", employee.Id), 
+                        {   new SqlParameter("@employeeId", employee.Id),
                             new SqlParameter("@sessionStartDate", prevSessionStartDate),
                             new SqlParameter("@sessionEndDate", prevSessionEndDate)
                         };
@@ -1979,7 +2004,7 @@ public class ManageReports
                 string queryELAssigned = @"SELECT [NoOfLeaves]FROM [BiometricAttendanceManagementSystem].[dbo].[tblLeaveAssignedPerSession] WHERE EmployeeId = @employeeId AND LeaveTypeId = 2 AND [SessionStartDate] = @sessionStartDate";
 
                 List<SqlParameter> list_params_el2 = new List<SqlParameter>()
-                        {   new SqlParameter("@employeeId", employee.Id), 
+                        {   new SqlParameter("@employeeId", employee.Id),
                             new SqlParameter("@sessionStartDate", prevSessionStartDate)
                         };
                 DataTable dtELAssigned;
@@ -1999,7 +2024,7 @@ public class ManageReports
                 string querySLAssigned = @"SELECT [NoOfLeaves] FROM [BiometricAttendanceManagementSystem].[dbo].[tblLeaveAssignedPerSession] WHERE EmployeeId = @employeeId AND LeaveTypeId = 5 AND [SessionStartDate] = @sessionStartDate";
 
                 List<SqlParameter> list_params_sl2 = new List<SqlParameter>()
-                        {   new SqlParameter("@employeeId", employee.Id), 
+                        {   new SqlParameter("@employeeId", employee.Id),
                             new SqlParameter("@sessionStartDate", prevSessionStartDate)
                         };
                 DataTable dtSLAssigned;
@@ -2025,7 +2050,7 @@ public class ManageReports
                                        AND SessionStartDate = @sessionStartDate";
 
                 List<SqlParameter> list_params_old = new List<SqlParameter>()
-                        {   new SqlParameter("@employeeId", employee.Id), 
+                        {   new SqlParameter("@employeeId", employee.Id),
                             new SqlParameter("@sessionStartDate", prevSessionStartDate)
                         };
                 DataTable dtOld;
@@ -2056,9 +2081,9 @@ public class ManageReports
                 string queryInset = @"INSERT INTO [tblLeavesOldStock] VALUES (@employeeId, @slCount,@elCount, @sessionStartDate,@sessionEndDate)";
 
                 List<SqlParameter> list_params_insert = new List<SqlParameter>()
-                        {   new SqlParameter("@employeeId", employee.Id), 
-                            new SqlParameter("@slCount", SLCountBalance), 
-                            new SqlParameter("@elCount", ELCountBalance), 
+                        {   new SqlParameter("@employeeId", employee.Id),
+                            new SqlParameter("@slCount", SLCountBalance),
+                            new SqlParameter("@elCount", ELCountBalance),
                             new SqlParameter("@sessionStartDate", sessionStartDate),
                             new SqlParameter("@sessionEndDate", sessionEndDate)
                         };
@@ -2072,7 +2097,7 @@ public class ManageReports
         }
         catch (Exception)
         {
-            
+
         }
 
     }

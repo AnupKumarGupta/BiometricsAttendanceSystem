@@ -11,8 +11,6 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <asp:ScriptManager ID="scriptManagerDepartment" runat="server" />
-    <asp:UpdatePanel ID="up" runat="server">
-        <ContentTemplate>
             <div class="row">
                 <div class="col s12 breadcrumb">
                     <br />
@@ -150,7 +148,5 @@
             <div class="col s8 m4 l4 offset-s2 offset-m5 offset-l5">
                 <asp:Button Text="Export to PDF" ID="btnExport" CssClass="btn waves-button-input" OnClick="btnExport_Click" Visible="false" runat="server" />
             </div>
-        </ContentTemplate>
-    </asp:UpdatePanel>
 </asp:Content>
 

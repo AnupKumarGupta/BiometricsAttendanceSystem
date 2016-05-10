@@ -15,8 +15,6 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <asp:ScriptManager ID="scriptManagerDepartment" runat="server" />
-    <asp:UpdatePanel ID="up" runat="server">
-        <ContentTemplate>
             <asp:Literal ID="lit_autocomplete" runat="server" />
             <div class="row">
                 <div class="col s10 m10 l10 offset-s1 offset-m1 offset-l1 card">
@@ -145,8 +143,6 @@
                     <asp:Button Text="Export to PDF" ID="btnExport" CssClass="btn waves-button-input" OnClick="btnExport_Click" Visible="false" runat="server" />
                 </div>
             </div>
-        </ContentTemplate>
-    </asp:UpdatePanel>
 </asp:Content>
 
 

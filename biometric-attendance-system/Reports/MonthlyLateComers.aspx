@@ -11,8 +11,6 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <asp:ScriptManager ID="scriptManagerDepartment" runat="server" />
-    <asp:UpdatePanel ID="up" runat="server">
-        <ContentTemplate>
             <div class="row">
                 <div class="col s12 breadcrumb">
                     <br />
@@ -135,6 +133,4 @@
                 </asp:GridView>
             </div>
             <asp:Button Text="Export to PDF" ID="btnExport" OnClick="btnExport_Click" Visible="false" CssClass="btn" runat="server" />
-        </ContentTemplate>
-    </asp:UpdatePanel>
 </asp:Content>
