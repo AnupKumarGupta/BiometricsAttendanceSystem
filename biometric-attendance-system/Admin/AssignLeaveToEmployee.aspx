@@ -26,8 +26,34 @@
                         <asp:ListItem Value="0" Text="--Select Leave--" />
                     </asp:DropDownList><br />
                     <br />
-                    <asp:Calendar ID="Calendar1" runat="server" Height="200px" OnDayRender="Calendar1_DayRender" OnSelectionChanged="Calender1_SelectionChanged"></asp:Calendar>
-                    <asp:TextBox runat="server" CssClass="input-field" ID="txtStartDate" />
+                    <div class="col s8 m4 l4 offset-l4 offset-m4">
+                        <br />
+                        <br />
+                       End Date
+                        <asp:TextBox runat="server" ID="txtDate" class="datepicker" />
+                        <asp:RequiredFieldValidator SetFocusOnError="true" ErrorMessage="&nbsp;Required" ControlToValidate="txtDate" CssClass="col s12" ForeColor="Red" runat="server" />
+                        <script>
+                            $('.datepicker').pickadate({
+                                selectMonths: true, // Creates a dropdown to control month
+                                selectYears: 15 // Creates a dropdown of 15 years to control year
+                            });
+
+                        </script>
+                    </div>
+                     <div class="col s8 m4 l4 offset-l4 offset-m4">
+                        <br />
+                        <br />
+                       Start Date
+                        <asp:TextBox runat="server" ID="txtEndDate" class="datepicker" />
+                        <asp:RequiredFieldValidator SetFocusOnError="true" ErrorMessage="&nbsp;Required" ControlToValidate="txtEndDate" CssClass="col s12" ForeColor="Red" runat="server" />
+                        <script>
+                            $('.datepicker').pickadate({
+                                selectMonths: true, // Creates a dropdown to control month
+                                selectYears: 15 // Creates a dropdown of 15 years to control year
+                            });
+
+                        </script>
+                    </div>
                     <asp:Button ID="btnAssignLeave" Text="Assign Leave" CssClass="btn" runat="server" OnClick="btnAssignLeave_Click" />
                     <br />
                     <br />

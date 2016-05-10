@@ -13,7 +13,6 @@ public partial class Admin_AssignLeaveToEmployee : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        Calendar1.SelectedDates.Clear();
         BindGrid();
         if (Session["employeeId"] == null)
         {
@@ -113,13 +112,13 @@ public partial class Admin_AssignLeaveToEmployee : System.Web.UI.Page
     }
     protected void btnAssignLeave_Click(object sender, EventArgs e)
     {
-        List<DateTime> newList = new List<DateTime>();
-        if (Session["SelectedDates"] != null)
-            newList = (List<DateTime>)Session["SelectedDates"];
-
+        var a = txtDate.Text;
+        var b = txtEndDate.Text;
+        DateTime startDate = DateTime.Parse(a);
+        DateTime endDate = DateTime.Parse(b);
         if (Convert.ToInt32(ddlLeaves.SelectedValue) > 0)
         {
-            foreach (var date in newList)
+            for (DateTime date = startDate; date <= endDate; date = date.AddDays(1))
             {
                 AssignLeave(date);
             }
@@ -130,7 +129,6 @@ public partial class Admin_AssignLeaveToEmployee : System.Web.UI.Page
         {
             ScriptManager.RegisterStartupScript(this, this.GetType(), "script", "alert('Select a Leave');", true);
         }
-        Calendar1.SelectedDates.Clear();
     }
     public void BindDropdown()
     {
@@ -156,36 +154,7 @@ public partial class Admin_AssignLeaveToEmployee : System.Web.UI.Page
             ds = objDDBDataHelper.GetDataSet(query, SQLTextType.Query, lstData);
         }
     }
-    protected void Calendar1_DayRender(object sender, DayRenderEventArgs e)
-    {
-        if (e.Day.IsSelected == true)
-        {
-            if (list.Contains(e.Day.Date))
-               list.Remove(e.Day.Date);
-            else
-                list.Add(e.Day.Date);
-        }
-        Session["SelectedDates"] = list;
-    }
-    protected void Calender1_SelectionChanged(object sender, EventArgs e)
-    {
-        if (Session["SelectedDates"] != null)
-        {
-            List<DateTime> newList = (List<DateTime>)Session["SelectedDates"];
-            int count = 0;
-            foreach (DateTime dt in newList)
-            {
-                Calendar1.SelectedDates.Add(dt);
-                count = LeaveExists(dt);
-            }
-            if (count > 0)
-            {
-                btnAssignLeave.Enabled = false;
-                btnAssignLeave.Text = "Employee On Leave";
-            }
-            list.Clear();
-        }
-    }
+    
     protected int LeaveExists(DateTime date)
     {
         MasterEntries objMasterEntries = new MasterEntries();
