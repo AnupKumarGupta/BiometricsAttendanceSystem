@@ -10,7 +10,7 @@
         <div class="col s12 breadcrumb">
             <br />
             <a href="../Admin/ManageMasterEntries.aspx" class="grey-text">Home &nbsp;&nbsp;></a>
-            <a href="#!" class="teal-text">&nbsp;&nbsp;Manage Old Data &nbsp;&nbsp;</a>
+            <a href="#!" class="teal-text">&nbsp;&nbsp;Manage Old Stock &nbsp;&nbsp;</a>
         </div>
         <br />
         <div class="col s8 m3 l2 offset-s2 offset-m5 offset-l5">

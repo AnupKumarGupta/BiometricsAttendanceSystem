@@ -43,7 +43,7 @@
                 <asp:Button ID="btnEmployee" runat="server" Text="Employee" CssClass="btn-large" OnClick="btnEmployee_Click" />
                 <asp:Button ID="btnAddDateWiseShift" runat="server" Text="Assign DateWise Shift" CssClass="btn-large" OnClick="btnAddDateWiseShift_Click" />
                 <asp:Button ID="btnLeave" runat="server" Text="Assign Leave" CssClass="btn-large" OnClick="btnLeave_Click" />
-                <asp:Button ID="btnManageOldData" runat="server" Text="Old Data" CssClass="btn-large" OnClick="btnManageOldData_Click" />
+                <asp:Button ID="btnManageOldData" runat="server" Text="Old Stock" CssClass="btn-large" OnClick="btnManageOldData_Click" />
             </div>
         </div>
     </div>
